@@ -12,7 +12,7 @@ export default {
     },
     output: {
         path: path.resolve(ROOT_PATH, "build"),
-        filename: "app.bundle.js"
+        filename: "chaynsweb.bundle.js"
     },
     module: {
         loaders: [

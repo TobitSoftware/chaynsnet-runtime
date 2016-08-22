@@ -6,7 +6,7 @@ const ROOT_PATH = path.resolve('./');
 export default {
     entry: [
         "webpack/hot/dev-server",
-        "webpack-dev-server/client?http://0.0.0.0:8081",
+        "webpack-dev-server/client?http://0.0.0.0:8080",
         path.resolve(ROOT_PATH, "src/index")
     ],
     resolve: {
@@ -14,7 +14,7 @@ export default {
     },
     output: {
         path: path.resolve(ROOT_PATH, "build"),
-        filename: "app.bundle.js"
+        filename: "chaynsweb.bundle.js"
     },
     module: {
         loaders: [
