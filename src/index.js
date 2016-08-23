@@ -15,3 +15,5 @@ import ChaynsInfo from './ChaynsInfo';
 window.ChaynsInfo = ChaynsInfo;
 
 require('./chaynsWeb');
+//require('./utils/jsonCalls');
+//require('./utils/customTappCommunication');
