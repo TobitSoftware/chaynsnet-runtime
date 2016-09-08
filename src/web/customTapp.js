@@ -1,7 +1,8 @@
 import * as customTappCfg from '../config/customTapps';
 
 export default function loadTapp(tappId) {
-    loadUrlByTappId(parseInt(tappId, 10), replaceUrlParams(customTappCfg.config[tappId], tappId));
+    console.debug('tappId', tappId, 'url', replaceUrlParams(customTappCfg.config[tappId], parseInt(tappId, 10)));
+    loadUrlByTappId(parseInt(tappId, 10), replaceUrlParams(customTappCfg.config[tappId], parseInt(tappId, 10)));
 }
 
 /**
@@ -72,10 +73,10 @@ function replaceUrlParams(url, tappId) {
         url += '&facebook-auth';
     }
 
-    let urlTappId = url.match(/(?:tappid=)\b(\d*)/i);
-    if (!urlTappId && tappId) {
-        url += `&TappID=${tappId}`;
-    }
+    // let urlTappId = url.match(/(?:tappid=)\b(\d*)/i);
+    // if (!urlTappId && tappId) {
+    //     url += `&TappID=${tappId}`;
+    // }
 
     let timeStamp = url.match(/(?:_=)\b(\d*)/i);
     if (!timeStamp) {
@@ -142,7 +143,11 @@ function appendCustomParameters(url, parameters) {
             url += '?';
         }
 
-        url += `${curParam.name}=${curParam.value}`;
+        let urlTappId = url.match(/(?:tappid=)\b(\d*)/i);
+
+        if (!urlTappId) {
+            url += `${curParam.name}=${curParam.value}`;
+        }
     });
     return url;
 }
@@ -163,10 +168,9 @@ function loadUrlByTappId(tappId, tappUrl) {
         return;
     }
 
-    let tappData = {};
     let $bodyContent = document.getElementById('BodyContent');
     let url = tappUrl;
-    let postTobitAccessToken = true;
+    let postTobitAccessToken = tappId === -7 ? true : false;
 
     if (!url) {
         console.error('No Tapp Url found');
@@ -191,7 +195,7 @@ function loadUrlByTappId(tappId, tappUrl) {
     let form = document.createElement('form');
     form.action = url;
     form.target = 'CustomTappIframe';
-    form.method = tappData ? (tappData.PostTobitAccessToken ? 'post' : 'get') : 'get';
+    form.method = postTobitAccessToken ? 'post' : 'get';
     form.id = 'TobitAccessTokenForm';
 
     params.forEach(function (param) {

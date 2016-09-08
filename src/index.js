@@ -11,9 +11,10 @@ if (typeof window.console === 'undefined') {
     };
 }
 
-import ChaynsInfo from './ChaynsInfo';
+import ChaynsInfo from './web/chaynsInfo';
 window.ChaynsInfo = ChaynsInfo;
 
-require('./chaynsWeb');
-//require('./utils/jsonCalls');
-//require('./utils/customTappCommunication');
+require('./web/customTappCommunication');
+require('./web/jsonCalls');
+require('./web/login');
+require('./web/chaynsWeb');
