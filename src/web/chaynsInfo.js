@@ -1,14 +1,17 @@
-import {getRelativeColor} from '../shared/utils/chaynsWeb';
+import {getRelativeColor, decodeTobitAccessToken} from '../shared/utils/chaynsWeb';
+
+let accessToken = 'ew0KICAiYWxnIjogIkhTNTEyIiwNCiAgInR5cCI6ICJKV1QiDQp9.ew0KICAiSXNBZG1pbiI6IGZhbHNlLA0KICAiTG9jYXRpb25JRCI6IDc3NzgzLA0KICAiVG9iaXRVc2VySUQiOiAxNDY0ODg3LA0KICAiSXNNYW51ZmFjdHVyZXIiOiBmYWxzZSwNCiAgIlVzZXJJRCI6IDM1MDQ4MjksDQogICJQZXJzb25JRCI6ICIxNDItODI0NzMiLA0KICAiRmFjZWJvb2tVc2VySUQiOiBudWxsLA0KICAiRmlyc3ROYW1lIjogIjE0Mi04MjQ3MyIsDQogICJMYXN0TmFtZSI6ICIiLA0KICAiRmxhZyI6IDAsDQogICJMb2dpblR5cGUiOiAwLA0KICAidHlwZSI6IDEsDQogICJzdWIiOiAiMTQyLTgyNDczIiwNCiAgImV4cCI6ICIyMDE2LTA5LTExVDExOjE4OjM5LjAxNzc4NloiLA0KICAiaWF0IjogIjIwMTYtMDktMDhUMTE6MTg6MzkuMDE3Nzg2WiIsDQogICJqdGkiOiAiNzMzZmE0MzQtMzAxNC00ZjE5LWJmM2QtNjI5NWZjNmY4OTQyIiwNCiAgImF1ZCI6IG51bGwsDQogICJyb2xlcyI6IG51bGwNCn0.tpDYtgqufvmNrkePollNXKSUkThcNZKRb40jx6nDk6FeX_2y_QWQDgD4oYfAp0Mo87Fm16_hvisRR3WJYntrGw';
+let $payload = decodeTobitAccessToken(accessToken);
 
 const ChaynsInfo = {
     Version: '4014',
     BaseUrl: '/',
     User: {
-        ID: 26302,
-        FirstName: 'Dennis',
-        LastName: 'Stockhofe',
-        PersonID: '118-30010',
-        TobitAccessToken: 'ew0KICAiYWxnIjogIkhTNTEyIiwNCiAgInR5cCI6ICJKV1QiDQp9.ew0KICAiSXNBZG1pbiI6IHRydWUsDQogICJMb2NhdGlvbklEIjogMjksDQogICJUb2JpdFVzZXJJRCI6IDI2MzAyLA0KICAiSXNNYW51ZmFjdHVyZXIiOiB0cnVlLA0KICAiVXNlcklEIjogMjg2NzUxOCwNCiAgIlBlcnNvbklEIjogIjExOC0zMDAxMCIsDQogICJGYWNlYm9va1VzZXJJRCI6ICIxMTIwNzExMjU3OTQwNzI1IiwNCiAgIkZpcnN0TmFtZSI6ICJEZW5uaXMiLA0KICAiTGFzdE5hbWUiOiAiU3RvY2tob2ZlIiwNCiAgIkZsYWciOiAwLA0KICAiTG9naW5UeXBlIjogMSwNCiAgInR5cGUiOiAxLA0KICAic3ViIjogIjExOC0zMDAxMCIsDQogICJleHAiOiAiMjAxNi0wOS0xMVQwNjozMjo1OC40MTgzMTIxWiIsDQogICJpYXQiOiAiMjAxNi0wOS0wOFQwNjozMjo1OC40MTgzMTIxWiIsDQogICJqdGkiOiAiNmMyZTFhMGItNzlhNS00ZGIwLTk2ZGUtMTE4YzE5MWY0NDRmIiwNCiAgImF1ZCI6IG51bGwsDQogICJyb2xlcyI6IG51bGwNCn0.6CRruj6umwEFkwOeCxC3GIDVVtvni3D2fkczm309nEcvn_rFlurnAaaYBe-oauvjmRgZ08e0W71LUSt36wgn5g',
+        ID: $payload && $payload.TobitUserID ? $payload.TobitUserID : 0,
+        FirstName: $payload && $payload.FirstName ? $payload.FirstName : '',
+        LastName: $payload && $payload.LastName ? $payload.LastName : '',
+        PersonID: $payload && $payload.PersonID ? $payload.PersonID : '',
+        TobitAccessToken: '',
         UACGroups: []
     },
     LocationID: 77783,
@@ -44,11 +47,11 @@ function getGlobalData() {
         AppUser: {
             UACGroups: [],
             FacebookAccessToken: '',
-            FacebookUserName: 'Dennis Stockhofe',
-            FacebookID: '',
-            PersonID: '118-30010',
-            TobitUserID: 26302,
-            TobitAccessToken: 'ew0KICAiYWxnIjogIkhTNTEyIiwNCiAgInR5cCI6ICJKV1QiDQp9.ew0KICAiSXNBZG1pbiI6IHRydWUsDQogICJMb2NhdGlvbklEIjogNzc3ODMsDQogICJUb2JpdFVzZXJJRCI6IDI2MzAyLA0KICAiSXNNYW51ZmFjdHVyZXIiOiB0cnVlLA0KICAiVXNlcklEIjogMjg2NzUxOCwNCiAgIlBlcnNvbklEIjogIjExOC0zMDAxMCIsDQogICJGYWNlYm9va1VzZXJJRCI6ICIxMTgwMTI0NTQxOTk5Mzk2IiwNCiAgIkZpcnN0TmFtZSI6ICJEZW5uaXMiLA0KICAiTGFzdE5hbWUiOiAiU3RvY2tob2ZlIiwNCiAgIkZsYWciOiAwLA0KICAiTG9naW5UeXBlIjogMSwNCiAgInR5cGUiOiAxLA0KICAic3ViIjogIjExOC0zMDAxMCIsDQogICJleHAiOiAiMjAxNi0wOS0xMVQwOTowMDo0Ni43MjA5NTk4WiIsDQogICJpYXQiOiAiMjAxNi0wOS0wOFQwOTowMDo0Ni43MjA5NTk4WiIsDQogICJqdGkiOiAiMTg1OWIyZTctNmUxMy00OThmLWI1YzUtNTE3NmQ1MDI1NGYyIiwNCiAgImF1ZCI6IG51bGwsDQogICJyb2xlcyI6IG51bGwNCn0.nQ-Sey0aWN3etj47gDHlcAh5iqncfut-oKBdFcKZAstD1EXfW4cr4bXouPhg4J_FK7wg67NQBOnZcIyHEceFAQ',
+            FacebookUserName: `${$payload.FirstName} ${$payload.LastName}`,
+            FacebookID: $payload && $payload.FacebookUserID ? $payload.FacebookUserID : '',
+            PersonID: $payload && $payload.PersonID ? $payload.PersonID : '',
+            TobitUserID: $payload && $payload.TobitUserID ? $payload.TobitUserID : 0,
+            TobitAccessToken: accessToken,
             AdminMode: false
         },
         Device: {},
