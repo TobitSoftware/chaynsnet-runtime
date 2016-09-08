@@ -1,0 +1,17 @@
+@import 'mixin';
+
+.transition--fade {
+  @include vendor(transition, opacity 0.5s ease-in-out !important);
+}
+
+.fade-out {
+  opacity: 0 !important;
+}
+
+.no-select {
+  @include vendor(user-select, none);
+}
+
+.hidden{
+  display: none;
+}

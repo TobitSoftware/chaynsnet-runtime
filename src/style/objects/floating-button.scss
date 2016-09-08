@@ -1,0 +1,23 @@
+@import '../generic/mixin';
+
+.floatingButton {
+  position: fixed;
+  cursor: pointer;
+  z-index: 5;
+
+  background-color: rgba(212, 61, 50, 255);
+  color: #fff;
+
+  text-align: center;
+  font-size: 25px;
+
+  border-radius: 1.5em;
+  min-width: 1em;
+  line-height: 1em;
+  padding: .5em;
+
+  bottom: 30px;
+  right: 7%;
+
+  @include vendor(transition, all 100ms ease-in-out);
+}
