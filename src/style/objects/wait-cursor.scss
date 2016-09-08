@@ -1,0 +1,78 @@
+@import '../generic/mixin';
+
+.ChaynsLoadingCursor {
+  min-height: 72px;
+  text-align: center;
+  font-size: 14px;
+  position: fixed;
+  top: 50%;
+  margin-top: -30px;
+  z-index: 9999;
+
+  &.hidden {
+    display: none !important;
+  }
+
+  &.right {
+    margin-left: 251px;
+  }
+
+  &.force-center {
+    margin-left: 125px !important;
+  }
+
+  &.with-text {
+    top: 45%;
+
+    > .loading-spinner-wrapper {
+      padding: 8px;
+      width: 234px;
+      background-color: rgba(218, 218, 218, .90) !important;
+    }
+  }
+
+  > .loading-spinner-wrapper {
+    display: inline-block;
+    background-color: rgba(110, 110, 110, .25);
+    border-radius: 5px;
+
+    @include keyframes(rotate-forever) {
+      0% {
+        @include vendor(transform, rotate(0deg));
+      }
+      100% {
+        @include vendor(transform, rotate(360deg));
+      }
+    }
+
+    .loading-spinner {
+      @include vendor(animation-duration, 0.75s);
+      @include vendor(animation-iteration-count, infinite);
+      @include vendor(animation-name, rotate-forever);
+      @include vendor(animation-timing-function, linear);
+
+      height: 50px;
+      width: 50px;
+
+      border: 6px solid;
+      border-color: rgba(110, 110, 110, .8);
+      border-right-color: transparent !important;
+      border-radius: 50%;
+
+      display: inline-block;
+      position: relative;
+      top: 3px;
+
+      margin: 5px;
+    }
+  }
+
+  .loading-spinner-text {
+    text-align: left;
+    max-width: 400px;
+    margin-top: 12px;
+    padding: 5px;
+    color: #545454;
+    line-height: 20px;
+  }
+}

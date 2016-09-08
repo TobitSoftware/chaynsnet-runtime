@@ -1,4 +1,4 @@
-import {getRelativeColor, decodeTobitAccessToken} from '../shared/utils/chaynsWeb';
+import {getRelativeColor, decodeTobitAccessToken} from '../shared/utils/convert';
 
 let accessToken = 'ew0KICAiYWxnIjogIkhTNTEyIiwNCiAgInR5cCI6ICJKV1QiDQp9.ew0KICAiSXNBZG1pbiI6IGZhbHNlLA0KICAiTG9jYXRpb25JRCI6IDc3NzgzLA0KICAiVG9iaXRVc2VySUQiOiAxNDY0ODg3LA0KICAiSXNNYW51ZmFjdHVyZXIiOiBmYWxzZSwNCiAgIlVzZXJJRCI6IDM1MDQ4MjksDQogICJQZXJzb25JRCI6ICIxNDItODI0NzMiLA0KICAiRmFjZWJvb2tVc2VySUQiOiBudWxsLA0KICAiRmlyc3ROYW1lIjogIjE0Mi04MjQ3MyIsDQogICJMYXN0TmFtZSI6ICIiLA0KICAiRmxhZyI6IDAsDQogICJMb2dpblR5cGUiOiAwLA0KICAidHlwZSI6IDEsDQogICJzdWIiOiAiMTQyLTgyNDczIiwNCiAgImV4cCI6ICIyMDE2LTA5LTExVDExOjE4OjM5LjAxNzc4NloiLA0KICAiaWF0IjogIjIwMTYtMDktMDhUMTE6MTg6MzkuMDE3Nzg2WiIsDQogICJqdGkiOiAiNzMzZmE0MzQtMzAxNC00ZjE5LWJmM2QtNjI5NWZjNmY4OTQyIiwNCiAgImF1ZCI6IG51bGwsDQogICJyb2xlcyI6IG51bGwNCn0.tpDYtgqufvmNrkePollNXKSUkThcNZKRb40jx6nDk6FeX_2y_QWQDgD4oYfAp0Mo87Fm16_hvisRR3WJYntrGw';
 let $payload = decodeTobitAccessToken(accessToken);
@@ -39,6 +39,9 @@ const ChaynsInfo = {
     Domain: window.location.host,
     ColorMode: 0,
     Color: '#6E6E6E',
+    Webshadow:{
+        MenuPosition: 0
+    },
     getGlobalData
 };
 

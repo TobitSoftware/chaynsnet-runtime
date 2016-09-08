@@ -5,12 +5,12 @@ const ROOT_PATH = path.resolve('./');
 
 export default {
     entry: [
-        "webpack/hot/dev-server",
-        "webpack-dev-server/client?http://0.0.0.0:8080",
-        path.resolve(ROOT_PATH, "src/index")
+        'webpack/hot/dev-server',
+        'webpack-dev-server/client?http://0.0.0.0:8080',
+        path.resolve(ROOT_PATH, 'src/index')
     ],
     resolve: {
-        extensions: ["", ".js"]
+        extensions: ['', '.js', '.scss']
     },
     output: {
         path: path.resolve(ROOT_PATH, "build"),
@@ -22,6 +22,11 @@ export default {
                 test: /\.js$/,
                 loader: 'babel',
                 exclude: /node_modules/
+            },
+            {
+                test: /\.scss$/,
+                loader: 'style!css!sass',
+                include: path.resolve(ROOT_PATH, 'src')
             }
         ]
     },

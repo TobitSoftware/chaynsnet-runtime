@@ -1,4 +1,5 @@
-import {ApplyUnsafeFunction, utf8Decode} from '../shared/utils/chaynsWeb';
+import {ApplyUnsafeFunction} from '../shared/utils/helper';
+import {utf8Decode} from '../shared/utils/convert';
 import WaitCursor from '../shared/wait-cursor';
 
 window.Login = (function (module, window, jquery) {
