@@ -2,7 +2,7 @@ import DialogNew from '../shared/dialog(new)';
 import WaitCursor from '../shared/wait-cursor';
 import FloatingButton from '../shared/floating-button';
 import {argbHexToRgba} from '../shared/utils/convert';
-import {getWindowMetrics} from '../shared/utils/chaynsWeb';
+import {getWindowMetrics} from '../shared/utils/helper';
 
 let dateType = {
     DATE: 1,
