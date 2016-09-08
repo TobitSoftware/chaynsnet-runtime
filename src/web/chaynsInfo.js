@@ -39,6 +39,9 @@ const ChaynsInfo = {
     Domain: window.location.host,
     ColorMode: 0,
     Color: '#6E6E6E',
+    Webshadow:{
+        MenuPosition: 0
+    },
     getGlobalData
 };
 
