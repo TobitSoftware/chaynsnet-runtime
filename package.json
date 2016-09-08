@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --colors --progress --host 0.0.0.0",
-    "build": "copy *.html ./build && webpack -p --config ./webpack.prod.babel.js"
+    "build": "webpack -p --config ./webpack.prod.babel.js && copy *.html build\\"
   },
   "repository": {
     "type": "git",
