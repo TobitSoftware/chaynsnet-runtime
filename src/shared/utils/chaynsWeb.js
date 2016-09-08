@@ -150,3 +150,20 @@ function utf8Decode(utftext) {
     }
     return string;
 }
+
+export function decodeTobitAccessToken(tobitAccessToken) {
+    if (tobitAccessToken && typeof (tobitAccessToken) === 'string' && tobitAccessToken.length > 0) {
+        var spl = tobitAccessToken.split('.');
+        if (spl.length === 3) {
+            try {
+                spl[1] = spl[1].slice(0, spl[1].length + (spl[1].length % 4));
+                spl[1] = spl[1].replace(/-/g, '+').replace(/_/g, '/');
+
+                return JSON.parse(utf8Decode(atob(spl[1])));
+            } catch (e) {
+                //TODO Logging
+            }
+        }
+    }
+    return null;
+}
