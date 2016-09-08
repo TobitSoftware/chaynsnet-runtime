@@ -33,7 +33,7 @@ export default class WaitCursor {
         config.$waitCursor.style.width = `${srcIframe.offsetWidth || 566}px`;
 
         config.$text.classList.add('hidden');
-        config.$text.innerHTML = (text && text.length > 0 && typeof text === 'string') ? text : '';
+        config.$text.innerHTML = (text && text.length > 0 && typeof text === 'string') ? text : 'Es tut uns leid, dass Du warten musst. Das dauert gerade länger als es eigentlich sollte...';
 
         clearTimeout(config.timeout);
         config.timeout = setTimeout(() => {
