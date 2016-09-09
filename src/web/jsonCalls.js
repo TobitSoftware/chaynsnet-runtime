@@ -1,4 +1,4 @@
-import DialogNew from '../shared/dialog(new)';
+import DialogNew from '../shared/dialog';
 import WaitCursor from '../shared/wait-cursor';
 import FloatingButton from '../shared/floating-button';
 import {argbHexToRgba} from '../shared/utils/convert';
@@ -118,6 +118,10 @@ let dateType = {
                 window.Login.facebookLogin();
             }
         }
+    };
+
+    jsonCalls[56] = jsonCalls.Logout = function (value) {
+        window.logout();
     };
 
     jsonCalls[72] = jsonCalls.ShowFloatingButton = function (value, srcIfame) {
