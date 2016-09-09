@@ -1,4 +1,4 @@
-import DialogNew from '../shared/dialog(new)';
+import DialogNew from '../shared/dialog';
 import WaitCursor from '../shared/wait-cursor';
 import FloatingButton from '../shared/floating-button';
 import {argbHexToRgba} from '../shared/utils/convert';
