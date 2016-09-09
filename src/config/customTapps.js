@@ -17,7 +17,8 @@ export function getUrlParameters() {
     let urlParam = window.location.href.split('?').length > 1 ? window.location.href.split('?')[1].split('&') : false;
     let params = {};
 
-    urlParam.forEach(paramString => params[paramString.split('=')[0].toLowerCase()] = paramString.split('=')[1]);
-
+    if (urlParam) {
+        urlParam.forEach(paramString => params[paramString.split('=')[0].toLowerCase()] = paramString.split('=')[1]);
+    }
     return params;
 }
