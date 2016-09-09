@@ -20,7 +20,7 @@ if (typeof window.console === 'undefined') {
 
 /*document.parentWindow = {
     external: {
-        SetKeyValue: (name, value) => {
+        PutKeyValue: (name, value) => {
             localStorage.setItem(name, value);
         },
         GetKeyValue: (name) => {
