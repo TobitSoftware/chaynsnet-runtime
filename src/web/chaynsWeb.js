@@ -25,3 +25,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 }, false);
+
+let $icons = document.querySelectorAll('.ChaynsIdIconPadding');
+
+for (let i = 0, l = $icons.length; i < l; i++) {
+    $icons[i].addEventListener('click', () => {
+        loadTapp($icons[i].getAttribute('data-tappid'));
+    });
+}
