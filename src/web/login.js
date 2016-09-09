@@ -2,6 +2,8 @@ import {ApplyUnsafeFunction} from '../shared/utils/helper';
 import {utf8Decode} from '../shared/utils/convert';
 import WaitCursor from '../shared/wait-cursor';
 
+window.Login = window.Login || {};
+
 window.Login = (function (module, window, jquery) {
     var TobitAccessTokenLocalStorage = `TobitAccessToken_${window.ChaynsInfo.SiteID}`;
     var LoginRequest = {
@@ -211,7 +213,6 @@ window.Login = (function (module, window, jquery) {
         }
         params = paramsObj;
 
-        $('.overlayCloser').click();
         WaitCursor.show();
 
         TobitAccessToken = null;

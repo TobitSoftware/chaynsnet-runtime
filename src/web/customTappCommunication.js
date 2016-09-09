@@ -51,6 +51,7 @@ window.CustomTappCommunication = window.CustomTappCommunication || {};
         });
         module.PostMessage('jsoncall', params, srcIframe);
     };
+
 })(window.CustomTappCommunication = {});
 
 //CustomTappCommunication.Functions
@@ -89,6 +90,10 @@ window.CustomTappCommunication = window.CustomTappCommunication || {};
         } else {
             window.JsonCalls.Helper.throw(action, 3, 'chaynsCall ' + action + ' doesn\'t exist', value, srcIframe);
         }
+    };
+
+    module.tobitlogin = function (params) {
+        window.Login.tobitLogin(params);
     };
 
     module.jsoncall = module.chaynscall;

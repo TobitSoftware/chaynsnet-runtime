@@ -1,7 +1,6 @@
 import * as customTappCfg from '../config/customTapps';
 
 export default function loadTapp(tappId) {
-    console.debug('tappId', tappId, 'url', replaceUrlParams(customTappCfg.config[tappId], parseInt(tappId, 10)));
     loadUrlByTappId(parseInt(tappId, 10), replaceUrlParams(customTappCfg.config[tappId], parseInt(tappId, 10)));
 }
 
