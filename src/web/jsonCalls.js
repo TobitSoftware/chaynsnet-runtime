@@ -120,6 +120,10 @@ let dateType = {
         }
     };
 
+    jsonCalls[56] = jsonCalls.Logout = function (value) {
+        window.logout();
+    };
+
     jsonCalls[72] = jsonCalls.ShowFloatingButton = function (value, srcIfame) {
         jsonCalls.Helper.RemoveJsonCallEventListener(72);
         if (value.enabled) {

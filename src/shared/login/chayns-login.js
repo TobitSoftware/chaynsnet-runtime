@@ -1,7 +1,7 @@
 import Request from '../utils/request';
 
 export function emailLogin(eMail, password) {
-    return Request.post('//sub34.tobit.com/qa/token/Post', {
+    return Request.post('https://sub34.tobit.com/qa/token/Post', {
             'type': '3',
             'locationId': window.ChaynsInfo.LocationID
         },
@@ -31,7 +31,7 @@ export function emailLogin(eMail, password) {
 
 export function facebookLogin(facebookAccessToken) {
 
-    return Request.post('//sub34.tobit.com/qa/token/Post', {
+    return Request.post('https://sub34.tobit.com/qa/token/Post', {
             'type': '3',
             'locationId': window.ChaynsInfo.LocationID
         },

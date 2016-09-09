@@ -10,6 +10,12 @@
     <link rel="stylesheet" href="https://chayns-res.tobit.com/API/v3.1/css/chayns.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 
+    <style>
+        .hidden {
+            display: none
+        }
+    </style>
+
 </head>
 <body>
 
@@ -22,7 +28,7 @@
         <span class="facebookConnect__button" chayns-lang="txt_david_administration_login_facebookconnect">Mit Facebook anmelden</span>
     </div>
 
-    <div class="or-mail"  chayns-lang="txt_david_administration_login_ormail">
+    <div class="or-mail" chayns-lang="txt_david_administration_login_ormail">
         oder per eMail
     </div>
 
@@ -45,11 +51,11 @@
 <div id="BodyContent"></div>
 
 <script>
-        var js, fjs = document.getElementsByTagName("script")[0];
-        js = document.createElement("script");
-        js.id = "facebook-jssdk";
-        js.src = "//connect.facebook.net/"+((navigator.language || navigator.userLanguage).replace("-","_") || 'de_DE') +"/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
+    var js, fjs = document.getElementsByTagName("script")[0];
+    js = document.createElement("script");
+    js.id = "facebook-jssdk";
+    js.src = "//connect.facebook.net/" + ((navigator.language || navigator.userLanguage).replace("-", "_") || 'de_DE') + "/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
 </script>
 
 

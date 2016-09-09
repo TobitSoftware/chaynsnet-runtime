@@ -88,6 +88,6 @@ function validateInput() {
 }
 
 window.logout = () => {
-    document.parentWindow.external.StoreToken("TobitAccessToken", '');
+    document.parentWindow.external.PutKeyValue("TobitAccessToken", '');
     location.reload();
 };
