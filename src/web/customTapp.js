@@ -1,6 +1,10 @@
 import * as customTappCfg from '../config/customTapps';
+import FloatinButton from '../shared/floating-button';
+import Waitcursor from '../shared/wait-cursor';
 
 export default function loadTapp(tappId) {
+    FloatinButton.hide();
+    Waitcursor.hide();
     loadUrlByTappId(parseInt(tappId, 10), replaceUrlParams(customTappCfg.config[tappId], parseInt(tappId, 10)));
 }
 

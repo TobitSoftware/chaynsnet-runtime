@@ -1,0 +1,20 @@
+#ChaynsIdIcons {
+  float: right;
+  height: 45px;
+  box-sizing: border-box;
+  transition: all .6s ease-in-out;
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
+  font-size: 20px;
+}
+
+#ChaynsIdIcons .ChaynsIdIconPadding {
+  padding-left: 8px;
+  padding-right: 8px;
+  height: 45px;
+  border-left: 1px solid #fff;
+  border-right: 1px solid #fff;
+}
