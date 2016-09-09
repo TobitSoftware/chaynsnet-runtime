@@ -15,11 +15,25 @@ if (typeof window.console === 'undefined') {
     };
 }
 
+
+//WorkAround for chrome
+
+/*document.parentWindow = {
+    external: {
+        SetKeyValue: (name, value) => {
+            localStorage.setItem(name, value);
+        },
+        GetKeyValue: (name) => {
+            return localStorage.getItem(name);
+        }
+    }
+};*/
+
+
 import ChaynsInfo from './web/chaynsInfo';
 window.ChaynsInfo = ChaynsInfo;
 
 require('./web/customTappCommunication');
 require('./web/jsonCalls');
-require('./web/T-FB');
 require('./web/login');
 require('./web/chaynsWeb');

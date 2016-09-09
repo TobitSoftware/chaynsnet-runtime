@@ -13,8 +13,48 @@
 </head>
 <body>
 
+<div class="view__login hidden">
+    <div class="tapp__intro">
+        <h1 chayns-lang="txt_david_administration_login_intro_headline">Login</h1>
+        <p chayns-lang="txt_david_administration_login_intro_text"></p>
+    </div>
+    <div class="facebookConnect" align="center">
+        <span class="facebookConnect__button" chayns-lang="txt_david_administration_login_facebookconnect">Mit Facebook anmelden</span>
+    </div>
+
+    <div class="or-mail"  chayns-lang="txt_david_administration_login_ormail">
+        oder per eMail
+    </div>
+
+    <div class="input-group">
+        <input class="input email" type="text" style="width: 100%; margin-bottom: 5px;" required>
+        <label chayns-lang="txt_david_administration_login_email">eMail-Adresse</label>
+    </div>
+
+    <div class="input-group">
+        <input class="input password" type="password" style="width: 100%; margin-bottom: 5px;" required>
+        <label chayns-lang="txt_david_administration_login_password">Kennwort</label>
+    </div>
+
+    <div style='text-align: center'>
+        <button class='button login' chayns-lang="txt_david_administration_login_login">Login</button>
+    </div>
+</div>
+
+
 <div id="BodyContent"></div>
 
+<script>
+        var js, fjs = document.getElementsByTagName("script")[0];
+        js = document.createElement("script");
+        js.id = "facebook-jssdk";
+        js.src = "//connect.facebook.net/"+((navigator.language || navigator.userLanguage).replace("-","_") || 'de_DE') +"/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+</script>
+
+
+<script src="https://chayns-res.tobit.com/API/V3.1/js/chayns.min.js"></script>
+<script src="https://chayns-res.tobit.com/API/v3/intern/chaynsLangRes/js/chaynsLangRes.min.js"></script>
 <script src="chaynsweb.bundle.js"></script>
 
 </body>

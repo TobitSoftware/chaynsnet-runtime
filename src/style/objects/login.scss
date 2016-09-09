@@ -1,0 +1,41 @@
+.facebookConnect {
+  padding-bottom: 15px;
+  padding-top: 7px;
+}
+
+.facebookConnect__button {
+  display: table-cell;
+  width: auto;
+  height: 32px;
+  padding: 0 13px 0 39px;
+  background-repeat: no-repeat;
+  font: 14px 'Lucida Grande', Verdana, Arial, sans-serif !important;
+  white-space: nowrap;
+  cursor: pointer;
+  color: #fff;
+  position: relative;
+  background-color: #3b5998;
+  background-image: url('https://sub34.tobit.com/Logintapp/Content/fb_ico.png') !important;
+  background-position: 11px 6px;
+  vertical-align: middle;
+  background-size: 20px;
+}
+
+.facebookConnect__button:hover {
+  background-color: #6a81b1;
+}
+
+.or-mail {
+  padding-bottom: 15px;
+  text-align: center;
+}
+
+.to-register {
+  margin-top: 5px;
+  margin-left: 5px;
+  cursor: pointer;
+  font-size: .85714rem;
+  line-height: 2;
+  color: #a8a8a8;
+  display: inline-block;
+}
