@@ -1,0 +1,44 @@
+.console {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 500px;
+  height: 200px;
+  background-color: black;
+  color: white;
+
+  .console__input {
+    position: absolute;
+    bottom: 0;
+    height: 10%;
+    width: 96%;
+    background-color: #2D2D2D;
+    overflow: hidden;
+  }
+
+  .console__element-wrapper {
+    position: absolute;
+    top: 0;
+    height: 170px;
+    width: 100%;
+    overflow-y: scroll;
+
+    .console__element {
+      border-bottom: solid 1px white;
+      overflow: hidden;
+      padding: 0 4px;
+      word-break: break-all;
+
+      .console__content {
+        max-width: 400px;
+        float: left;
+        -ms-user-select: text;
+      }
+
+      .console__date {
+        float: right;
+      }
+    }
+  }
+
+}
