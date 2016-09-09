@@ -123,3 +123,6 @@ export function ApplyUnsafeFunction(func, args, thisArg) {
     }
 }
 
+export function stringisEmptyOrWhitespace(value){
+    return value == null || value.trim().length < 1;
+}
