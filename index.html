@@ -13,6 +13,26 @@
 </head>
 <body>
 
+<div id="ChaynsIdIcons" style="margin-right: 0; padding-left: 8px;">
+    <ul>
+        <li class="ChaynsIdIconPadding" id="user" data-tappid="-7">
+            <span class="ChaynsIdIcon fa fa-user"></span>
+        </li>
+        <li class="ChaynsIdIconPadding" id="message" data-tappid="251441">
+            <span class="ChaynsIdIcon fa fa-comments"></span>
+        </li>
+        <li class="ChaynsIdIconPadding" id="ticket" data-tappid="250357">
+            <span class="ChaynsIdIcon fa fa-ticket"></span>
+        </li>
+        <li class="ChaynsIdIconPadding" id="file" data-tappid="250358">
+            <span class="ChaynsIdIcon fa fa-file"></span>
+        </li>
+        <li class="ChaynsIdIconPadding" id="euro" data-tappid="250359">
+            <span class="ChaynsIdIcon fa fa-eur"></span>
+        </li>
+    </ul>
+</div>
+
 <div class="view__login hidden">
     <div class="tapp__intro">
         <h1 chayns-lang="txt_david_administration_login_intro_headline">Login</h1>
@@ -22,7 +42,7 @@
         <span class="facebookConnect__button" chayns-lang="txt_david_administration_login_facebookconnect">Mit Facebook anmelden</span>
     </div>
 
-    <div class="or-mail"  chayns-lang="txt_david_administration_login_ormail">
+    <div class="or-mail" chayns-lang="txt_david_administration_login_ormail">
         oder per eMail
     </div>
 
@@ -45,11 +65,11 @@
 <div id="BodyContent"></div>
 
 <script>
-        var js, fjs = document.getElementsByTagName("script")[0];
-        js = document.createElement("script");
-        js.id = "facebook-jssdk";
-        js.src = "//connect.facebook.net/"+((navigator.language || navigator.userLanguage).replace("-","_") || 'de_DE') +"/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
+    var js, fjs = document.getElementsByTagName("script")[0];
+    js = document.createElement("script");
+    js.id = "facebook-jssdk";
+    js.src = "//connect.facebook.net/" + ((navigator.language || navigator.userLanguage).replace("-", "_") || 'de_DE') + "/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
 </script>
 
 
