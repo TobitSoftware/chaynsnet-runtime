@@ -104,6 +104,22 @@ let dateType = {
         DialogNew.show('select', value.dialog);
     };
 
+    jsonCalls[54] = jsonCalls.TobitLogin = function (value) {
+        if ((value.urlParams || []).length) {
+            window.Login.setReloadParams(value.urlParams);
+        }
+
+        if ((value.fbPermissions || []).length) {
+            window.Login.facebookLogin(false, value.fbPermissions.join(','));
+        } else {
+            if (!window.ChaynsInfo.IsFacebook) {
+                window.Login.showDialog();
+            } else {
+                window.Login.facebookLogin();
+            }
+        }
+    };
+
     jsonCalls[72] = jsonCalls.ShowFloatingButton = function (value, srcIfame) {
         jsonCalls.Helper.RemoveJsonCallEventListener(72);
         if (value.enabled) {
