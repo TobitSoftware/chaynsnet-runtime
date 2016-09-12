@@ -21,5 +21,4 @@ window.ChaynsInfo = ChaynsInfo;
 
 require('./web/customTappCommunication');
 require('./web/jsonCalls');
-require('./web/login');
 require('./web/chaynsWeb');

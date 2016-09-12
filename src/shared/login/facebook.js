@@ -1,7 +1,8 @@
 export default class facebook {
     constructor() {
+        console.log('init');
         FB.init({
-            appId: window.ChaynsInfo.FacebookAppID,
+            appId: window.ChaynsInfo.getGlobalData().AppInfo.FacebookAppID,
             xfbml: true,
             version: 'v2.5'
         });
