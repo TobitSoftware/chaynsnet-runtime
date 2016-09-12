@@ -151,6 +151,7 @@ function addsActivation() {
         if (count > 5) {
             count = 0;
             console.show();
+            document.querySelector('#ChaynsIdIcons').classList.remove('hidden');
         }
     };
 
