@@ -3,6 +3,9 @@ import {getRelativeColor, decodeTobitAccessToken} from '../shared/utils/convert'
 if (navigator.userAgent.indexOf('David Client') === -1) {
     document.parentWindow = {
         external: {
+            Window:{
+              Close:()=>console.log('window closed.')
+            },
             Chayns: {
                 PutKeyValue: (name, value) => {
                     localStorage.setItem(name, value);
