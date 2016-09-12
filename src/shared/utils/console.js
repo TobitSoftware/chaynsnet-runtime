@@ -16,6 +16,8 @@ if (navigator.userAgent.indexOf('David Client') > -1) {
     createConsole();
     init();
     addsActivation();
+} else {
+    document.querySelector('#ChaynsIdIcons').classList.remove('hidden');
 }
 
 
