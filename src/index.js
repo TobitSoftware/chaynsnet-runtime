@@ -1,6 +1,6 @@
 import './style/index.scss';
 
-//import './shared/utils/console';
+import './shared/utils/console';
 
 //IE Fix
 if (!window.location.origin) {
@@ -14,20 +14,6 @@ if (typeof window.console === 'undefined') {
         error: Function.prototype
     };
 }
-
-
-//WorkAround for chrome
-
-document.parentWindow = {
-    external: {
-        PutKeyValue: (name, value) => {
-            localStorage.setItem(name, value);
-        },
-        GetKeyValue: (name) => {
-            return localStorage.getItem(name);
-        }
-    }
-};
 
 
 import ChaynsInfo from './web/chaynsInfo';

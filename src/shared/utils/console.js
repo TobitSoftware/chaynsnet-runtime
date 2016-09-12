@@ -5,17 +5,15 @@ import classNames from 'classnames';
 const password = 'cw913';
 
 let locked = false,
-    hidden = false,
+    hidden = true,
     $consoleElement = null,
     $elementWrapper = null,
-    $input = null,
-    timeout,
-    count = 0,
-    headlines;
+    $input = null;
 
-createConsole();
-init();
-addsActivation();
+if (navigator.userAgent.indexOf('David Client') > -1) {
+    createConsole();
+    init();
+}
 
 
 function createConsole() {
@@ -39,6 +37,10 @@ function init() {
         $consoleElement.classList.add('hidden');
         log('>>> HIDDEN');
     };
+    window.console.show = () => {
+        $consoleElement.classList.remove('hidden');
+        log('>>> SHOWN');
+    };
     window.console.clear = () => {
         $elementWrapper.innerHTML = '';
         log('>>> CLEARED');
@@ -53,7 +55,9 @@ function init() {
 
         log(content);
 
-        nativeLog.apply(this, messages);
+        if (navigator.userAgent.indexOf('David Client') === -1) {
+            nativeLog.apply(this, messages);
+        }
     };
 
     window.console.log = customLog;
@@ -63,6 +67,7 @@ function init() {
     window.console.error = customLog;
 
     window.onerror = function (message, url, lineNumber) {
+        console.show();
         let urlParts = url.split('/');
         let fileName = urlParts[urlParts.length - 1];
         customLog(`${message} (${fileName}:${lineNumber})`);
@@ -113,6 +118,7 @@ function init() {
             }
             console.log(res);
             this.value = '';
+            $elementWrapper.scrollTop = $elementWrapper.scrollHeight;
             return false;
         }
     });
@@ -130,26 +136,6 @@ function log(text) {
     $elementWrapper.appendChild(element);
 }
 
-function addsActivation() {
-    headlines = document.querySelectorAll('h1, h2');
-    let activateCB = () => {
-        if (!timeout) {
-            timeout = setTimeout(() => {
-                count = 0;
-                timeout = null;
-            }, 10000);
-        }
-        count++;
-        if (count > 10) {
-            count = 0;
-            $consoleElement.classList.remove('hidden');
-        }
-    };
-
-    for (let i = 0, l = headlines.length; i < l; i++) {
-        headlines[i].addEventListener('click', activateCB);
-    }
-}
 
 function getLogText(data) {
     if (data && typeof data === 'object') {
