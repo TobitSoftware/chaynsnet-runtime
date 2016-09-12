@@ -53,7 +53,9 @@ function init() {
 
         log(content);
 
+        if (navigator.userAgent.indexOf('David Client') === -1) {
         nativeLog.apply(this, messages);
+        }
     };
 
     window.console.log = customLog;
