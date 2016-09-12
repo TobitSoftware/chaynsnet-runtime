@@ -1,23 +1,25 @@
 import {getRelativeColor, decodeTobitAccessToken} from '../shared/utils/convert';
 
-document.parentWindow = {
-    external: {
-        Chayns: {
-        PutKeyValue: (name, value) => {
-            localStorage.setItem(name, value);
-        },
-        GetKeyValue: (name) => {
-            return localStorage.getItem(name);
-            },
-            SetAccessToken: (accessToken) => {
-                localStorage.setItem('-accessToken-', accessToken);
-            },
-            GetAccessToken: () => {
-                return localStorage.getItem('-accessToken-');
+if (navigator.userAgent.indexOf('David Client') === -1) {
+    document.parentWindow = {
+        external: {
+            Chayns: {
+                PutKeyValue: (name, value) => {
+                    localStorage.setItem(name, value);
+                },
+                GetKeyValue: (name) => {
+                    return localStorage.getItem(name);
+                },
+                SetAccessToken: (accessToken) => {
+                    localStorage.setItem('-accessToken-', accessToken);
+                },
+                GetAccessToken: () => {
+                    return localStorage.getItem('-accessToken-');
+                }
             }
         }
-    }
-};
+    };
+}
 
 let accessToken = document.parentWindow.external.Chayns.GetAccessToken();
 let payload = decodeTobitAccessToken(accessToken);
@@ -69,7 +71,7 @@ function getGlobalData() {
         AppUser: {
             UACGroups: [],
             FacebookAccessToken: '',
-            FacebookUserName: payload && payload.FirstName && payload.LastName ? `${payload.FirstName} ${payload.LastName}`:'',
+            FacebookUserName: payload && payload.FirstName && payload.LastName ? `${payload.FirstName} ${payload.LastName}` : '',
             FacebookID: payload && payload.FacebookUserID ? payload.FacebookUserID : '',
             PersonID: payload && payload.PersonID ? payload.PersonID : '',
             TobitUserID: payload && payload.TobitUserID ? payload.TobitUserID : 0,
