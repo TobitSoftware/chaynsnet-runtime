@@ -115,6 +115,7 @@ function init() {
             }
             console.log(res);
             this.value = '';
+            $elementWrapper.scrollTop = $elementWrapper.scrollHeight;
             return false;
         }
     });
