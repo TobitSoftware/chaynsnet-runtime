@@ -5,7 +5,7 @@ import classNames from 'classnames';
 const password = 'cw913';
 
 let locked = false,
-    hidden = false,
+    hidden = true,
     $consoleElement = null,
     $elementWrapper = null,
     $input = null;
@@ -35,6 +35,10 @@ function init() {
         $consoleElement.classList.add('hidden');
         log('>>> HIDDEN');
     };
+    window.console.show = () => {
+        $consoleElement.classList.remove('hidden');
+        log('>>> SHOWN');
+    };
     window.console.clear = () => {
         $elementWrapper.innerHTML = '';
         log('>>> CLEARED');
@@ -61,6 +65,7 @@ function init() {
     window.console.error = customLog;
 
     window.onerror = function (message, url, lineNumber) {
+        console.show();
         let urlParts = url.split('/');
         let fileName = urlParts[urlParts.length - 1];
         customLog(`${message} (${fileName}:${lineNumber})`);
