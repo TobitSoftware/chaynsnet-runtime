@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.ChaynsInfo.User.TobitAccessToken = tobitAccessToken;
                 console.log('login-res', tobitAccessToken);
                 location.href = `${location.origin}${location.pathname}?tappid=-7`;
-            }), 1500);
+            }), 500);
         } else {
             let tobitAccessToken = document.parentWindow.external.Chayns.GetAccessToken();
             console.log('tobitAccessToken', tobitAccessToken);
