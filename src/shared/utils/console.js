@@ -8,14 +8,10 @@ let locked = false,
     hidden = false,
     $consoleElement = null,
     $elementWrapper = null,
-    $input = null,
-    timeout,
-    count = 0,
-    headlines;
+    $input = null;
 
 createConsole();
 init();
-addsActivation();
 
 
 function createConsole() {
@@ -54,7 +50,7 @@ function init() {
         log(content);
 
         if (navigator.userAgent.indexOf('David Client') === -1) {
-        nativeLog.apply(this, messages);
+            nativeLog.apply(this, messages);
         }
     };
 
@@ -133,26 +129,6 @@ function log(text) {
     $elementWrapper.appendChild(element);
 }
 
-function addsActivation() {
-    headlines = document.querySelectorAll('h1, h2');
-    let activateCB = () => {
-        if (!timeout) {
-            timeout = setTimeout(() => {
-                count = 0;
-                timeout = null;
-            }, 10000);
-        }
-        count++;
-        if (count > 10) {
-            count = 0;
-            $consoleElement.classList.remove('hidden');
-        }
-    };
-
-    for (let i = 0, l = headlines.length; i < l; i++) {
-        headlines[i].addEventListener('click', activateCB);
-    }
-}
 
 function getLogText(data) {
     if (data && typeof data === 'object') {
