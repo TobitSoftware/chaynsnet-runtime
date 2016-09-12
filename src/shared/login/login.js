@@ -11,7 +11,7 @@ let $dom,
 export default class Login {
     static run() {
         return new Promise((resolve) => {
-            let tobitAccessToken = document.parentWindow.external.GetKeyValue("TobitAccessToken");
+            let tobitAccessToken = document.parentWindow.external.Chayns.GetAccessToken();
             console.log('tobitAccessToken', tobitAccessToken);
             var tokenData = decodeTobitAccessToken(tobitAccessToken);
             if (!stringisEmptyOrWhitespace(tobitAccessToken) && new Date(tokenData.exp) > new Date() && tokenData.LocationID === window.ChaynsInfo.LocationID) {
@@ -35,7 +35,7 @@ export default class Login {
                     return;
                 emailLogin($dom.email.value, $dom.password.value).then((res) => {
                     if (res.success) {
-                        document.parentWindow.external.PutKeyValue("TobitAccessToken", res.tobitAccessToken);
+                        document.parentWindow.external.Chayns.SetAccessToken(res.tobitAccessToken);
                         hide();
                         resolve(res.tobitAccessToken);
                     } else {
@@ -51,7 +51,7 @@ export default class Login {
                     if (facebookAccessToken) {
                         facebookLogin(facebookAccessToken).then((res) => {
                             if (res.success) {
-                                document.parentWindow.external.PutKeyValue("TobitAccessToken", res.tobitAccessToken);
+                                document.parentWindow.external.Chayns.SetAccessToken(res.tobitAccessToken);
                                 hide();
                                 resolve(res.tobitAccessToken);
                             }
@@ -88,6 +88,6 @@ function validateInput() {
 }
 
 window.logout = () => {
-    document.parentWindow.external.PutKeyValue("TobitAccessToken", '');
+    document.parentWindow.external.Chayns.setAccessToken('');
     location.reload();
 };

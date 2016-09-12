@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 location.href = `${location.origin}${location.pathname}?tappid=-7`;
             }), 1500);
         } else {
-            let tobitAccessToken = document.parentWindow.external.GetKeyValue("TobitAccessToken");
+            let tobitAccessToken = document.parentWindow.external.Chayns.GetAccessToken();
             console.log('tobitAccessToken', tobitAccessToken);
             var tokenData = decodeTobitAccessToken(tobitAccessToken);
             if (!stringisEmptyOrWhitespace(tobitAccessToken) && new Date(tokenData.exp) > new Date() && tokenData.LocationID === window.ChaynsInfo.LocationID) {

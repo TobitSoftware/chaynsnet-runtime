@@ -18,16 +18,24 @@ if (typeof window.console === 'undefined') {
 
 //WorkAround for chrome
 
-document.parentWindow = {
+/*document.parentWindow = {
     external: {
+        Chayns: {
         PutKeyValue: (name, value) => {
             localStorage.setItem(name, value);
         },
         GetKeyValue: (name) => {
             return localStorage.getItem(name);
+            },
+            SetAccessToken: (accessToken) => {
+                localStorage.setItem('-accessToken-', accessToken);
+            },
+            GetAccessToken: () => {
+                return localStorage.getItem('-accessToken-');
         }
     }
-};
+    }
+};*/
 
 
 import ChaynsInfo from './web/chaynsInfo';
