@@ -8,11 +8,15 @@ let locked = false,
     hidden = true,
     $consoleElement = null,
     $elementWrapper = null,
-    $input = null;
+    $input = null,
+    timeout,
+    count = 0,
+    headlines;
 
 if (navigator.userAgent.indexOf('David Client') > -1) {
     createConsole();
     init();
+    addsActivation();
 }
 
 
@@ -136,6 +140,26 @@ function log(text) {
     $elementWrapper.appendChild(element);
 }
 
+function addsActivation() {
+    headlines = document.querySelectorAll('h1, h2');
+    let activateCB = () => {
+        if (!timeout) {
+            timeout = setTimeout(() => {
+                count = 0;
+                timeout = null;
+            }, 10000);
+        }
+        count++;
+        if (count > 10) {
+            count = 0;
+            $consoleElement.classList.remove('hidden');
+        }
+    };
+
+    for (let i = 0, l = headlines.length; i < l; i++) {
+        headlines[i].addEventListener('click', activateCB);
+    }
+}
 
 function getLogText(data) {
     if (data && typeof data === 'object') {
