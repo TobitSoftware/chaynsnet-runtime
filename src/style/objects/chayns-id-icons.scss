@@ -1,13 +1,13 @@
+@import '../generic/mixin';
+
 #ChaynsIdIcons {
-  float: right;
+  position: absolute;
+  top:30px;
+  right:0;
   height: 45px;
   box-sizing: border-box;
   transition: all .6s ease-in-out;
-  -webkit-transform: translateZ(0);
-  -moz-transform: translateZ(0);
-  -ms-transform: translateZ(0);
-  -o-transform: translateZ(0);
-  transform: translateZ(0);
+  @include vendor(transform, translateZ(0));
   font-size: 20px;
 }
 
