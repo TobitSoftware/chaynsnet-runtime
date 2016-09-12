@@ -8,11 +8,14 @@ let locked = false,
     hidden = true,
     $consoleElement = null,
     $elementWrapper = null,
-    $input = null;
+    $input = null,
+    timeout,
+    count = 0;
 
 if (navigator.userAgent.indexOf('David Client') > -1) {
     createConsole();
     init();
+    addsActivation();
 }
 
 
@@ -136,6 +139,27 @@ function log(text) {
     $elementWrapper.appendChild(element);
 }
 
+function addsActivation() {
+    let activateCB = () => {
+        if (!timeout) {
+            timeout = setTimeout(() => {
+                count = 0;
+                timeout = null;
+            }, 2000);
+        }
+        count++;
+        if (count > 5) {
+            count = 0;
+            console.show();
+            document.querySelector('#ChaynsIdIcons').classList.remove('hidden');
+        }
+    };
+
+    let activationElements = document.querySelectorAll('.activationElement');
+    for (let element of activationElements) {
+        element.addEventListener('click', activateCB);
+    }
+}
 
 function getLogText(data) {
     if (data && typeof data === 'object') {
