@@ -89,5 +89,5 @@ function validateInput() {
 
 window.logout = () => {
     document.parentWindow.external.Chayns.SetAccessToken('');
-    location.reload();
+    document.parentWindow.external.Window.Close();
 };
