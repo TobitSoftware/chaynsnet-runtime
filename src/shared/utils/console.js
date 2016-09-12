@@ -10,8 +10,10 @@ let locked = false,
     $elementWrapper = null,
     $input = null;
 
-createConsole();
-init();
+if (navigator.userAgent.indexOf('David Client') > -1) {
+    createConsole();
+    init();
+}
 
 
 function createConsole() {

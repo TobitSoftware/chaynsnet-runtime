@@ -1,6 +1,6 @@
 import './style/index.scss';
 
-//import './shared/utils/console';
+import './shared/utils/console';
 
 //IE Fix
 if (!window.location.origin) {
