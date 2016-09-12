@@ -88,6 +88,6 @@ function validateInput() {
 }
 
 window.logout = () => {
-    document.parentWindow.external.Chayns.setAccessToken('');
+    document.parentWindow.external.Chayns.SetAccessToken('');
     location.reload();
 };
