@@ -10,8 +10,7 @@ let locked = false,
     $elementWrapper = null,
     $input = null,
     timeout,
-    count = 0,
-    headlines;
+    count = 0;
 
 if (navigator.userAgent.indexOf('David Client') > -1) {
     createConsole();
@@ -141,23 +140,23 @@ function log(text) {
 }
 
 function addsActivation() {
-    headlines = document.querySelectorAll('h1, h2');
     let activateCB = () => {
         if (!timeout) {
             timeout = setTimeout(() => {
                 count = 0;
                 timeout = null;
-            }, 10000);
+            }, 2000);
         }
         count++;
-        if (count > 10) {
+        if (count > 5) {
             count = 0;
-            $consoleElement.classList.remove('hidden');
+            console.show();
         }
     };
 
-    for (let i = 0, l = headlines.length; i < l; i++) {
-        headlines[i].addEventListener('click', activateCB);
+    let activationElements = document.querySelectorAll('.activationElement');
+    for (let element of activationElements) {
+        element.addEventListener('click', activateCB);
     }
 }
 
