@@ -10,8 +10,9 @@ export default class FloatingButton {
      * @param srcIframe
      * @param bgColor
      * @param color
+     * @param callback
      */
-    static show = (text, srcIframe, bgColor, color)=> {
+    static show = (text, srcIframe, bgColor, color, callback)=> {
         if (!srcIframe || srcIframe === window) {
             srcIframe = document.querySelector('#CustomTappIframe');
             if (!srcIframe) {
@@ -24,12 +25,14 @@ export default class FloatingButton {
 
         if (!config.$floatingButton) {
             config.$floatingButton = getFloatingButton(srcIframe.name);
-            config.$floatingButton.addEventListener('click', (e)=> {
-                JsonCalls.Helper.DispatchJsonCallEvent(72);
-                e.stopPropagation()
-            });
             srcIframe.parentElement.parentElement.appendChild(config.$floatingButton);
         }
+
+        config.$floatingButton.onclick = (e) => {
+            callback();
+            e.stopPropagation()
+        };
+
         config.$floatingButton.innerHTML = text;
         config.$floatingButton.style.backgroundColor = bgColor;
         config.$floatingButton.style.color = color;
