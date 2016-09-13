@@ -152,64 +152,21 @@ let dateType = {
     };
 
     jsonCalls[77] = jsonCalls.SetIframeHeigth = function (value, srcIframe) {
-        //noinspection JSUnresolvedVariable
         if (window.ChaynsInfo.IsFacebook && window.FB) {
             setTimeout(function () {
-                //noinspection JSUnresolvedVariable,JSUnresolvedFunction
                 window.FB.Canvas.setSize({
                     'height': $(document.body).height()
                 });
             }, 500);
         }
 
-        let $iframe = srcIframe;
+        let $iframe = srcIframe[0];
 
         if (!value.full && !('height' in value) && !('fullViewport' in value)) {
             jsonCalls.Helper.throw(77, 2, 'Field height missing.', value, srcIframe);
             return;
-        } else if (value.full) {
+        } else if (value.full || value.fullViewport) {
             value.height = getWindowMetrics().AvailHeight;
-        } else if (value.fullViewport) {
-            let $NavItems = $('#NavItems');
-            let $PageHead = $('#PageHead');
-            let navHeight = $NavItems.height();
-            let maxHeight = $NavItems.height() + 45;
-            let headerHeight = $PageHead.height() + ($('.domainOfferAttention').outerHeight() || 0);
-            let pageheadHeight = $PageHead.height() + $('#TitleConnect').height() + 50;
-            let minHeight = $(window).height() - headerHeight - 35;
-            let h, margin;
-
-            $('#BodyContent').css('margin-bottom', '0px');
-            $('#BodyContentCell').css('padding-bottom', '0px');
-            value.height = $(window.top).height() + $(window).scrollTop() - $PageHead.height() - $('#TitleConnectSites').height() - 30;
-            if (value.height > $(window.top).height()) {
-                value.height = $(window.top).height();
-            }
-            $iframe.height(value.height);
-            $(window).bind('scroll', function () {
-                if (minHeight > maxHeight) {
-                    maxHeight = minHeight;
-                }
-
-                h = minHeight + $(window).scrollTop();
-
-                if (h > maxHeight) {
-                    h = maxHeight;
-                } else {
-                    h = h - 25;
-                }
-
-                if (h < $(window).height() - 28) {
-                    $iframe.height(h);
-                    $iframe.css('margin-top', -35);
-                } else {
-                    margin = $(window).scrollTop() - pageheadHeight;
-                    if (margin + $iframe.height() <= navHeight + 65) {
-                        $iframe.css('margin-top', margin);
-                        $iframe.height($(window).height());
-                    }
-                }
-            });
         } else {
             value.height = parseInt(value.height, 10);
         }
@@ -221,13 +178,9 @@ let dateType = {
 
         value.growOnly = value.growOnly !== false; // true als default
 
-        if ($iframe && (!value.growOnly || $iframe[0].style.height < value.height)) {
-            $iframe[0].style.height = value.height;
+        if ($iframe && (!value.growOnly || parseInt($iframe.style.height) < value.height)) {
+            $iframe.style.height = `${value.height}px`;
         }
-
-        // if (window.positionFloatingButton) {
-        //     window.positionFloatingButton();
-        // }
     };
 
     jsonCalls[103] = jsonCalls.ShowDialog = function (value, srcIframe) {
