@@ -125,7 +125,6 @@ let dateType = {
     };
 
     jsonCalls[72] = jsonCalls.ShowFloatingButton = function (value, srcIfame) {
-        jsonCalls.Helper.RemoveJsonCallEventListener(72);
         if (value.enabled) {
             var bgColor = argbHexToRgba(value.color);
             bgColor = bgColor ? `rgba(${bgColor.r}, ${bgColor.g}, ${bgColor.b}, ${bgColor.a})` : '';
@@ -140,8 +139,10 @@ let dateType = {
             } else {
                 text = '!';
             }
-            FloatingButton.show(text, srcIfame[0], bgColor, color);
-            jsonCalls.Helper.AddJsonCallEventListener(72, value, srcIfame);
+
+            let callback = window.CustomTappCommunication.AnswerJsonCall.bind(undefined, value, null, srcIfame);
+
+            FloatingButton.show(text, srcIfame[0], bgColor, color, callback);
         } else {
             FloatingButton.hide(srcIfame[0]);
         }
@@ -181,6 +182,10 @@ let dateType = {
         if ($iframe && (!value.growOnly || parseInt($iframe.style.height) < value.height)) {
             $iframe.style.height = `${value.height}px`;
         }
+    };
+
+    jsonCalls[92] = jsonCalls.UpdateChaynsId = function () {
+        document.parentWindow.external.Chayns.RefreshDisplay();
     };
 
     jsonCalls[103] = jsonCalls.ShowDialog = function (value, srcIframe) {
