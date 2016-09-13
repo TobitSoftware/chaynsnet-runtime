@@ -184,6 +184,10 @@ let dateType = {
         }
     };
 
+    jsonCalls[92] = jsonCalls.UpdateChaynsId = function () {
+        document.parentWindow.external.Chayns.RefreshDisplay();
+    };
+
     jsonCalls[103] = jsonCalls.ShowDialog = function (value, srcIframe) {
         if (value.dialog === undefined) {
             jsonCalls.Helper.throw(103, 2, 'Field dialog missing.', value, srcIframe);
