@@ -125,7 +125,6 @@ let dateType = {
     };
 
     jsonCalls[72] = jsonCalls.ShowFloatingButton = function (value, srcIfame) {
-        jsonCalls.Helper.RemoveJsonCallEventListener(72);
         if (value.enabled) {
             var bgColor = argbHexToRgba(value.color);
             bgColor = bgColor ? `rgba(${bgColor.r}, ${bgColor.g}, ${bgColor.b}, ${bgColor.a})` : '';
@@ -140,8 +139,10 @@ let dateType = {
             } else {
                 text = '!';
             }
-            FloatingButton.show(text, srcIfame[0], bgColor, color);
-            jsonCalls.Helper.AddJsonCallEventListener(72, value, srcIfame);
+
+            let callback = window.CustomTappCommunication.AnswerJsonCall.bind(undefined, value, null, srcIfame);
+
+            FloatingButton.show(text, srcIfame[0], bgColor, color, callback);
         } else {
             FloatingButton.hide(srcIfame[0]);
         }
