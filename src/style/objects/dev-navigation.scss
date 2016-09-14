@@ -1,9 +1,10 @@
 @import '../generic/mixin';
 
 .dev-navigation {
-  position: absolute;
+  position: fixed;
   top: 30px;
   right: 0;
+  z-index: 2;
   height: 45px;
   box-sizing: border-box;
   margin-right: 0;
