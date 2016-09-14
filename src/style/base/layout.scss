@@ -6,13 +6,8 @@ body {
 
 #BodyContent {
   width: 566px;
-}
-
-@media (min-width: 566px) {
-  #BodyContent {
-    transform: translate(-50%);
-    margin-left: 50%;
-  }
+  transform: translate(-50%);
+  margin-left: 50%;
 }
 
 #CustomTappIframe {
