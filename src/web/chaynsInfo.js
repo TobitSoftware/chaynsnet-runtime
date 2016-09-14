@@ -2,19 +2,19 @@ import {getRelativeColor, decodeTobitAccessToken} from '../shared/utils/convert'
 
 if (navigator.userAgent.indexOf('David Client') === -1) {
 
-    if (!document.defaultView.chayns) {
+    if (document.defaultView.external.chayns) {
         //Polyfill Chromium Webview
         document.parentWindow = {
             external: {
                 Window: {
-                    Close: () => document.defaultView.window.close
+                    Close: document.defaultView.external.window.close
                 },
                 Chayns: {
-                    RefreshDisplay: document.defaultView.chayns.refreshDisplay,
-                    PutKeyValue: document.defaultView.chayns.putKeyValue,
-                    GetKeyValue: document.defaultView.chayns.getKeyValue,
-                    SetAccessToken: document.defaultView.chayns.setAccessToken,
-                    GetAccessToken: document.defaultView.chayns.getAccessToken
+                    RefreshDisplay: document.defaultView.external.chayns.refreshDisplay,
+                    PutKeyValue: document.defaultView.external.chayns.putKeyValue,
+                    GetKeyValue: document.defaultView.external.chayns.getKeyValue,
+                    SetAccessToken: document.defaultView.external.chayns.setAccessToken,
+                    GetAccessToken: document.defaultView.external.chayns.getAccessToken
                 }
             }
         };
