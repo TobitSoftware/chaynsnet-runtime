@@ -17,7 +17,7 @@ if (navigator.userAgent.indexOf('David Client') > -1) {
     init();
     addsActivation();
 } else {
-    document.querySelector('#ChaynsIdIcons').classList.remove('hidden');
+    document.querySelector('.dev-navigation').classList.remove('hidden');
 }
 
 
@@ -147,13 +147,13 @@ function addsActivation() {
             timeout = setTimeout(() => {
                 count = 0;
                 timeout = null;
-            }, 2000);
+            }, 10000);
         }
         count++;
         if (count > 5) {
             count = 0;
             console.show();
-            document.querySelector('#ChaynsIdIcons').classList.remove('hidden');
+            document.querySelector('.dev-navigation').classList.remove('hidden');
         }
     };
 

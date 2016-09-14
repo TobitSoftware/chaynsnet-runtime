@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             let tobitAccessToken = document.parentWindow.external.Chayns.GetAccessToken();
             console.log('tobitAccessToken', tobitAccessToken);
-            var tokenData = decodeTobitAccessToken(tobitAccessToken);
+            let tokenData = decodeTobitAccessToken(tobitAccessToken);
             if (!stringisEmptyOrWhitespace(tobitAccessToken) && new Date(tokenData.exp) > new Date() && tokenData.LocationID === window.ChaynsInfo.LocationID) {
                 loadTapp(tappId);
             }else {
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 }, false);
 
-let $icons = document.querySelectorAll('.ChaynsIdIconPadding');
+let $icons = document.querySelectorAll('.dev-navigation__element:not(.text)');
 
 for (let i = 0, l = $icons.length; i < l; i++) {
     $icons[i].addEventListener('click', () => {
