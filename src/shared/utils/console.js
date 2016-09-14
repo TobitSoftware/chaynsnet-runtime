@@ -147,7 +147,7 @@ function addsActivation() {
             timeout = setTimeout(() => {
                 count = 0;
                 timeout = null;
-            }, 2000);
+            }, 10000);
         }
         count++;
         if (count > 5) {
