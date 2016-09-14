@@ -14,7 +14,7 @@ export default class Login {
             let tobitAccessToken = document.parentWindow.external.Chayns.GetAccessToken();
             console.log('tobitAccessToken', tobitAccessToken);
             var tokenData = decodeTobitAccessToken(tobitAccessToken);
-            if (!stringisEmptyOrWhitespace(tobitAccessToken) && new Date(tokenData.exp) > new Date() && tokenData.LocationID === window.ChaynsInfo.LocationID) {
+            if (tokenData && new Date(tokenData.exp) > new Date() && tokenData.LocationID === window.ChaynsInfo.LocationID) {
                 resolve(tobitAccessToken);
                 return;
             }

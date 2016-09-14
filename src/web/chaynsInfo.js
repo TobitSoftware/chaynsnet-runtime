@@ -1,29 +1,50 @@
 import {getRelativeColor, decodeTobitAccessToken} from '../shared/utils/convert';
 
 if (navigator.userAgent.indexOf('David Client') === -1) {
-    document.parentWindow = {
-        external: {
-            Window: {
-                Close: () => console.log('window closed.')
-            },
-            Chayns: {
-                RefreshDisplay: () => console.debug('refresh chaynsId icons'),
-                PutKeyValue: (name, value) => {
-                    localStorage.setItem(name, value);
+
+    if (document.defaultView.external.chayns) {
+        //Polyfill Chromium Webview
+        document.parentWindow = {
+            external: {
+                Window: {
+                    Close: document.defaultView.external.window.close
                 },
-                GetKeyValue: (name) => {
-                    return localStorage.getItem(name);
-                },
-                SetAccessToken: (accessToken) => {
-                    localStorage.setItem('-accessToken-', accessToken);
-                },
-                GetAccessToken: () => {
-                    return localStorage.getItem('-accessToken-');
+                Chayns: {
+                    RefreshDisplay: document.defaultView.external.chayns.refreshDisplay,
+                    PutKeyValue: document.defaultView.external.chayns.putKeyValue,
+                    GetKeyValue: document.defaultView.external.chayns.getKeyValue,
+                    SetAccessToken: document.defaultView.external.chayns.setAccessToken,
+                    GetAccessToken: document.defaultView.external.chayns.getAccessToken
                 }
             }
-        }
-    };
+        };
+    } else {
+        //Polyfill Debugging Chrome
+        document.parentWindow = {
+            external: {
+                Window: {
+                    Close: () => console.log('window closed.')
+                },
+                Chayns: {
+                    RefreshDisplay: () => console.debug('refresh chaynsId icons'),
+                    PutKeyValue: (name, value) => {
+                        localStorage.setItem(name, value);
+                    },
+                    GetKeyValue: (name) => {
+                        return localStorage.getItem(name);
+                    },
+                    SetAccessToken: (accessToken) => {
+                        localStorage.setItem('-accessToken-', accessToken);
+                    },
+                    GetAccessToken: () => {
+                        return localStorage.getItem('-accessToken-');
+                    }
+                }
+            }
+        };
+    }
 }
+
 
 let accessToken = document.parentWindow.external.Chayns.GetAccessToken();
 let payload = decodeTobitAccessToken(accessToken);
