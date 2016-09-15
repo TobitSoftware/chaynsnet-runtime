@@ -26,10 +26,10 @@
   background-position: 11px 6px;
   vertical-align: middle;
   background-size: 20px;
-}
 
-.facebookConnect__button:hover {
-  background-color: #6a81b1;
+  &:hover{
+    background-color: #6a81b1;
+  }
 }
 
 .or-mail {
