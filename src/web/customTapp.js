@@ -32,7 +32,7 @@ function loadToIframe() {
 function replaceUrlParams(url, tappId) {
     url = url.replace(/##apname##/ig, window.ChaynsInfo.LocationName);
     url = url.replace(/##siteid##/ig, window.ChaynsInfo.SiteID);
-    url = url.replace(/##os##/ig, 'webshadow' + (window.ChaynsInfo.IsMobile ? 'mobile' : ''));
+    url = url.replace(/##os##/ig, 'webshadowlight');
     url = url.replace(/##version##/ig, window.ChaynsInfo.Version);
     url = url.replace(/##colormode##/ig, window.ChaynsInfo.ColorMode.toString());
     url = url.replace(/##color##/ig, window.ChaynsInfo.ColorScheme.BaseColor.replace('#', ''));
