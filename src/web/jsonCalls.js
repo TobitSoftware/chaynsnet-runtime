@@ -203,7 +203,7 @@ let dateType = {
         DialogNew.show('input', value.dialog);
     };
 
-    jsonCalls[114] = jsonCalls.setTitle = function (value) {
+    jsonCalls[114] = jsonCalls.setWebsiteTitle = function (value) {
         if(value.title){
             document.title = value.title;
         }

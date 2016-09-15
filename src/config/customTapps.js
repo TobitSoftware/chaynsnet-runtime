@@ -6,11 +6,13 @@ export const loginTapp = `${qaBase}${url}`;
 
 export const config = {
     '-1': loginTapp,
+    '-2': 'http://w-mn.tobit.ag:8080',
     '-7': 'https://tappqa.tobit.com/ChaynsPBA/Home/Index?AppVersion=##version##&OS=##os##&colormode=##colormode##&color=##color##&tappid=-7',
     '251441': 'https://sub54.tobit.com/frontend/overview?AppVersion=##version##&OS=##os##&colormode=##colormode##&color=##color##&tappid=251441',
     '250357': 'https://tappqa.tobit.com/Tapps/ChaynsId/Tickets.html?AppVersion=##version##&OS=##os##&colormode=##colormode##&color=##color##&tappid=250357',
     '250358': 'https://tappqa.tobit.com/Tapps/ChaynsId/Documents.html?AppVersion=##version##&OS=##os##&colormode=##colormode##&color=##color##&TappID=250358',
     '250359': 'https://tappqa.tobit.com/Tapps/ChaynsId/Money.html?AppVersion=##version##&OS=##os##&colormode=##colormode##&color=##color##&TappID=250359'
+
     /*
     '-7': 'https://tapp01.tobit.com/Tapps/PayByApp/Home/Index?AppVersion=##version##&OS=##os##&colormode=##colormode##&color=##color##&tappid=-7',
     '251441': 'https://sub54.tobit.com/frontend/overview?AppVersion=##version##&OS=##os##&colormode=##colormode##&color=##color##&tappid=251441',
