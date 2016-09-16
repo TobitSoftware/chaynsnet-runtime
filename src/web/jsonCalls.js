@@ -104,6 +104,12 @@ let dateType = {
         DialogNew.show('select', value.dialog);
     };
 
+    jsonCalls[52] = jsonCalls.tobitWebTokenLogin = (value) => {
+        if('tobitAccessToken' in value){
+            document.parentWindow.external.Chayns.SetAccessToken(value.tobitAccessToken);
+        }
+    };
+
     jsonCalls[54] = jsonCalls.TobitLogin = function (value) {
         if ((value.urlParams || []).length) {
             window.Login.setReloadParams(value.urlParams);
