@@ -3,6 +3,7 @@ import WaitCursor from '../shared/wait-cursor';
 import FloatingButton from '../shared/floating-button';
 import {argbHexToRgba} from '../shared/utils/convert';
 import {getWindowMetrics} from '../shared/utils/helper';
+import loadTapp from './customTapp';
 
 let dateType = {
     DATE: 1,
@@ -28,12 +29,7 @@ let dateType = {
     jsonCalls[2] = jsonCalls.SelectTab = function (value, srcIframe) {
         FloatingButton.hide(srcIframe[0]);
 
-        //noinspection Eslint
-        if (value.params && Array === value.params.constructor) {
-            value.params = '?' + value.params.join('&');
-        }
-
-        window.ChaynsWeb.SelectTapp(value);
+        loadTapp(value.id);
     };
 
     jsonCalls[16] = jsonCalls.ShowDialog = function (value, srcIframe) {
