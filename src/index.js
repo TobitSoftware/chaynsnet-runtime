@@ -15,6 +15,7 @@ if (typeof window.console === 'undefined') {
     };
 }
 
+chayns.ready.catch();
 
 import ChaynsInfo from './web/chaynsInfo';
 window.ChaynsInfo = ChaynsInfo;
