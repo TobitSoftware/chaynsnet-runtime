@@ -3,8 +3,8 @@ import WaitCursor from '../shared/wait-cursor';
 import FloatingButton from '../shared/floating-button';
 import {argbHexToRgba} from '../shared/utils/convert';
 import {getWindowMetrics} from '../shared/utils/helper';
-import Login from '../shared/login/login';
 import loadTapp from './customTapp';
+import {loginTappId} from '../config/customTapps';
 
 let dateType = {
     DATE: 1,
@@ -102,20 +102,21 @@ let dateType = {
     };
 
     jsonCalls[52] = jsonCalls.tobitWebTokenLogin = (value) => {
-        if('tobitAccessToken' in value){
+        if ('tobitAccessToken' in value) {
             document.parentWindow.external.Chayns.SetAccessToken(value.tobitAccessToken);
+            document.parentWindow.external.Window.Close();
+            location.reload();
         }
     };
 
     jsonCalls[54] = jsonCalls.TobitLogin = function (value) {
-        Login.run().then((tobitAccessToken) => {
-            console.log('jsonCall-54-login-res', tobitAccessToken);
-            document.parentWindow.external.Window.Close();
-        })
+        loadTapp(loginTappId);
     };
 
     jsonCalls[56] = jsonCalls.Logout = function (value) {
-        window.logout();
+        document.parentWindow.external.Chayns.SetAccessToken('');
+        document.parentWindow.external.Window.Close();
+        location.reload();
     };
 
     jsonCalls[72] = jsonCalls.ShowFloatingButton = function (value, srcIfame) {
@@ -198,7 +199,7 @@ let dateType = {
     };
 
     jsonCalls[114] = jsonCalls.setWebsiteTitle = function (value) {
-        if(value.title){
+        if (value.title) {
             document.title = value.title;
         }
     };

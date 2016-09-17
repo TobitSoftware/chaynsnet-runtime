@@ -92,9 +92,6 @@ window.CustomTappCommunication = window.CustomTappCommunication || {};
         }
     };
 
-    module.tobitlogin = function (params) {
-        window.Login.tobitLogin(params);
-    };
 
     module.jsoncall = module.chaynscall;
 
