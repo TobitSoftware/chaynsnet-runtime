@@ -7,7 +7,8 @@ if (navigator.userAgent.indexOf('David Client') === -1) {
         document.parentWindow = {
             external: {
                 Window: {
-                    Close: document.defaultView.external.window.close
+                    Close: document.defaultView.external.window.close,
+                    ResizeTo: (x, y) => console.debug(`resize window to x${x}, y${y}`)
                 },
                 Chayns: {
                     RefreshDisplay: document.defaultView.external.chayns.refreshDisplay,
@@ -23,7 +24,8 @@ if (navigator.userAgent.indexOf('David Client') === -1) {
         document.parentWindow = {
             external: {
                 Window: {
-                    Close: () => console.log('window closed.')
+                    Close: () => console.debug('window closed.'),
+                    ResizeTo: (x, y) => console.debug(`resize window to x${x}, y${y}`)
                 },
                 Chayns: {
                     RefreshDisplay: () => console.debug('refresh chaynsId icons'),
