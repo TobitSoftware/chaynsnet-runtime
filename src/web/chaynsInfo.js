@@ -1,54 +1,7 @@
 import {getRelativeColor, decodeTobitAccessToken} from '../shared/utils/convert';
+import {getAccessToken} from '../shared/utils/native-functions';
 
-if (navigator.userAgent.indexOf('David Client') === -1) {
-
-    if (document.defaultView.external.chayns) {
-        //Polyfill Chromium Webview
-        document.parentWindow = {
-            external: {
-                Window: {
-                    Close: document.defaultView.external.window.close,
-                    ResizeTo: (x, y) => console.debug(`resize window to x${x}, y${y}`)
-                },
-                Chayns: {
-                    RefreshDisplay: document.defaultView.external.chayns.refreshDisplay,
-                    PutKeyValue: document.defaultView.external.chayns.putKeyValue,
-                    GetKeyValue: document.defaultView.external.chayns.getKeyValue,
-                    SetAccessToken: document.defaultView.external.chayns.setAccessToken,
-                    GetAccessToken: document.defaultView.external.chayns.getAccessToken
-                }
-            }
-        };
-    } else {
-        //Polyfill Debugging Chrome
-        document.parentWindow = {
-            external: {
-                Window: {
-                    Close: () => console.debug('window closed.'),
-                    ResizeTo: (x, y) => console.debug(`resize window to x${x}, y${y}`)
-                },
-                Chayns: {
-                    RefreshDisplay: () => console.debug('refresh chaynsId icons'),
-                    PutKeyValue: (name, value) => {
-                        localStorage.setItem(name, value);
-                    },
-                    GetKeyValue: (name) => {
-                        return localStorage.getItem(name);
-                    },
-                    SetAccessToken: (accessToken) => {
-                        localStorage.setItem('-accessToken-', accessToken);
-                    },
-                    GetAccessToken: () => {
-                        return localStorage.getItem('-accessToken-');
-                    }
-                }
-            }
-        };
-    }
-}
-
-
-let accessToken = document.parentWindow.external.Chayns.GetAccessToken();
+let accessToken = getAccessToken();
 let payload = decodeTobitAccessToken(accessToken);
 
 const ChaynsInfo = {
