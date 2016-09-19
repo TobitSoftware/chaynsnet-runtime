@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (validateTobitAccessToken(tobitAccessToken)) {
             loadTapp((tappId !== loginTappId) ? tappId : '-7');
         } else {
+            document.defaultView.external.Window.ResizeTo(566, 766);
             loadTapp(loginTappId);
         }
     });
