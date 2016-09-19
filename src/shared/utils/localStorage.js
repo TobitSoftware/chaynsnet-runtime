@@ -2,16 +2,18 @@ let lsExists = true;
 let chaynsWebStorage;
 let storagePrefix = 'ChaynsWeb_';
 
-export function init() {
-    try {
-        localStorage.setItem('test123', 123);
-        localStorage.getItem('test123');
-        lsExists = true;
-    } catch (err) {
-        lsExists = false;
-        chaynsWebStorage = window.Storage = {};
-    }
+/***
+ * Inits localStorage helper.
+ */
+try {
+    localStorage.setItem('test123', 123);
+    localStorage.getItem('test123');
+    lsExists = true;
+} catch (err) {
+    lsExists = false;
+    chaynsWebStorage = window.Storage = {};
 }
+
 
 export function setItem(key, value) {
     if (typeof value !== 'string') {
