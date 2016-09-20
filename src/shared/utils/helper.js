@@ -1,3 +1,5 @@
+import {decodeTobitAccessToken} from './convert';
+
 /**
  * Function that do the same as query's "$(el).outerHeight(true)"
  * @param el
@@ -125,4 +127,9 @@ export function ApplyUnsafeFunction(func, args, thisArg) {
 
 export function stringisEmptyOrWhitespace(value){
     return value == null || value.trim().length < 1;
+}
+
+export function validateTobitAccessToken(tobitAccessToken) {
+    let tokenData = decodeTobitAccessToken(tobitAccessToken);
+    return tokenData && new Date(tokenData.exp) > new Date() && tokenData.LocationID === window.ChaynsInfo.LocationID
 }

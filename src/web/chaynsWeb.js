@@ -1,12 +1,9 @@
 import loadTapp from './customTapp';
-import {getUrlParameters} from '../config/customTapps';
-import Login from '../shared/login/login';
+import {getUrlParameters, loginTappId} from '../config/customTapps';
 import Textstrings from '../shared/utils/textstings';
-import {stringisEmptyOrWhitespace} from "../shared/utils/helper";
-import {decodeTobitAccessToken} from "../shared/utils/convert";
+import {validateTobitAccessToken} from '../shared/utils/helper';
 import Dialog from '../shared/dialog';
-
-let loginTappId = '-1';
+import {getAccessToken, resizeWindow} from '../shared/utils/native-functions';
 
 document.addEventListener('DOMContentLoaded', () => {
     Textstrings.init().then(() => {
@@ -18,30 +15,23 @@ document.addEventListener('DOMContentLoaded', () => {
             title: title || null,
             message
         });
-
-        if (tappId === loginTappId) {
-            setTimeout(() => Login.run().then((tobitAccessToken) => {
-                window.ChaynsInfo.User.TobitAccessToken = tobitAccessToken;
-                console.log('login-res', tobitAccessToken);
-                document.parentWindow.external.Window.Close();
-            }), 500);
+        let tobitAccessToken = getAccessToken();
+        console.log('tobitAccessToken', tobitAccessToken);
+        if (validateTobitAccessToken(tobitAccessToken)) {
+            loadTapp((tappId !== loginTappId) ? tappId : '-7');
         } else {
-            let tobitAccessToken = document.parentWindow.external.Chayns.GetAccessToken();
-            console.log('tobitAccessToken', tobitAccessToken);
-            let tokenData = decodeTobitAccessToken(tobitAccessToken);
-            if (!stringisEmptyOrWhitespace(tobitAccessToken) && new Date(tokenData.exp) > new Date() && tokenData.LocationID === window.ChaynsInfo.LocationID) {
-                loadTapp(tappId);
-            }else {
-                location.href = `${location.origin}${location.pathname}?tappid=-1`;
-            }
+            resizeWindow(566, 766);
+            loadTapp(loginTappId);
         }
     });
 }, false);
 
-let $icons = document.querySelectorAll('.dev-navigation__element:not(.text)');
+(function () {
+    let $icons = document.querySelectorAll('.dev-navigation__element:not(.text)');
 
-for (let i = 0, l = $icons.length; i < l; i++) {
-    $icons[i].addEventListener('click', () => {
-        loadTapp($icons[i].getAttribute('data-tappid'));
-    });
-}
+    for (let i = 0, l = $icons.length; i < l; i++) {
+        $icons[i].addEventListener('click', () => {
+            loadTapp($icons[i].getAttribute('data-tappid'));
+        });
+    }
+}());
