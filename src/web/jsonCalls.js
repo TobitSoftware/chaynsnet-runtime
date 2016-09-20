@@ -5,6 +5,7 @@ import {argbHexToRgba} from '../shared/utils/convert';
 import {getWindowMetrics} from '../shared/utils/helper';
 import loadTapp from './customTapp';
 import {loginTappId} from '../config/customTapps';
+import {setAccessToken, closeWindow} from '../shared/utils/native-functions';
 
 let dateType = {
     DATE: 1,
@@ -103,8 +104,8 @@ let dateType = {
 
     jsonCalls[52] = jsonCalls.tobitWebTokenLogin = (value) => {
         if ('tobitAccessToken' in value) {
-            document.parentWindow.external.Chayns.SetAccessToken(value.tobitAccessToken);
-            document.parentWindow.external.Window.Close();
+            setAccessToken(value.tobitAccessToken);
+            closeWindow();
             location.reload();
         }
     };
@@ -114,8 +115,8 @@ let dateType = {
     };
 
     jsonCalls[56] = jsonCalls.Logout = function (value) {
-        document.parentWindow.external.Chayns.SetAccessToken('');
-        document.parentWindow.external.Window.Close();
+        setAccessToken('');
+        closeWindow();
         location.reload();
     };
 
