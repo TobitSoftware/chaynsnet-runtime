@@ -105,8 +105,8 @@ export function resizeWindow(x, y) {
 
     if (parentWindow.Window && 'ResizeTo' in parentWindow.Window) {
         functions.resizeWindow = () => document.parentWindow.external.Window.ResizeTo(x, y);
-    } else if (defaultView.window && 'ResizeTo' in defaultView.window) {
-        functions.resizeWindow = () => document.defaultView.external.window.ResizeTo(x, y);
+    } else if (defaultView.window && 'resizeTo' in defaultView.window) {
+        functions.resizeWindow = () => document.defaultView.external.window.resizeTo(x, y);
     } else {
         functions.resizeWindow = (x, y) => console.debug(`resize window to x${x}, y${y}`);
     }
