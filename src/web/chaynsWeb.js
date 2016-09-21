@@ -26,12 +26,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 }, false);
 
-(function () {
-    let $icons = document.querySelectorAll('.dev-navigation__element:not(.text)');
 
-    for (let i = 0, l = $icons.length; i < l; i++) {
-        $icons[i].addEventListener('click', () => {
-            loadTapp($icons[i].getAttribute('data-tappid'));
-        });
-    }
-}());
