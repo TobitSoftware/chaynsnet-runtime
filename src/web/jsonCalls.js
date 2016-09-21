@@ -3,9 +3,9 @@ import WaitCursor from '../shared/wait-cursor';
 import FloatingButton from '../shared/floating-button';
 import {argbHexToRgba} from '../shared/utils/convert';
 import {getWindowMetrics} from '../shared/utils/helper';
-import loadTapp from './customTapp';
+import {loadTapp} from './customTapp';
 import {loginTappId} from '../config/customTapps';
-import {setAccessToken, closeWindow} from '../shared/utils/native-functions';
+import {setAccessToken, closeWindow, refreshChaynsIdIcons} from '../shared/utils/native-functions';
 
 let dateType = {
     DATE: 1,
@@ -181,7 +181,7 @@ let dateType = {
     };
 
     jsonCalls[92] = jsonCalls.UpdateChaynsId = function () {
-        document.parentWindow.external.Chayns.RefreshDisplay();
+        refreshChaynsIdIcons()
     };
 
     jsonCalls[103] = jsonCalls.ShowDialog = function (value, srcIframe) {
