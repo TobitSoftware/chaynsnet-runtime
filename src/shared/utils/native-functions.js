@@ -12,14 +12,11 @@ export function getAccessToken(accessToken) {
 
     if (parentWindow.Chayns && 'GetAccessToken' in parentWindow.Chayns) {
         functions.getAccessToken = () => document.parentWindow.external.Chayns.GetAccessToken();
-        console.log('david', !!functions.getAccessToken);
     } else if (defaultView.chayns && 'getAccessToken' in defaultView.chayns) {
         functions.getAccessToken = () => document.defaultView.external.chayns.getAccessToken();
-        console.log('clipinc', functions.getAccessToken);
     } else {
         functions.getAccessToken = () => getItem('*accessToken');
     }
-    console.log(functions.getAccessToken);
     return functions.getAccessToken();
 }
 
