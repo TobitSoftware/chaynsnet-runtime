@@ -133,3 +133,17 @@ export function validateTobitAccessToken(tobitAccessToken) {
     let tokenData = decodeTobitAccessToken(tobitAccessToken);
     return tokenData && new Date(tokenData.exp) > new Date() && tokenData.LocationID === window.ChaynsInfo.LocationID
 }
+
+let urlParameter = null;
+export function getUrlParameters() {
+    if(!urlParameter){
+        let urlParam = window.location.href.split('?').length > 1 ? window.location.href.split('?')[1].split('&') : false;
+
+        if (urlParam) {
+            urlParameter = {};
+            urlParam.forEach(paramString => urlParameter[paramString.split('=')[0].toLowerCase()] = paramString.split('=')[1]);
+        }
+    }
+
+    return urlParameter;
+}

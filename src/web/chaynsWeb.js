@@ -1,7 +1,7 @@
-import loadTapp from './customTapp';
-import {getUrlParameters, loginTappId} from '../config/customTapps';
+import {loadTapp} from './customTapp';
+import {loginTappId} from '../config/customTapps';
 import Textstrings from '../shared/utils/textstings';
-import {validateTobitAccessToken} from '../shared/utils/helper';
+import {validateTobitAccessToken, getUrlParameters} from '../shared/utils/helper';
 import Dialog from '../shared/dialog';
 import {getAccessToken, resizeWindow} from '../shared/utils/native-functions';
 
