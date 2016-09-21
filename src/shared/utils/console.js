@@ -16,12 +16,11 @@ let locked = false,
 if (getUrlParameters().console !== '0') {
     createConsole();
     init();
-    addsActivation();
 }
-
 if (getUrlParameters().debug === '1') {
     document.querySelector('.dev-navigation').classList.remove('hidden');
 }
+addsActivation();
 
 function createConsole() {
     let classes = classNames('console', {
@@ -154,7 +153,9 @@ function addsActivation() {
         count++;
         if (count > 5) {
             count = 0;
-            console.show();
+            if(console.show){
+                console.show();
+            }
             document.querySelector('.dev-navigation').classList.remove('hidden');
         }
     };
