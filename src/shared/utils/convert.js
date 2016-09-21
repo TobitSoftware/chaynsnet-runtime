@@ -88,7 +88,7 @@ export function decodeTobitAccessToken(tobitAccessToken) {
     return null;
 }
 
-export function getRelativeColor(baseColor, percentage) {
+export function getRelativeColor(baseColor, percentage, opacity) {
     function getSingleRelativeColor(hex, percentage) {
         if (hex.length === 1) {
             hex += hex;
@@ -119,6 +119,10 @@ export function getRelativeColor(baseColor, percentage) {
         };
     }
 
+    if (percentage === 100 && !opacity) {
+        return baseColor;
+    }
+
     let color = baseColor.substr(1);
     let l = color.length;
 
@@ -138,6 +142,10 @@ export function getRelativeColor(baseColor, percentage) {
             message: 'Invalid color-format'
         };
     }
+    if (opacity) {
+        return `rgba(${parseInt(getSingleRelativeColor(r, percentage), 16)},${parseInt(getSingleRelativeColor(g, percentage), 16)},${parseInt(getSingleRelativeColor(b, percentage), 16)},${opacity})`
+    }
+
     color = '#';
     color += getSingleRelativeColor(r, percentage);
     color += getSingleRelativeColor(g, percentage);
