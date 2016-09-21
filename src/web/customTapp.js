@@ -35,7 +35,7 @@ function replaceUrlParams(url, tappId) {
     url = url.replace(/##os##/ig, 'webshadowlight');
     url = url.replace(/##version##/ig, window.ChaynsInfo.Version);
     url = url.replace(/##colormode##/ig, window.ChaynsInfo.ColorMode.toString());
-    url = url.replace(/##color##/ig, window.ChaynsInfo.ColorScheme.BaseColor.replace('#', ''));
+    url = url.replace(/##color##/ig, window.ChaynsInfo.Color.replace('#', ''));
     url = url.replace(/##adminmode##/ig, (window.ChaynsInfo.AdminMode ? 1 : 0).toString());
     url = url.replace(/##tobituserid##/ig, window.ChaynsInfo.User.ID.toString());
 

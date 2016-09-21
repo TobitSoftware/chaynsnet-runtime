@@ -6,7 +6,6 @@ const ROOT_PATH = path.resolve('./');
 export default {
     entry: [
         'webpack/hot/dev-server',
-        'webpack-dev-server/client?http://0.0.0.0:8080',
         'babel-polyfill',
         path.resolve(ROOT_PATH, 'src/index')
     ],

@@ -29,13 +29,11 @@
     > .loading-spinner-wrapper {
       padding: 8px;
       width: 234px;
-      background-color: rgba(218, 218, 218, .90) !important;
     }
   }
 
   > .loading-spinner-wrapper {
     display: inline-block;
-    background-color: rgba(110, 110, 110, .25);
     border-radius: 5px;
 
     @include keyframes(rotate-forever) {
@@ -57,7 +55,6 @@
       width: 50px;
 
       border: 6px solid;
-      border-color: rgba(110, 110, 110, .8);
       border-right-color: transparent !important;
       border-radius: 50%;
 

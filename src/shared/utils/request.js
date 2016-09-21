@@ -32,7 +32,7 @@ function request(method, url, body, customHeader) {
     config.headers = {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${ChaynsInfo.User.TobitAccessToken}`
+        'Authorization': `Bearer ${(ChaynsInfo)?ChaynsInfo.User.TobitAccessToken:''}`
     };
 
     for(let type of Object.keys(customHeader||{})){

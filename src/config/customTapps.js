@@ -1,7 +1,7 @@
-let devBase = 'http://localhost:7070',
+let devBase = 'http://localhost:8080/',
     qaBase = 'https://tappqa.tobit.com/tapps/LoginTapp/',
-    liveBase = 'https://tapp03.tobit.com/ChaynsWebLightLogin',
-    urlParameter = '?AppVersion=##version##&OS=##os##&colormode=##colormode##&color=##color##&tappid=-1';
+    liveBase = 'https://tapp03.tobit.com/ChaynsWebLightLogin/',
+    urlParameter = '?AppVersion=##version##&OS=##os##&colormode=##colormode##&color=##color##&apname=##apname##&tappid=-1';
 
 export const loginTappId = '-1';
 
