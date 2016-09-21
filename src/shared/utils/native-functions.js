@@ -72,7 +72,7 @@ export function refreshChaynsIdIcons() {
 
     if (parentWindow.Chayns && 'RefreshDisplay' in parentWindow.Chayns) {
         functions.refreshChaynsIdIcons = () => document.parentWindow.external.Chayns.RefreshDisplay();
-    } else if (defaultView.chayns && 'RefreshDisplay' in defaultView.chayns) {
+    } else if (defaultView.chayns && 'refreshDisplay' in defaultView.chayns) {
         functions.refreshChaynsIdIcons = () => document.defaultView.external.chayns.refreshDisplay();
     } else {
         functions.refreshChaynsIdIcons = () => console.debug('refresh chaynsId icons');
