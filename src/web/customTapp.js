@@ -30,7 +30,7 @@ function loadToIframe() {
  * @returns {string}
  */
 function replaceUrlParams(url, tappId) {
-    url = url.replace(/##apname##/ig, window.ChaynsInfo.LocationName);
+    url = url.replace(/##apname##/ig, encodeURIComponent(window.ChaynsInfo.LocationName));
     url = url.replace(/##siteid##/ig, window.ChaynsInfo.SiteID);
     url = url.replace(/##os##/ig, 'webshadowlight');
     url = url.replace(/##version##/ig, window.ChaynsInfo.Version);
