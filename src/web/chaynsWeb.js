@@ -8,7 +8,7 @@ import {loadLocation} from './chaynsInfo';
 import {setDynamicStyle} from '../shared/dynamic-style';
 
 document.addEventListener('DOMContentLoaded', () => {
-    loadLocation(getUrlParameters().locationid).then(()=>{
+    loadLocation(getUrlParameters().locationid).then(() => {
         setDynamicStyle();
         Textstrings.init().then(() => {
             let urlParameters = getUrlParameters();
@@ -21,15 +21,14 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             let tobitAccessToken = getAccessToken();
             console.log('tobitAccessToken', tobitAccessToken);
-            if (validateTobitAccessToken(tobitAccessToken)) {
-                loadTapp((tappId !== loginTappId) ? tappId : '-7');
+            if (tappId !== loginTappId && validateTobitAccessToken(tobitAccessToken)) {
+                loadTapp(tappId);
             } else {
                 resizeWindow(566, 766);
                 loadTapp(loginTappId);
             }
         });
     });
-
 }, false);
 
 
