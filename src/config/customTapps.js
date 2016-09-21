@@ -19,13 +19,3 @@ export const config = {
      '250358': 'https://tappqa.tobit.com/Tapps/ChaynsId/Documents.html?AppVersion=##version##&OS=##os##&colormode=##colormode##&color=##color##&TappID=250358',
      '250359': 'https://tappqa.tobit.com/Tapps/ChaynsId/Money.html?AppVersion=##version##&OS=##os##&colormode=##colormode##&color=##color##&TappID=250359'*/
 };
-
-export function getUrlParameters() {
-    let urlParam = window.location.href.split('?').length > 1 ? window.location.href.split('?')[1].split('&') : false;
-    let params = {};
-
-    if (urlParam) {
-        urlParam.forEach(paramString => params[paramString.split('=')[0].toLowerCase()] = paramString.split('=')[1]);
-    }
-    return params;
-}

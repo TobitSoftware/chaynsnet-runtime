@@ -1,5 +1,6 @@
-import {stringisEmptyOrWhitespace} from './helper';
+import {stringisEmptyOrWhitespace, getUrlParameters} from './helper';
 import {htmlToElement, numberToTimeString} from './convert';
+import {loadTapp} from '../../web/customTapp';
 import classNames from 'classnames';
 
 const password = 'cw913';
@@ -12,14 +13,15 @@ let locked = false,
     timeout,
     count = 0;
 
-if (navigator.userAgent.indexOf('David Client') > -1) {
+if (getUrlParameters().console !== '0') {
     createConsole();
     init();
     addsActivation();
-} else {
-    document.querySelector('.dev-navigation').classList.remove('hidden');
 }
 
+if (getUrlParameters().debug === '1') {
+    document.querySelector('.dev-navigation').classList.remove('hidden');
+}
 
 function createConsole() {
     let classes = classNames('console', {
@@ -60,8 +62,9 @@ function init() {
 
         log(content);
 
-        if (navigator.userAgent.indexOf('David Client') === -1) {
+        try {
             nativeLog.apply(this, messages);
+        } catch (ex) {
         }
     };
 
@@ -72,7 +75,6 @@ function init() {
     window.console.error = customLog;
 
     window.onerror = function (message, url, lineNumber) {
-        console.show();
         let urlParts = url.split('/');
         let fileName = urlParts[urlParts.length - 1];
         customLog(`${message} (${fileName}:${lineNumber})`);
@@ -170,7 +172,14 @@ function getLogText(data) {
     return data;
 }
 
+//DevNavigation
+(function () {
+    let $icons = document.querySelectorAll('.dev-navigation__element:not(.text)');
 
-
-
+    for (let i = 0, l = $icons.length; i < l; i++) {
+        $icons[i].addEventListener('click', () => {
+            loadTapp($icons[i].getAttribute('data-tappid'));
+        });
+    }
+}());
 
