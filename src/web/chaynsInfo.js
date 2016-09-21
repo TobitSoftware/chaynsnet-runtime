@@ -11,7 +11,9 @@ export function loadLocation(locationId = 77783) {
             .then((res) => res.json())
             .then((data) => {
                 data = data.data;
-                console.log('data', data);
+
+                data.design.color = `#${data.design.color}`;
+
                 let accessToken = getAccessToken(),
                     payload = decodeTobitAccessToken(accessToken);
 

@@ -133,13 +133,13 @@
 
 
 
-.dialogItemList .dialogItem span {
+.dialogItemList .dialogItem div {
   vertical-align: middle;
   position: static;
   margin-left: 5px;
 }
 
-.dialogItem.withImg span {
+.dialogItem.withImg div {
   margin-left: 0;
 }
 
@@ -445,7 +445,6 @@
 
 .chaynsBtn {
   display:inline-block;
-  background-color: #6E6E6E;
   color: #ffffff;
   font-size: 14px;
   font-family: 'Roboto', Tahoma, 'robotolight';
@@ -479,17 +478,4 @@
   margin: 0 auto;
   display: block;
   width: 100px;
-}
-.chaynsBtn.brighter{
-  background-color: rgba(110, 110, 110, .3);
-}
-.chaynsBtn.brighter:hover{
-  background-color: rgba(110, 110, 110, .8);
-}
-.chaynsBtn:hover {
-  background-color: rgba(110, 110, 110, .6);
-}
-
-.ChaynsCS-Border-30Pcnt {
-  border: 1px solid #D4D4D4;
 }
