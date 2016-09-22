@@ -5,7 +5,7 @@ import Request from '../shared/utils/request';
 let chaynsInfo,
     globalData;
 
-export function loadLocation(locationId = 1214) {
+export function loadLocation(locationId = 77783) {
     return new Promise((resolve) => {
         Request.get(`https://chaynssvc.tobit.com/v0.4/${locationId}/LocationSettings`)
             .then((res) => res.json())
