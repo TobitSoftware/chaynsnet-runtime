@@ -13,7 +13,7 @@ let locked = false,
     timeout,
     count = 0;
 
-if (getUrlParameters().console !== '0') {
+if (getUrlParameters().console === '1') {
     createConsole();
     init();
 }

@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server webpack-dev-server/client?http://0.0.0.0:8080 --colors --progress --host 0.0.0.0",
-    "build": "webpack -p --config ./webpack.prod.babel.js && copy *.html build\\"
+    "start": "webpack-dev-server webpack-dev-server/client?http://0.0.0.0:7070 --colors --progress --host 0.0.0.0 --port 7070",
+    "build": "webpack -p --config ./webpack.prod.babel.js && gulp uncache"
   },
   "keywords": [
     "ChaynsWeb",
@@ -26,10 +26,12 @@
     "babel-preset-stage-0": "^6.5.0",
     "classnames": "^2.2.5",
     "css-loader": "^0.23.1",
-    "node-sass": "^3.9.3",
+    "gulp": "^3.9.1",
+    "gulp-uncache": "^0.3.6",
+    "node-sass": "^3.10.0",
     "sass-loader": "^3.2.3",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.2",
-    "webpack-dev-server": "^1.15.1"
+    "webpack-dev-server": "^1.16.1"
   }
 }
