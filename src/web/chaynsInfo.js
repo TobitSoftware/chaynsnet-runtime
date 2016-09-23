@@ -64,6 +64,7 @@ export function loadLocation(locationId = 77783) {
                         TappSelected: {},
                         FacebookAppID: data.facebookAppId,
                         FacebookPageID: data.facebookId,
+                        Title: chaynsInfo.LocationName,
                         CurrentUrl: window.location.href,
                         SiteID: chaynsInfo.SiteID,
                         LocationID: chaynsInfo.LocationID,
