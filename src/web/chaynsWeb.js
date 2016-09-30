@@ -1,5 +1,5 @@
 import {loadTapp} from './customTapp';
-import {loginTappId} from '../config/customTapps';
+import {loginTappId} from '../shared/login';
 import Textstrings from '../shared/utils/textstings';
 import {validateTobitAccessToken, getUrlParameters} from '../shared/utils/helper';
 import Dialog from '../shared/dialog';
