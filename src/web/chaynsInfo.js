@@ -1,12 +1,22 @@
 import {getRelativeColor, decodeTobitAccessToken} from '../shared/utils/convert';
 import {getAccessToken} from '../shared/utils/native-functions';
 import Request from '../shared/utils/request';
+import {getUrlParameters} from '../shared/utils/helper';
+
+let loginUrl = {
+    devBase: 'http://localhost:8080/',
+    qaBase: 'https://tappqa.tobit.com/tapps/LoginTapp/',
+    liveBase: 'https://tapp03.tobit.com/ChaynsWebLightLogin/',
+    urlParameter: '?AppVersion=##version##&OS=##os##&colormode=##colormode##&color=##color##&apname=##apname##&tappid=-1'
+};
+
 
 let chaynsInfo,
     globalData;
 
 export function loadLocation(locationId = 77783) {
     return new Promise((resolve) => {
+        locationId = parseInt(locationId, 10);
         Request.get(`https://chaynssvc.tobit.com/v0.4/${locationId}/LocationSettings`)
             .then((res) => res.json())
             .then((data) => {
@@ -73,10 +83,19 @@ export function loadLocation(locationId = 77783) {
                         color: chaynsInfo.Color,
                     }
                 };
-
                 window.ChaynsInfo = chaynsInfo;
-                resolve();
+
+                return Request.get(`https://chaynssvc.tobit.com/v0.4/${locationId}/Tapp?forWeb=true`)
+                    .then(res => res.json())
+                    .then((tapps) => {
+                        chaynsInfo.Tapps = tapps.data;
+                        chaynsInfo.Tapps.push({
+                            id: '-1',
+                            url: ((getUrlParameters().login === 'dev') ? loginUrl.devBase : (getUrlParameters().login === 'qa') ? loginUrl.qaBase : loginUrl.liveBase) + loginUrl.urlParameter,
+                        });
+                        resolve();
+                    });
             })
-            .catch(()=>loadLocation().then(resolve))
+            .catch((e) => console.error(e)) // loadLocation().then(resolve))
     })
 }

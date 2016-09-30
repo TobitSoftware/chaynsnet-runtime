@@ -1,11 +1,34 @@
-import * as customTappCfg from '../config/customTapps';
 import FloatinButton from '../shared/floating-button';
 import Waitcursor from '../shared/wait-cursor';
 
 export function loadTapp(tappId) {
     FloatinButton.hide();
     Waitcursor.hide();
-    loadUrlByTappId(parseInt(tappId, 10), replaceUrlParams(customTappCfg.config[tappId], parseInt(tappId, 10)));
+
+    if(tappId == -7){
+        tappId = -2;
+    }
+
+    let tapp = getTappById(tappId);
+    if (tapp) {
+        loadUrlByTappId(parseInt(tapp.id, 10), replaceUrlParams(tapp.url, tapp.id));
+    } else {
+        throw 'No Tapp found!';
+    }
+}
+
+/**
+ * Returns the tapp to tappId
+ * @param tappId
+ * @returns {*}
+ */
+function getTappById(tappId) {
+    for (let tapp of window.ChaynsInfo.Tapps) {
+        if (tapp.id == parseInt(tappId, 10)) {
+            return tapp;
+        }
+    }
+    return null;
 }
 
 /**
@@ -107,7 +130,7 @@ function getParametersArrayByString(parameterString) {
 
     let params = workingString.split('&');
 
-    params.forEach(function(paramString) {
+    params.forEach(function (paramString) {
         result.push({
             name: paramString.split('=')[0],
             value: paramString.split('=')[1]
@@ -139,7 +162,7 @@ function getParametersArrayByArray(parameterArray) {
  * @returns {string}
  */
 function appendCustomParameters(url, parameters) {
-    parameters.forEach(function(curParam) {
+    parameters.forEach(function (curParam) {
         if (url.indexOf('?') > -1) {
             url += '&';
         } else {
