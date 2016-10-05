@@ -153,7 +153,7 @@ function addsActivation() {
         count++;
         if (count > 5) {
             count = 0;
-            if(console.show){
+            if (console.show) {
                 console.show();
             }
             document.querySelector('.dev-navigation').classList.remove('hidden');
@@ -175,12 +175,24 @@ function getLogText(data) {
 
 //DevNavigation
 (function () {
-    let $icons = document.querySelectorAll('.dev-navigation__element:not(.text)');
+    let $icons = document.querySelectorAll('.dev-navigation__element');
+    let urlParameters = (location.href.split('?').length > 1) ? location.href.split('?')[1] : '';
 
     for (let i = 0, l = $icons.length; i < l; i++) {
-        $icons[i].addEventListener('click', () => {
-            loadTapp($icons[i].getAttribute('data-tappid'));
-        });
+        let cb = () => {};
+
+        if ($icons[i].getAttribute('data-tappid')) {
+
+            cb = () => loadTapp($icons[i].getAttribute('data-tappid'));
+
+        } else if ($icons[i].getAttribute('data-url')) {
+
+            let url = $icons[i].getAttribute('data-url');
+            url += `${url.indexOf('?') > -1 ? '&' : '?'}${urlParameters}`;
+            cb = () => location.href = url;
+
+        }
+        $icons[i].addEventListener('click', cb);
     }
 }());
 
