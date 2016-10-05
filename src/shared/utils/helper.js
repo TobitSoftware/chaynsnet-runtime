@@ -96,11 +96,11 @@ let urlParameter = null,
     systemParameter = ['tappid', 'locationid', 'console', 'debug'];
 export function getUrlParameters(withSystemParameter = true) {
     if (!urlParameter || !urlParameterNoSystem) {
+        urlParameterNoSystem = urlParameter = {};
+
         let urlParams = window.location.href.split('?').length > 1 ? window.location.href.split('?')[1].split('&') : false;
 
         if (urlParams) {
-            urlParameterNoSystem = urlParameter = {};
-
             for (let param of urlParams) {
                 param = param.split('=');
                 urlParameter[param[0].toLowerCase()] = param[1];
