@@ -1,11 +1,33 @@
-import * as customTappCfg from '../config/customTapps';
-import FloatinButton from '../shared/floating-button';
-import Waitcursor from '../shared/wait-cursor';
+import FloatingButton from '../shared/floating-button';
+import WaitCursor from '../shared/wait-cursor';
+import {setSelectedTapp} from './chaynsInfo';
+import {getUrlParameters} from "../shared/utils/helper";
 
 export function loadTapp(tappId) {
-    FloatinButton.hide();
-    Waitcursor.hide();
-    loadUrlByTappId(parseInt(tappId, 10), replaceUrlParams(customTappCfg.config[tappId], parseInt(tappId, 10)));
+    FloatingButton.hide();
+    WaitCursor.hide();
+
+    let tapp = getTappById(tappId);
+    if (tapp) {
+        setSelectedTapp(tapp);
+        loadUrlByTappId(parseInt(tapp.id, 10), replaceUrlParams(tapp.url, tapp.id));
+    } else {
+        throw 'No Tapp found!';
+    }
+}
+
+/**
+ * Returns the tapp to tappId
+ * @param tappId
+ * @returns {*}
+ */
+function getTappById(tappId) {
+    for (let tapp of window.ChaynsInfo.Tapps) {
+        if (tapp.id == parseInt(tappId, 10)) {
+            return tapp;
+        }
+    }
+    return null;
 }
 
 /**
@@ -30,7 +52,7 @@ function loadToIframe() {
  * @returns {string}
  */
 function replaceUrlParams(url, tappId) {
-    url = url.replace(/##apname##/ig, encodeURIComponent(window.ChaynsInfo.LocationName));
+    url = url.replace(/##apname##/ig, window.ChaynsInfo.LocationName);
     url = url.replace(/##siteid##/ig, window.ChaynsInfo.SiteID);
     url = url.replace(/##os##/ig, 'webshadowlight');
     url = url.replace(/##version##/ig, window.ChaynsInfo.Version);
@@ -107,7 +129,7 @@ function getParametersArrayByString(parameterString) {
 
     let params = workingString.split('&');
 
-    params.forEach(function(paramString) {
+    params.forEach(function (paramString) {
         result.push({
             name: paramString.split('=')[0],
             value: paramString.split('=')[1]
@@ -139,7 +161,7 @@ function getParametersArrayByArray(parameterArray) {
  * @returns {string}
  */
 function appendCustomParameters(url, parameters) {
-    parameters.forEach(function(curParam) {
+    parameters.forEach(function (curParam) {
         if (url.indexOf('?') > -1) {
             url += '&';
         } else {
@@ -182,12 +204,14 @@ function loadUrlByTappId(tappId, tappUrl) {
 
     let params = url.split('?')[1].split('&');
 
-    let urlParam = window.location.href.split('?').length > 1 ? window.location.href.split('?')[1].split('&') : false;
+
+    let urlParam =  getUrlParameters(false);
     if (urlParam) {
         params.push.apply(params, urlParam);
+        url = appendCustomParameters(url, getParametersArrayByArray(urlParam));
     }
 
-    url = appendCustomParameters(url, getParametersArrayByArray(urlParam));
+    getUrlParameters(true);
 
     let input = document.createElement('input');
     input.id = 'ActiveTappID';

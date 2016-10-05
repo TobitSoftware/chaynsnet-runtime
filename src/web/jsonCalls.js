@@ -1,11 +1,11 @@
-import DialogNew from '../shared/dialog';
+import Dialog from '../shared/dialog';
 import WaitCursor from '../shared/wait-cursor';
 import FloatingButton from '../shared/floating-button';
 import {argbHexToRgba} from '../shared/utils/convert';
 import {getWindowMetrics} from '../shared/utils/helper';
 import {loadTapp} from './customTapp';
-import {loginTappId} from '../config/customTapps';
 import {setAccessToken, closeWindow, refreshChaynsIdIcons} from '../shared/utils/native-functions';
+import {login, logout} from '../shared/login';
 
 let dateType = {
     DATE: 1,
@@ -46,7 +46,7 @@ let dateType = {
 
         value.dialog.callback = (buttonType) => jsonCalls.Helper.return(value, buttonType, srcIframe);
 
-        DialogNew.show('alert', value.dialog);
+        Dialog.show('alert', value.dialog);
     };
 
     jsonCalls[18] = jsonCalls.GetGlobalData = function (value, srcIframe) {
@@ -79,7 +79,7 @@ let dateType = {
                 dialogType = 'dateTime';
         }
 
-        DialogNew.show(dialogType, value.dialog);
+        Dialog.show(dialogType, value.dialog);
     };
 
     jsonCalls[50] = jsonCalls.MultiSelectDialog = function (value, srcIframe) {
@@ -99,7 +99,7 @@ let dateType = {
         value.dialog.list = value.list;
         value.dialog.callback = (retVal) => jsonCalls.Helper.return(value, retVal, srcIframe);
 
-        DialogNew.show('select', value.dialog);
+        Dialog.show('select', value.dialog);
     };
 
     jsonCalls[52] = jsonCalls.tobitWebTokenLogin = (value) => {
@@ -110,14 +110,12 @@ let dateType = {
         }
     };
 
-    jsonCalls[54] = jsonCalls.TobitLogin = function (value) {
-        loadTapp(loginTappId);
+    jsonCalls[54] = jsonCalls.TobitLogin = function () {
+        login();
     };
 
-    jsonCalls[56] = jsonCalls.Logout = function (value) {
-        setAccessToken('');
-        closeWindow();
-        location.reload();
+    jsonCalls[56] = jsonCalls.Logout = function () {
+        logout();
     };
 
     jsonCalls[72] = jsonCalls.ShowFloatingButton = function (value, srcIfame) {
@@ -196,7 +194,7 @@ let dateType = {
 
         value.dialog.callback = (retVal) => jsonCalls.Helper.return(value, retVal, srcIframe);
 
-        DialogNew.show('input', value.dialog);
+        Dialog.show('input', value.dialog);
     };
 
     jsonCalls[114] = jsonCalls.setWebsiteTitle = function (value) {
