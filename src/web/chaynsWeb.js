@@ -1,5 +1,5 @@
 import {loadTapp} from './customTapp';
-import {loginTappId} from '../config/customTapps';
+import {loginTappId} from '../shared/login';
 import Textstrings from '../shared/utils/textstings';
 import {validateTobitAccessToken, getUrlParameters} from '../shared/utils/helper';
 import Dialog from '../shared/dialog';
@@ -22,6 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
             let tobitAccessToken = getAccessToken();
             console.log('tobitAccessToken', tobitAccessToken);
             if (tappId !== loginTappId && validateTobitAccessToken(tobitAccessToken)) {
+                if(tappId == -7){
+                    tappId = -2;
+                }
+
                 loadTapp(tappId);
             } else {
                 resizeWindow(566, 766);

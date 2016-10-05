@@ -13,49 +13,6 @@ export function outerHeight(el) {
     return height;
 }
 
-/**
- * Convert Object to CSS style String.
- *
- *   Example:
- *      {
- *          height: "20px",
- *          width: {
- *              "20px": false,
- *              "30px": true,
- *              "40px": true
- *          }
- *      }
- *      returns: ' "height:20px;width:30px;" '
- *
- * @param styles
- * @returns {string}
- */
-export function styleNames(styles) {
-    let styleNames = '';
-
-    for (let key of Object.keys(styles)) {
-        if (typeof styles[key] === "string") {
-            styleNames += `${key}:${styles[key]};`;
-            continue;
-        }
-
-        if (typeof styles[key] !== "object" || styles[key].length === 0) {
-            continue;
-        }
-
-        let conditions = styles[key];
-
-        for (let value of Object.keys(conditions)) {
-            if (conditions[value]) {
-                styleNames += `${key}:${value};`;
-                break;
-            }
-        }
-    }
-
-    return `"${styleNames}"`;
-}
-
 export function setCookie(cName, value, exdays) {
     let exdate = new Date();
     exdate.setDate(exdate.getDate() + exdays);
@@ -125,7 +82,7 @@ export function ApplyUnsafeFunction(func, args, thisArg) {
     }
 }
 
-export function stringisEmptyOrWhitespace(value){
+export function stringisEmptyOrWhitespace(value) {
     return value == null || value.trim().length < 1;
 }
 
@@ -134,16 +91,25 @@ export function validateTobitAccessToken(tobitAccessToken) {
     return tokenData && new Date(tokenData.exp) > new Date() && tokenData.LocationID == window.ChaynsInfo.LocationID
 }
 
-let urlParameter = null;
-export function getUrlParameters() {
-    if(!urlParameter){
-        let urlParam = window.location.href.split('?').length > 1 ? window.location.href.split('?')[1].split('&') : false;
+let urlParameter = null,
+    urlParameterNoSystem = null,
+    systemParameter = ['tappid', 'locationid', 'console', 'debug'];
+export function getUrlParameters(withSystemParameter = true) {
+    if (!urlParameter || !urlParameterNoSystem) {
+        let urlParams = window.location.href.split('?').length > 1 ? window.location.href.split('?')[1].split('&') : false;
 
-        if (urlParam) {
-            urlParameter = {};
-            urlParam.forEach(paramString => urlParameter[paramString.split('=')[0].toLowerCase()] = paramString.split('=')[1]);
+        if (urlParams) {
+            urlParameterNoSystem = urlParameter = {};
+
+            for (let param of urlParams) {
+                param = param.split('=');
+                urlParameter[param[0].toLowerCase()] = param[1];
+                if (systemParameter.indexOf(param[0]) === -1) {
+                    urlParameterNoSystem[param[0].toLowerCase()] = param[1];
+                }
+            }
         }
     }
 
-    return urlParameter;
+    return withSystemParameter ? urlParameter : urlParameterNoSystem;
 }
