@@ -4,8 +4,8 @@ import FloatingButton from '../shared/floating-button';
 import {argbHexToRgba} from '../shared/utils/convert';
 import {getWindowMetrics} from '../shared/utils/helper';
 import {loadTapp} from './customTapp';
-import {loginTappId} from '../config/customTapps';
 import {setAccessToken, closeWindow, refreshChaynsIdIcons} from '../shared/utils/native-functions';
+import {login, logout} from '../shared/login';
 
 let dateType = {
     DATE: 1,
@@ -110,14 +110,12 @@ let dateType = {
         }
     };
 
-    jsonCalls[54] = jsonCalls.TobitLogin = function (value) {
-        loadTapp(loginTappId);
+    jsonCalls[54] = jsonCalls.TobitLogin = function () {
+        login();
     };
 
-    jsonCalls[56] = jsonCalls.Logout = function (value) {
-        setAccessToken('');
-        closeWindow();
-        location.reload();
+    jsonCalls[56] = jsonCalls.Logout = function () {
+        logout();
     };
 
     jsonCalls[72] = jsonCalls.ShowFloatingButton = function (value, srcIfame) {

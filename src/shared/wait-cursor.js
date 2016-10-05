@@ -75,13 +75,6 @@ export default class WaitCursor {
             return;
         }
 
-        if (!config.tappName) {
-            window.ChaynsInfo.Tapps.forEach(function (tapp) {
-                if (tapp.Id === window.Navigation.GetActiveTappID()) {
-                    config.tappName = tapp.ShowName;
-                }
-            });
-        }
         config.startTime = null;
     };
 }

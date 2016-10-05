@@ -1,5 +1,5 @@
-import {htmlToElement, argbHexToRgba, numberToTimeString} from './utils/convert';
-import {styleNames} from './utils/helper';
+import {htmlToElement, argbHexToRgba} from './utils/convert';
+import styleNames from 'stylenames';
 import classNames from 'classnames';
 
 import TimePicker from './date-time-dialog/time-picker';

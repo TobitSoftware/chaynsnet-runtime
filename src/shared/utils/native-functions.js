@@ -90,7 +90,7 @@ export function closeWindow() {
     } else if (defaultView.window && 'close' in defaultView.window) {
         functions.closeWindow = () => document.defaultView.external.window.close();
     } else {
-        functions.closeWindow = () => console.debug('window closed.');
+        functions.closeWindow = () => location.reload(false);
     }
     functions.closeWindow();
 }
