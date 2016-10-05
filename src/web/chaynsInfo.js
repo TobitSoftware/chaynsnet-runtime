@@ -1,4 +1,4 @@
-import {getRelativeColor, decodeTobitAccessToken} from '../shared/utils/convert';
+import {decodeTobitAccessToken} from '../shared/utils/convert';
 import {getAccessToken} from '../shared/utils/native-functions';
 import Request from '../shared/utils/request';
 import {getUrlParameters} from '../shared/utils/helper';
@@ -88,7 +88,7 @@ export function loadLocation(locationId = 77783) {
                 return Request.get(`https://chaynssvc.tobit.com/v0.4/${locationId}/Tapp?forWeb=true`)
                     .then(res => res.json())
                     .then((tapps) => {
-                        chaynsInfo.Tapps = tapps.data;
+                        chaynsInfo.Tapps = tapps.data || [];
                         chaynsInfo.Tapps.push({
                             id: '-1',
                             url: ((getUrlParameters().login === 'dev') ? loginUrl.devBase : (getUrlParameters().login === 'qa') ? loginUrl.qaBase : loginUrl.liveBase) + loginUrl.urlParameter,
@@ -96,6 +96,6 @@ export function loadLocation(locationId = 77783) {
                         resolve();
                     });
             })
-            .catch((e) => console.error(e)) // loadLocation().then(resolve))
+            .catch((e) => console.error(e)); // loadLocation().then(resolve))
     })
 }
