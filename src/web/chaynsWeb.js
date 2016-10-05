@@ -22,6 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
             let tobitAccessToken = getAccessToken();
             console.log('tobitAccessToken', tobitAccessToken);
             if (tappId !== loginTappId && validateTobitAccessToken(tobitAccessToken)) {
+                if(tappId == -7){
+                    tappId = -2;
+                }
+
                 loadTapp(tappId);
             } else {
                 resizeWindow(566, 766);

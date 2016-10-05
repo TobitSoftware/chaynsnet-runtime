@@ -1,13 +1,10 @@
-import FloatinButton from '../shared/floating-button';
-import Waitcursor from '../shared/wait-cursor';
+import FloatingButton from '../shared/floating-button';
+import WaitCursor from '../shared/wait-cursor';
+import {getUrlParameters} from "../shared/utils/helper";
 
 export function loadTapp(tappId) {
-    FloatinButton.hide();
-    Waitcursor.hide();
-
-    if(tappId == -7){
-        tappId = -2;
-    }
+    FloatingButton.hide();
+    WaitCursor.hide();
 
     let tapp = getTappById(tappId);
     if (tapp) {
@@ -205,12 +202,14 @@ function loadUrlByTappId(tappId, tappUrl) {
 
     let params = url.split('?')[1].split('&');
 
-    let urlParam = window.location.href.split('?').length > 1 ? window.location.href.split('?')[1].split('&') : false;
+
+    let urlParam =  getUrlParameters(false);
     if (urlParam) {
         params.push.apply(params, urlParam);
+        url = appendCustomParameters(url, getParametersArrayByArray(urlParam));
     }
 
-    url = appendCustomParameters(url, getParametersArrayByArray(urlParam));
+    getUrlParameters(true);
 
     let input = document.createElement('input');
     input.id = 'ActiveTappID';
