@@ -81,13 +81,14 @@ export function loadLocation(locationId = 77783) {
                     .then(res => res.json())
                     .then((tapps) => {
                         chaynsInfo.Tapps = [];
-
-                        for (let entry of tapps.data) {
-                            if (entry.tapps && typeof entry.tapps === 'object') {
-                                chaynsInfo.Tapps = chaynsInfo.Tapps.concat(entry.tapps);
-                                continue;
+                        if (tapps && tapps.data) {
+                            for (let entry of tapps.data) {
+                                if (entry.tapps && typeof entry.tapps === 'object') {
+                                    chaynsInfo.Tapps = chaynsInfo.Tapps.concat(entry.tapps);
+                                    continue;
+                                }
+                                chaynsInfo.Tapps.push(entry);
                             }
-                            chaynsInfo.Tapps.push(entry);
                         }
 
                         chaynsInfo.Tapps.push(loginTapp);

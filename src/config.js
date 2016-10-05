@@ -1,7 +1,7 @@
 import {getUrlParameters} from './shared/utils/helper';
 
 export let defaultLocationId = 77783;
-export let defaultTappId = -7;
+export let defaultTappId = -2;
 export let loginTappId = -1;
 
 let loginUrl = {
