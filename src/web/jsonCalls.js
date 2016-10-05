@@ -1,4 +1,4 @@
-import DialogNew from '../shared/dialog';
+import Dialog from '../shared/dialog';
 import WaitCursor from '../shared/wait-cursor';
 import FloatingButton from '../shared/floating-button';
 import {argbHexToRgba} from '../shared/utils/convert';
@@ -46,7 +46,7 @@ let dateType = {
 
         value.dialog.callback = (buttonType) => jsonCalls.Helper.return(value, buttonType, srcIframe);
 
-        DialogNew.show('alert', value.dialog);
+        Dialog.show('alert', value.dialog);
     };
 
     jsonCalls[18] = jsonCalls.GetGlobalData = function (value, srcIframe) {
@@ -79,7 +79,7 @@ let dateType = {
                 dialogType = 'dateTime';
         }
 
-        DialogNew.show(dialogType, value.dialog);
+        Dialog.show(dialogType, value.dialog);
     };
 
     jsonCalls[50] = jsonCalls.MultiSelectDialog = function (value, srcIframe) {
@@ -99,7 +99,7 @@ let dateType = {
         value.dialog.list = value.list;
         value.dialog.callback = (retVal) => jsonCalls.Helper.return(value, retVal, srcIframe);
 
-        DialogNew.show('select', value.dialog);
+        Dialog.show('select', value.dialog);
     };
 
     jsonCalls[52] = jsonCalls.tobitWebTokenLogin = (value) => {
@@ -194,7 +194,7 @@ let dateType = {
 
         value.dialog.callback = (retVal) => jsonCalls.Helper.return(value, retVal, srcIframe);
 
-        DialogNew.show('input', value.dialog);
+        Dialog.show('input', value.dialog);
     };
 
     jsonCalls[114] = jsonCalls.setWebsiteTitle = function (value) {
