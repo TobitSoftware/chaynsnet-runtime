@@ -1,15 +1,7 @@
 import {decodeTobitAccessToken} from '../shared/utils/convert';
 import {getAccessToken} from '../shared/utils/native-functions';
 import Request from '../shared/utils/request';
-import {getUrlParameters} from '../shared/utils/helper';
-
-let loginUrl = {
-    devBase: 'http://localhost:8080/',
-    qaBase: 'https://tappqa.tobit.com/tapps/LoginTapp/',
-    liveBase: 'https://tapp03.tobit.com/ChaynsWebLightLogin/',
-    urlParameter: '?AppVersion=##version##&OS=##os##&colormode=##colormode##&color=##color##&apname=##apname##&tappid=-1'
-};
-
+import {loginTapp} from '../config';
 
 let chaynsInfo,
     globalData;
@@ -98,10 +90,7 @@ export function loadLocation(locationId = 77783) {
                             chaynsInfo.Tapps.push(entry);
                         }
 
-                        chaynsInfo.Tapps.push({
-                            id: '-1',
-                            url: ((getUrlParameters().login === 'dev') ? loginUrl.devBase : (getUrlParameters().login === 'qa') ? loginUrl.qaBase : loginUrl.liveBase) + loginUrl.urlParameter,
-                        });
+                        chaynsInfo.Tapps.push(loginTapp);
                         globalData.AppInfo.Tapps = chaynsInfo.Tapps;
                         resolve();
                     });

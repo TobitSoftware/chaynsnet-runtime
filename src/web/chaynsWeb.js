@@ -1,28 +1,45 @@
 import {loadTapp} from './customTapp';
-import {loginTappId} from '../shared/login';
 import Textstrings from '../shared/utils/textstings';
 import {validateTobitAccessToken, getUrlParameters} from '../shared/utils/helper';
 import Dialog from '../shared/dialog';
 import {getAccessToken, resizeWindow} from '../shared/utils/native-functions';
 import {loadLocation} from './chaynsInfo';
 import {setDynamicStyle} from '../shared/dynamic-style';
+import {defaultLocationId, defaultTappId, loginTappId} from '../config';
 
 document.addEventListener('DOMContentLoaded', () => {
+
+    //Reloads after appends missing parameters
+    if (!getUrlParameters().locationid || !getUrlParameters().tappid) {
+        let url = `${location.href}${location.href.indexOf('?') === -1 ? '?' : '&'}`;
+
+        if (!getUrlParameters().locationid) {
+            url += `${url.endsWith('&') || url.endsWith('?') ? '' : '&'}locationid=${defaultLocationId}`
+        }
+
+        if (!getUrlParameters().tappid) {
+            url += `${url.endsWith('&') || url.endsWith('?') ? '' : '&'}tappId=${defaultTappId}`
+        }
+        location.href = url;
+        return;
+    }
+
     loadLocation(getUrlParameters().locationid).then(() => {
         setDynamicStyle();
         Textstrings.init().then(() => {
-            let urlParameters = getUrlParameters();
-            let tappId = urlParameters && urlParameters.tappid ? urlParameters.tappid : loginTappId;
+            let tappId = getUrlParameters().tappid;
             window.CustomTappCommunication.Init();
 
             window.alert = (message, title) => Dialog.show('alert', {
                 title: title || null,
                 message
             });
+
             let tobitAccessToken = getAccessToken();
             console.log('tobitAccessToken', tobitAccessToken);
+
             if (tappId !== loginTappId && validateTobitAccessToken(tobitAccessToken)) {
-                if(tappId == -7){
+                if (tappId == -7) {
                     tappId = -2;
                 }
 
