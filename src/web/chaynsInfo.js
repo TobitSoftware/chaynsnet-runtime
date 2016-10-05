@@ -88,7 +88,16 @@ export function loadLocation(locationId = 77783) {
                 return Request.get(`https://chaynssvc.tobit.com/v0.4/${locationId}/Tapp?forWeb=true`)
                     .then(res => res.json())
                     .then((tapps) => {
-                        chaynsInfo.Tapps = tapps.data || [];
+                        chaynsInfo.Tapps = [];
+
+                        for (let entry of tapps.data) {
+                            if (entry.tapps && typeof entry.tapps === 'object') {
+                                chaynsInfo.Tapps = chaynsInfo.Tapps.concat(entry.tapps);
+                                continue;
+                            }
+                            chaynsInfo.Tapps.push(entry);
+                        }
+
                         chaynsInfo.Tapps.push({
                             id: '-1',
                             url: ((getUrlParameters().login === 'dev') ? loginUrl.devBase : (getUrlParameters().login === 'qa') ? loginUrl.qaBase : loginUrl.liveBase) + loginUrl.urlParameter,
