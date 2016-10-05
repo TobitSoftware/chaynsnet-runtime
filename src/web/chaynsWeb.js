@@ -8,6 +8,22 @@ import {setDynamicStyle} from '../shared/dynamic-style';
 import {defaultLocationId, defaultTappId, loginTappId} from '../config';
 
 document.addEventListener('DOMContentLoaded', () => {
+
+    //Reloads after appends missing parameters
+    if (!getUrlParameters().locationid || !getUrlParameters().tappid) {
+        let url = `${location.href}${location.href.indexOf('?') === -1 ? '?' : '&'}`;
+
+        if (!getUrlParameters().locationid) {
+            url += `${url.endsWith('&') || url.endsWith('?') ? '' : '&'}locationid=${defaultLocationId}`
+        }
+
+        if (!getUrlParameters().tappid) {
+            url += `${url.endsWith('&') || url.endsWith('?') ? '' : '&'}tappId=${defaultTappId}`
+        }
+        location.href = url;
+        return;
+    }
+
     loadLocation(getUrlParameters().locationid).then(() => {
         setDynamicStyle();
         Textstrings.init().then(() => {
