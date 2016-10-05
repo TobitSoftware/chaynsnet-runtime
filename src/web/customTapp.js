@@ -1,5 +1,6 @@
 import FloatingButton from '../shared/floating-button';
 import WaitCursor from '../shared/wait-cursor';
+import {setSelectedTapp} from './chaynsInfo';
 import {getUrlParameters} from "../shared/utils/helper";
 
 export function loadTapp(tappId) {
@@ -8,6 +9,7 @@ export function loadTapp(tappId) {
 
     let tapp = getTappById(tappId);
     if (tapp) {
+        setSelectedTapp(tapp);
         loadUrlByTappId(parseInt(tapp.id, 10), replaceUrlParams(tapp.url, tapp.id));
     } else {
         throw 'No Tapp found!';

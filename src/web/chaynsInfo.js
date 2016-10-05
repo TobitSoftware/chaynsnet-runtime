@@ -93,9 +93,35 @@ export function loadLocation(locationId = 77783) {
                             id: '-1',
                             url: ((getUrlParameters().login === 'dev') ? loginUrl.devBase : (getUrlParameters().login === 'qa') ? loginUrl.qaBase : loginUrl.liveBase) + loginUrl.urlParameter,
                         });
+                        globalData.AppInfo.Tapps = chaynsInfo.Tapps;
                         resolve();
                     });
             })
             .catch((e) => console.error(e)); // loadLocation().then(resolve))
     })
+}
+
+export function setSelectedTapp(tapp) {
+    if (tapp && typeof tapp === 'object') {
+        globalData.AppInfo.TappSelected = {
+            "Id": tapp.id,
+            "InternalName": tapp.internalName,
+            "ShowName": tapp.showName,
+            "SortID": tapp.sortId,
+            "ExclusiveMode": tapp.exclusiveMode,
+            "LoadAsAjax": tapp.loadAsAjax,
+            "Url": tapp.url,
+            "Link": tapp.link,
+            "SendAuthenticationHeader": tapp.sendAuthenticationHeader,
+            "PostTobitAccessToken": tapp.postTobitAccessToken,
+            "UserGroupIds": tapp.uacGroupIds || [],
+            "HideFromMenu": tapp.hideFromMenu,
+            "Mobile": tapp.mobile,
+            "Desktop": tapp.desktop,
+            "ShowOnlyInAdminMode": tapp.showOnlyInAdminMode,
+            "Icon": tapp.icon,
+            "FallbackTapp": tapp.fallbackTapp,
+            "isExclusiveView": tapp.isExclusiveView
+        };
+    }
 }
