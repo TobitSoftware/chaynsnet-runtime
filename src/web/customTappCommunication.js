@@ -55,8 +55,8 @@ window.CustomTappCommunication = window.CustomTappCommunication || {};
 })(window.CustomTappCommunication = {});
 
 //CustomTappCommunication.Functions
-(function (module, parent) {
-    module.chaynscall = function(param, srcIframe) {
+(function (module) {
+    module.chaynscall = function (param, srcIframe) {
         let value;
         let action;
 

@@ -120,12 +120,12 @@ let dateType = {
 
     jsonCalls[72] = jsonCalls.ShowFloatingButton = function (value, srcIfame) {
         if (value.enabled) {
-            var bgColor = argbHexToRgba(value.color);
+            let bgColor = argbHexToRgba(value.color);
             bgColor = bgColor ? `rgba(${bgColor.r}, ${bgColor.g}, ${bgColor.b}, ${bgColor.a})` : '';
             //noinspection JSUnresolvedVariable
-            var color = argbHexToRgba(value.colorText);
+            let color = argbHexToRgba(value.colorText);
             color = color ? `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})` : '';
-            var text;
+            let text;
             if ('text' in value) {
                 text = value.text;
             } else if ('icon' in value) {
@@ -207,7 +207,7 @@ let dateType = {
 
 // JsonCalls.Helper
 (function (m) {
-    var jsonCallEventListener = [];
+    let jsonCallEventListener = [];
 
     m.AddJsonCallEventListener = function (action, request, srcIframe) {
         jsonCallEventListener.push({
@@ -222,7 +222,7 @@ let dateType = {
      * @return {boolean}
      */
     m.DispatchJsonCallEvent = function (action, response, destIframe) {
-        var retVal = false;
+        let retVal = false;
 
         jsonCallEventListener.forEach(function (listener) {
             if ((listener.action !== action) || (destIframe && listener.srcIframe !== destIframe)) {
@@ -248,7 +248,7 @@ let dateType = {
     };
 
     m.throw = function (action, code, message, request, srcIframe) {
-        var retVal = {
+        const retVal = {
             action: action,
             errorCode: code,
             message: message,
@@ -279,12 +279,12 @@ let dateType = {
 
     m.Throttle = function (fn, threshhold, scope) {
         threshhold = threshhold ? threshhold : 250;
-        var last,
+        let last,
             deferTimer;
         return function () {
-            var context = scope || this;
+            const context = scope || this;
 
-            var now = +new Date,
+            const now = +new Date,
                 args = arguments;
             if (last && now < last + threshhold) {
                 // hold on to it

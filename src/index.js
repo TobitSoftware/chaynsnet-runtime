@@ -13,10 +13,11 @@ if (typeof window.console === 'undefined') {
     };
 }
 
-chayns.ready.catch((ex) => {});
-
 import './config';
 
+chayns.ready.catch((ex) => {});
+
+//Console && Navigation
 import Console from './shared/utils/console';
 Console.init();
 import Navigation from './shared/utils/navigation';
@@ -44,9 +45,6 @@ Navigation.init();
         element.addEventListener('click', activateCB);
     }
 })();
-
-import ChaynsInfo from './web/chaynsInfo';
-window.ChaynsInfo = ChaynsInfo;
 
 import './web/customTappCommunication';
 import './web/jsonCalls';

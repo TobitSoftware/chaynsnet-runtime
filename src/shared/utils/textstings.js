@@ -1,6 +1,6 @@
 export default class Textstrings {
     static init() {
-        return new Promise((resolve, reject)=> {
+        return new Promise((resolve, reject) => {
             chayns.utils.lang.init({
                 libs: [{
                     project: 'DavidAdministration', //Project Name
@@ -8,7 +8,7 @@ export default class Textstrings {
                 }],
                 language: (navigator.language || navigator.userLanguage).substring(0, 2) || 'de',
                 preventOverride: false,
-                successCallback: ()=> {
+                successCallback: () => {
                     save();
                     chayns.utils.lang.renderTextStrings(document.body);
                     resolve();

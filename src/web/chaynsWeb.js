@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         locationId = decodedToken.LocationID;
         setAccessToken(tobitAccessToken);
 
-        if(decodedToken.roles.indexOf('tobitBuha') !== -1 && getUrlParameters().debug !== '1'){
+        if (decodedToken.roles.indexOf('tobitBuha') !== -1 && getUrlParameters().debug !== '1') {
             document.querySelector('.navigation__element[data-tappid="251441"]').classList.add('hidden');
         }
     }
