@@ -1,7 +1,7 @@
 import {decodeTobitAccessToken} from '../shared/utils/convert';
 import {getAccessToken} from '../shared/utils/native-functions';
 import Request from '../shared/utils/request';
-import {loginTapp} from '../config';
+import {LOGIN_TAPP} from '../config';
 
 let chaynsInfo,
     globalData;
@@ -91,7 +91,7 @@ export function loadLocation(locationId = 77783) {
                             }
                         }
 
-                        chaynsInfo.Tapps.push(loginTapp);
+                        chaynsInfo.Tapps.push(LOGIN_TAPP);
                         globalData.AppInfo.Tapps = chaynsInfo.Tapps;
                         resolve();
                     });

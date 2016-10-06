@@ -1,3 +1,4 @@
+import {SYSTEM_URL_PARAMETERS} from '../../config';
 import {decodeTobitAccessToken} from './convert';
 
 /**
@@ -92,8 +93,7 @@ export function validateTobitAccessToken(tobitAccessToken) {
 }
 
 let urlParameter = null,
-    urlParameterNoSystem = null,
-    systemParameter = ['tappid', 'locationid', 'console', 'debug'];
+    urlParameterNoSystem = null;
 export function getUrlParameters(withSystemParameter = true) {
     if (!urlParameter || !urlParameterNoSystem) {
         urlParameterNoSystem = urlParameter = {};
@@ -104,7 +104,7 @@ export function getUrlParameters(withSystemParameter = true) {
             for (let param of urlParams) {
                 param = param.split('=');
                 urlParameter[param[0].toLowerCase()] = param[1];
-                if (systemParameter.indexOf(param[0]) === -1) {
+                if (SYSTEM_URL_PARAMETERS.indexOf(param[0]) === -1) {
                     urlParameterNoSystem[param[0].toLowerCase()] = param[1];
                 }
             }

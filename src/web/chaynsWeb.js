@@ -1,3 +1,4 @@
+import {DEFAULT_LOCATIONID, DEFAULT_TAPPID, LOGIN_TAPPID} from '../config';
 import {loadTapp} from './customTapp';
 import Textstrings from '../shared/utils/textstings';
 import {validateTobitAccessToken, getUrlParameters} from '../shared/utils/helper';
@@ -5,7 +6,6 @@ import Dialog from '../shared/dialog';
 import {getAccessToken, resizeWindow} from '../shared/utils/native-functions';
 import {loadLocation} from './chaynsInfo';
 import {setDynamicStyle} from '../shared/dynamic-style';
-import {defaultLocationId, defaultTappId, loginTappId} from '../config';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let tobitAccessToken = getAccessToken();
             console.log('tobitAccessToken', tobitAccessToken);
 
-            if (tappId !== loginTappId && validateTobitAccessToken(tobitAccessToken)) {
+            if (tappId !== LOGIN_TAPPID && validateTobitAccessToken(tobitAccessToken)) {
                 if (tappId == -7) {
                     tappId = -2;
                 }
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 loadTapp(tappId);
             } else {
                 resizeWindow(566, 766);
-                loadTapp(loginTappId);
+                loadTapp(LOGIN_TAPPID);
             }
         });
     });

@@ -1,7 +1,5 @@
 import './style/index.scss';
 
-import './shared/utils/console';
-
 //IE Fix
 if (!window.location.origin) {
     window.location.origin = `${window.location.protocol}//${window.location.hostname}${(window.location.port ? `:${window.location.port}` : '')}`;
@@ -15,11 +13,14 @@ if (typeof window.console === 'undefined') {
     };
 }
 
-chayns.ready.catch();
+chayns.ready.catch((ex)=>{});
+
+import './config';
+import './shared/utils/console';
 
 import ChaynsInfo from './web/chaynsInfo';
 window.ChaynsInfo = ChaynsInfo;
 
-require('./web/customTappCommunication');
-require('./web/jsonCalls');
-require('./web/chaynsWeb');
+import './web/customTappCommunication';
+import './web/jsonCalls';
+import './web/chaynsWeb';
