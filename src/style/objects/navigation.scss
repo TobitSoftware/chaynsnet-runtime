@@ -1,6 +1,6 @@
 @import '../generic/mixin';
 
-.dev-navigation {
+.navigation {
   position: fixed;
   top: 30px;
   right: 0;
@@ -11,7 +11,7 @@
   padding-left: 8px;
   margin-top: 40px;
 
-  .dev-navigation__element {
+  .navigation__element {
     padding-left: 8px;
     padding-right: 8px;
     height: 45px;

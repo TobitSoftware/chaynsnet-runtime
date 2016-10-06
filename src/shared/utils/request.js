@@ -19,12 +19,12 @@ export default class Request {
 function request(method, url, body, customHeader) {
     let config = {};
 
-    if(method === 'get'){
-        if(url.indexOf('?') > -1){
-            url+= `&ts=${Date.now()}`
-        }else{
+    if (method === 'get') {
+        if (url.indexOf('?') > -1) {
+            url += `&ts=${Date.now()}`
+        } else {
 
-            url+= `?ts=${Date.now()}`
+            url += `?ts=${Date.now()}`
         }
     }
 
@@ -32,10 +32,10 @@ function request(method, url, body, customHeader) {
     config.headers = {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${(ChaynsInfo)?ChaynsInfo.User.TobitAccessToken:''}`
+        'Authorization': `Bearer ${(window.ChaynsInfo) ? window.ChaynsInfo.User.TobitAccessToken : ''}`
     };
 
-    for(let type of Object.keys(customHeader||{})){
+    for (let type of Object.keys(customHeader || {})) {
         config.headers[type] = customHeader[type]
     }
 

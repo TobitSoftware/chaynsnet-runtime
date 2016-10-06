@@ -73,7 +73,7 @@ export function utf8Decode(utftext) {
 
 export function decodeTobitAccessToken(tobitAccessToken) {
     if (tobitAccessToken && typeof (tobitAccessToken) === 'string' && tobitAccessToken.length > 0) {
-        var spl = tobitAccessToken.split('.');
+        const spl = tobitAccessToken.split('.');
         if (spl.length === 3) {
             try {
                 spl[1] = spl[1].slice(0, spl[1].length + (spl[1].length % 4));

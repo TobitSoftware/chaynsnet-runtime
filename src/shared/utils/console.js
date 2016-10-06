@@ -1,6 +1,5 @@
 import {stringisEmptyOrWhitespace, getUrlParameters} from './helper';
 import {htmlToElement, numberToTimeString} from './convert';
-import {loadTapp} from '../../web/customTapp';
 import classNames from 'classnames';
 
 const password = 'cw913';
@@ -9,18 +8,40 @@ let locked = false,
     hidden = true,
     $consoleElement = null,
     $elementWrapper = null,
-    $input = null,
-    timeout,
-    count = 0;
+    $input = null;
 
-if (getUrlParameters().console === '1') {
-    createConsole();
-    init();
+export default class Console {
+    static init() {
+        if (getUrlParameters().console === '1') {
+            createConsole();
+            init();
+            window.console.hide = Console.hide();
+            window.console.clear = Console.clear();
+        }
+    }
+
+    static show() {
+        if ($consoleElement) {
+            $consoleElement.classList.remove('hidden');
+            log('>>> SHOWN');
+        }
+    }
+
+    static hide() {
+        if ($consoleElement) {
+            $consoleElement.classList.add('hidden');
+            log('>>> HIDDEN');
+        }
+    }
+
+    static clear() {
+        if ($elementWrapper) {
+            $elementWrapper.innerHTML = '';
+            log('>>> CLEARED');
+        }
+    }
 }
-if (getUrlParameters().debug === '1') {
-    document.querySelector('.dev-navigation').classList.remove('hidden');
-}
-addsActivation();
+
 
 function createConsole() {
     let classes = classNames('console', {
@@ -39,19 +60,6 @@ function createConsole() {
 }
 
 function init() {
-    window.console.hide = () => {
-        $consoleElement.classList.add('hidden');
-        log('>>> HIDDEN');
-    };
-    window.console.show = () => {
-        $consoleElement.classList.remove('hidden');
-        log('>>> SHOWN');
-    };
-    window.console.clear = () => {
-        $elementWrapper.innerHTML = '';
-        log('>>> CLEARED');
-    };
-
     let nativeLog = console.log;
     let customLog = (...messages) => {
         let content = '';
@@ -142,30 +150,6 @@ function log(text) {
     $elementWrapper.appendChild(element);
 }
 
-function addsActivation() {
-    let activateCB = () => {
-        if (!timeout) {
-            timeout = setTimeout(() => {
-                count = 0;
-                timeout = null;
-            }, 10000);
-        }
-        count++;
-        if (count > 5) {
-            count = 0;
-            if (console.show) {
-                console.show();
-            }
-            document.querySelector('.dev-navigation').classList.remove('hidden');
-        }
-    };
-
-    let activationElements = document.querySelectorAll('.activationElement');
-    for (let element of activationElements) {
-        element.addEventListener('click', activateCB);
-    }
-}
-
 function getLogText(data) {
     if (data && typeof data === 'object') {
         return JSON.stringify(data, Object.getOwnPropertyNames(data));
@@ -173,26 +157,5 @@ function getLogText(data) {
     return data;
 }
 
-//DevNavigation
-(function () {
-    let $icons = document.querySelectorAll('.dev-navigation__element');
-    let urlParameters = (location.href.split('?').length > 1) ? location.href.split('?')[1] : '';
 
-    for (let i = 0, l = $icons.length; i < l; i++) {
-        let cb = () => {};
-
-        if ($icons[i].getAttribute('data-tappid')) {
-
-            cb = () => loadTapp($icons[i].getAttribute('data-tappid'));
-
-        } else if ($icons[i].getAttribute('data-url')) {
-
-            let url = $icons[i].getAttribute('data-url');
-            url += `${url.indexOf('?') > -1 ? '&' : '?'}${urlParameters}`;
-            cb = () => location.href = url;
-
-        }
-        $icons[i].addEventListener('click', cb);
-    }
-}());
 

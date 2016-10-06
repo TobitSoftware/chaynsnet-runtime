@@ -10,7 +10,7 @@ export function loadTapp(tappId) {
     let tapp = getTappById(tappId);
     if (tapp) {
         setSelectedTapp(tapp);
-        loadUrlByTappId(parseInt(tapp.id, 10), replaceUrlParams(tapp.url, tapp.id));
+        loadUrlByTappId(parseInt(tapp.id, 10), replaceUrlParams(tapp.url));
     } else {
         throw 'No Tapp found!';
     }
@@ -48,10 +48,9 @@ function loadToIframe() {
 /**
  * replaces url parameters with chayns env, removes double params, removes empty params
  * @param {string} url
- * @param {number} tappId
  * @returns {string}
  */
-function replaceUrlParams(url, tappId) {
+function replaceUrlParams(url) {
     url = url.replace(/##apname##/ig, window.ChaynsInfo.LocationName);
     url = url.replace(/##siteid##/ig, window.ChaynsInfo.SiteID);
     url = url.replace(/##os##/ig, 'webshadowlight');
@@ -97,11 +96,6 @@ function replaceUrlParams(url, tappId) {
     if (facebookAuth) {
         url += '&facebook-auth';
     }
-
-    // let urlTappId = url.match(/(?:tappid=)\b(\d*)/i);
-    // if (!urlTappId && tappId) {
-    //     url += `&TappID=${tappId}`;
-    // }
 
     let timeStamp = url.match(/(?:_=)\b(\d*)/i);
     if (!timeStamp) {
@@ -195,7 +189,7 @@ function loadUrlByTappId(tappId, tappUrl) {
 
     let $bodyContent = document.getElementById('BodyContent');
     let url = tappUrl;
-    let postTobitAccessToken = tappId === -7 ? true : false;
+    let postTobitAccessToken = tappId === -7;
 
     if (!url) {
         console.error('No Tapp Url found');
@@ -205,7 +199,7 @@ function loadUrlByTappId(tappId, tappUrl) {
     let params = url.split('?')[1].split('&');
 
 
-    let urlParam =  getUrlParameters(false);
+    let urlParam = getUrlParameters(false);
     if (urlParam) {
         params.push.apply(params, urlParam);
         url = appendCustomParameters(url, getParametersArrayByArray(urlParam));
