@@ -12,7 +12,7 @@ export default class FloatingButton {
      * @param color
      * @param callback
      */
-    static show = (text, srcIframe, bgColor, color, callback)=> {
+    static show = (text, srcIframe, bgColor, color, callback) => {
         if (!srcIframe || srcIframe === window) {
             srcIframe = document.querySelector('#CustomTappIframe');
             if (!srcIframe) {

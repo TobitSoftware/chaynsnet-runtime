@@ -28,7 +28,7 @@ function addStyle(classArray) {
 
 export function setDynamicStyle() {
     new Promise(() => {
-        let getColor = (percentage, opacity) => getRelativeColor(ChaynsInfo.Color, percentage, opacity);
+        let getColor = (percentage, opacity) => getRelativeColor(window.ChaynsInfo.Color, percentage, opacity);
 
         let chaynsCss = document.querySelector('link[href^="https://chayns-res.tobit.com/API/"]');
         let chaynsCssColor = htmlToElement(`<link rel="stylesheet" href="${chaynsCss.href}?color=${getColor(100).substr(1, 6)}">`);

@@ -1,9 +1,9 @@
 import {loadTapp} from '../web/customTapp';
 import {setAccessToken, closeWindow} from './utils/native-functions';
-import {loginTappId} from '../config';
+import {LOGIN_TAPPID} from '../config';
 
 export function login() {
-    loadTapp(loginTappId);
+    loadTapp(LOGIN_TAPPID);
 }
 
 export function logout() {
