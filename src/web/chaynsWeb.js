@@ -33,9 +33,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     //check if accessToken in parameters and updates locationId
-    if (!stringisEmptyOrWhitespace(tobitAccessToken)) {
-        locationId = decodeTobitAccessToken(tobitAccessToken).LocationID;
+    if (!stringisEmptyOrWhitespace(tobitAccessToken) && validateTobitAccessToken(tobitAccessToken)) {
+        let decodedToken = decodeTobitAccessToken(tobitAccessToken);
+        locationId = decodedToken.LocationID;
         setAccessToken(tobitAccessToken);
+
+        if(decodedToken.roles.indexOf('tobitBuha') !== -1 && getUrlParameters().debug !== '1'){
+            document.querySelector('.navigation__element[data-tappid="251441"]').classList.add('hidden');
+        }
     }
 
     //start of ChaynsWebLight

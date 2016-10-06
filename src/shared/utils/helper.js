@@ -89,7 +89,7 @@ export function stringisEmptyOrWhitespace(value) {
 
 export function validateTobitAccessToken(tobitAccessToken) {
     let tokenData = decodeTobitAccessToken(tobitAccessToken);
-    return tokenData && new Date(tokenData.exp) > new Date() && tokenData.LocationID == window.ChaynsInfo.LocationID
+    return tokenData && new Date(tokenData.exp) > new Date() && (!window.ChaynsInfo || tokenData.LocationID == window.ChaynsInfo.LocationID);
 }
 
 let urlParameter = null,

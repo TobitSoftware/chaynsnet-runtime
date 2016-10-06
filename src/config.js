@@ -3,7 +3,7 @@ import {getUrlParameters} from './shared/utils/helper';
 export const DEFAULT_LOCATIONID = 77783;
 export const DEFAULT_TAPPID = -2;
 export const LOGIN_TAPPID = -1;
-export const SYSTEM_URL_PARAMETERS = ['tappid', 'locationid', 'console', 'debug', 'tobitaccesstoken'];
+export const SYSTEM_URL_PARAMETERS = ['tappid', 'locationid', 'navigation', 'console', 'debug', 'accesstoken'];
 
 let loginUrl = {
     devBase: 'http://localhost:8080/',
