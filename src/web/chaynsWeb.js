@@ -1,33 +1,47 @@
 import {DEFAULT_LOCATIONID, DEFAULT_TAPPID, LOGIN_TAPPID} from '../config';
 import {loadTapp} from './customTapp';
 import Textstrings from '../shared/utils/textstings';
-import {validateTobitAccessToken, getUrlParameters} from '../shared/utils/helper';
+import {validateTobitAccessToken, getUrlParameters, stringisEmptyOrWhitespace} from '../shared/utils/helper';
+import {decodeTobitAccessToken} from '../shared/utils/convert';
 import Dialog from '../shared/dialog';
-import {getAccessToken, resizeWindow} from '../shared/utils/native-functions';
+import {getAccessToken, setAccessToken, resizeWindow} from '../shared/utils/native-functions';
 import {loadLocation} from './chaynsInfo';
 import {setDynamicStyle} from '../shared/dynamic-style';
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    let tappId = getUrlParameters().tappid,
+        locationId = getUrlParameters().locationid,
+        tobitAccessToken = getUrlParameters().accesstoken;
+
     //Reloads after appends missing parameters
-    if (!getUrlParameters().locationid || !getUrlParameters().tappid) {
+    if ((!locationId || !tappId) && stringisEmptyOrWhitespace(tobitAccessToken)) {
         let url = `${location.href}${location.href.indexOf('?') === -1 ? '?' : '&'}`;
 
-        if (!getUrlParameters().locationid) {
-            url += `${url.endsWith('&') || url.endsWith('?') ? '' : '&'}locationid=${defaultLocationId}`
+        if (!locationId) {
+            url += `${url.endsWith('&') || url.endsWith('?') ? '' : '&'}locationid=${DEFAULT_LOCATIONID}`
         }
 
-        if (!getUrlParameters().tappid) {
-            url += `${url.endsWith('&') || url.endsWith('?') ? '' : '&'}tappId=${defaultTappId}`
+        if (!tappId) {
+            url += `${url.endsWith('&') || url.endsWith('?') ? '' : '&'}tappId=${DEFAULT_TAPPID}`
         }
         location.href = url;
         return;
+    } else {
+        locationId = DEFAULT_LOCATIONID;
+        tappId = DEFAULT_TAPPID;
     }
 
-    loadLocation(getUrlParameters().locationid).then(() => {
+    //check if accessToken in parameters and updates locationId
+    if (!stringisEmptyOrWhitespace(tobitAccessToken)) {
+        locationId = decodeTobitAccessToken(tobitAccessToken).LocationID;
+        setAccessToken(tobitAccessToken);
+    }
+
+    //start of ChaynsWebLight
+    loadLocation(locationId).then(() => {
         setDynamicStyle();
         Textstrings.init().then(() => {
-            let tappId = getUrlParameters().tappid;
             window.CustomTappCommunication.Init();
 
             window.alert = (message, title) => Dialog.show('alert', {
