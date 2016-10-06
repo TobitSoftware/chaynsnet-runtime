@@ -14,8 +14,19 @@ document.addEventListener('DOMContentLoaded', () => {
         locationId = getUrlParameters().locationid,
         tobitAccessToken = getUrlParameters().accesstoken;
 
-    //Reloads after appends missing parameters
-    if ((!locationId || !tappId) && stringisEmptyOrWhitespace(tobitAccessToken)) {
+
+    if (!stringisEmptyOrWhitespace(tobitAccessToken) && validateTobitAccessToken(tobitAccessToken)) {
+        let decodedToken = decodeTobitAccessToken(tobitAccessToken);
+        locationId = decodedToken.LocationID;
+        tappId = DEFAULT_TAPPID;
+
+        setAccessToken(tobitAccessToken);
+
+        if (decodedToken.roles.indexOf('tobitBuha') !== -1 && getUrlParameters().debug !== '1') {
+            document.querySelector('.navigation__element[data-tappid="251441"]').classList.add('hidden');
+        }
+
+    } else if ((!locationId || !tappId)) {
         let url = `${location.href}${location.href.indexOf('?') === -1 ? '?' : '&'}`;
 
         if (!locationId) {
@@ -27,20 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         location.href = url;
         return;
-    } else {
-        locationId = DEFAULT_LOCATIONID;
-        tappId = DEFAULT_TAPPID;
-    }
-
-    //check if accessToken in parameters and updates locationId
-    if (!stringisEmptyOrWhitespace(tobitAccessToken) && validateTobitAccessToken(tobitAccessToken)) {
-        let decodedToken = decodeTobitAccessToken(tobitAccessToken);
-        locationId = decodedToken.LocationID;
-        setAccessToken(tobitAccessToken);
-
-        if (decodedToken.roles.indexOf('tobitBuha') !== -1 && getUrlParameters().debug !== '1') {
-            document.querySelector('.navigation__element[data-tappid="251441"]').classList.add('hidden');
-        }
     }
 
     //start of ChaynsWebLight
