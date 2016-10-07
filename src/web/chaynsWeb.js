@@ -7,6 +7,7 @@ import Dialog from '../shared/dialog';
 import {getAccessToken, setAccessToken, resizeWindow} from '../shared/utils/native-functions';
 import {loadLocation} from './chaynsInfo';
 import {setDynamicStyle} from '../shared/dynamic-style';
+import Navigation from '../shared/utils/navigation';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -62,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 loadTapp(tappId);
             } else {
                 resizeWindow(566, 766);
+                Navigation.hide();
                 loadTapp(LOGIN_TAPPID);
             }
         });
