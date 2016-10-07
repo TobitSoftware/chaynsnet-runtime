@@ -15,8 +15,6 @@ export default class Console {
         if (getUrlParameters().console === '1') {
             createConsole();
             init();
-            window.console.hide = Console.hide();
-            window.console.clear = Console.clear();
         }
     }
 
@@ -102,12 +100,12 @@ function init() {
             }
 
             if (this.value.indexOf('console.clear()') > -1) {
-                console.clear();
+                Console.clear();
                 this.value = '';
                 return false;
             }
             if (this.value.indexOf('console.hide()') > -1) {
-                console.hide();
+                Console.hide();
                 this.value = '';
                 return false;
             }
