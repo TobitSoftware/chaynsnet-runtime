@@ -16,14 +16,16 @@ export default class Navigation {
 
                 cb = () => loadTapp($icons[i].getAttribute('data-tappid'));
 
-            } else if ($icons[i].getAttribute('data-url') && getUrlParameters().debug === '1') {
+            } else if ($icons[i].getAttribute('data-url')) {
                 let url = $icons[i].getAttribute('data-url');
                 url += `${url.indexOf('?') > -1 ? '&' : '?'}${urlParameters}`;
                 cb = () => location.href = url;
-            } else {
-                $icons[i].classList.add('hidden');
-                continue;
+
+                if (getUrlParameters().debug !== '1') {
+                    $icons[i].classList.add('hidden');
+                }
             }
+
             $icons[i].addEventListener('click', cb);
         }
         if (getUrlParameters().navigation === '1' || getUrlParameters().debug === '1') {
@@ -33,7 +35,7 @@ export default class Navigation {
 
     static show(debug = false) {
         if (debug) {
-            for(let element of $navigation.querySelectorAll('.navigation__element')){
+            for (let element of $navigation.querySelectorAll('.navigation__element')) {
                 element.classList.remove('hidden');
             }
         }
