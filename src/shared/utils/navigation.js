@@ -33,7 +33,9 @@ export default class Navigation {
 
     static show(debug = false) {
         if (debug) {
-            $navigation.querySelectorAll('.navigation__element').forEach(element => element.classList.remove('hidden'));
+            for(let element of $navigation.querySelectorAll('.navigation__element')){
+                element.classList.remove('hidden');
+            }
         }
         $navigation.classList.remove('hidden');
     }
