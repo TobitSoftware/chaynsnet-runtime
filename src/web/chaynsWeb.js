@@ -1,33 +1,50 @@
+import {DEFAULT_LOCATIONID, DEFAULT_TAPPID, LOGIN_TAPPID} from '../config';
 import {loadTapp} from './customTapp';
 import Textstrings from '../shared/utils/textstings';
-import {validateTobitAccessToken, getUrlParameters} from '../shared/utils/helper';
+import {validateTobitAccessToken, getUrlParameters, stringisEmptyOrWhitespace} from '../shared/utils/helper';
+import {decodeTobitAccessToken} from '../shared/utils/convert';
 import Dialog from '../shared/dialog';
-import {getAccessToken, resizeWindow} from '../shared/utils/native-functions';
+import {getAccessToken, setAccessToken, resizeWindow} from '../shared/utils/native-functions';
 import {loadLocation} from './chaynsInfo';
 import {setDynamicStyle} from '../shared/dynamic-style';
-import {defaultLocationId, defaultTappId, loginTappId} from '../config';
+import Navigation from '../shared/utils/navigation';
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    //Reloads after appends missing parameters
-    if (!getUrlParameters().locationid || !getUrlParameters().tappid) {
-        let url = `${location.href}${location.href.indexOf('?') === -1 ? '?' : '&'}`;
+    let tappId = getUrlParameters().tappid,
+        locationId = getUrlParameters().locationid,
+        tobitAccessToken = getUrlParameters().accesstoken;
 
-        if (!getUrlParameters().locationid) {
-            url += `${url.endsWith('&') || url.endsWith('?') ? '' : '&'}locationid=${defaultLocationId}`
+
+    if (!stringisEmptyOrWhitespace(tobitAccessToken) && validateTobitAccessToken(tobitAccessToken)) {
+        let decodedToken = decodeTobitAccessToken(tobitAccessToken);
+        locationId = decodedToken.LocationID;
+        tappId = DEFAULT_TAPPID;
+
+        setAccessToken(tobitAccessToken);
+
+        if (decodedToken.roles.indexOf('tobitBuha') !== -1 && getUrlParameters().debug !== '1') {
+            document.querySelector('.navigation__element[data-tappid="251441"]').classList.add('hidden');
         }
 
-        if (!getUrlParameters().tappid) {
-            url += `${url.endsWith('&') || url.endsWith('?') ? '' : '&'}tappId=${defaultTappId}`
+    } else if ((!locationId || !tappId)) {
+        let url = `${location.href}${location.href.indexOf('?') === -1 ? '?' : '&'}`;
+
+        if (!locationId) {
+            url += `${url.endsWith('&') || url.endsWith('?') ? '' : '&'}locationid=${DEFAULT_LOCATIONID}`
+        }
+
+        if (!tappId) {
+            url += `${url.endsWith('&') || url.endsWith('?') ? '' : '&'}tappId=${DEFAULT_TAPPID}`
         }
         location.href = url;
         return;
     }
 
-    loadLocation(getUrlParameters().locationid).then(() => {
+    //start of ChaynsWebLight
+    loadLocation(locationId).then(() => {
         setDynamicStyle();
         Textstrings.init().then(() => {
-            let tappId = getUrlParameters().tappid;
             window.CustomTappCommunication.Init();
 
             window.alert = (message, title) => Dialog.show('alert', {
@@ -38,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let tobitAccessToken = getAccessToken();
             console.log('tobitAccessToken', tobitAccessToken);
 
-            if (tappId !== loginTappId && validateTobitAccessToken(tobitAccessToken)) {
+            if (tappId !== LOGIN_TAPPID && validateTobitAccessToken(tobitAccessToken)) {
                 if (tappId == -7) {
                     tappId = -2;
                 }
@@ -46,7 +63,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 loadTapp(tappId);
             } else {
                 resizeWindow(566, 766);
-                loadTapp(loginTappId);
+                Navigation.hide();
+                loadTapp(LOGIN_TAPPID);
             }
         });
     });

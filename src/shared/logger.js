@@ -28,10 +28,10 @@ export function init() {
 }
 
 function sendLogToServer(obj) {
-    var loggerUrl = 'https://david.tobit.software/Log/Log';
+    const loggerUrl = 'https://david.tobit.software/Log/Log';
 
-    var xmlhttp = new XMLHttpRequest();
-    var url = loggerUrl;
+    const xmlhttp = new XMLHttpRequest();
+    const url = loggerUrl;
 
     obj.appversion = appversion;
 
@@ -43,9 +43,9 @@ function sendLogToServer(obj) {
 //noinspection JSUnusedLocalSymbols
 function logError(errorMsg, url, lineNumber, column, error) {
     try {
-        var fnName = fnRegex.exec(error.stack)[1];
+        const fnName = fnRegex.exec(error.stack)[1];
 
-        var obj = {
+        const obj = {
             msg: error.message,
             section: fnName,
             stacktrace: error.stack,
