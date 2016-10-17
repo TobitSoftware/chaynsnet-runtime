@@ -2,6 +2,7 @@ import {decodeTobitAccessToken} from '../shared/utils/convert';
 import {getAccessToken} from '../shared/utils/native-functions';
 import Request from '../shared/utils/request';
 import {LOGIN_TAPP} from '../config';
+import Logger from "../shared/logger";
 
 let chaynsInfo,
     globalData;
@@ -96,7 +97,10 @@ export function loadLocation(locationId = 77783) {
                         resolve();
                     });
             })
-            .catch((e) => console.error(e)); // loadLocation().then(resolve))
+            .catch((err) => {
+                console.error('Load location failed.', err);
+                Logger.error('Load location failed.', err, 'chaynsInfo.js : loadLocation');
+            });
     })
 }
 

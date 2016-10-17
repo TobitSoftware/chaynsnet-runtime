@@ -2,6 +2,7 @@ import FloatingButton from '../shared/floating-button';
 import WaitCursor from '../shared/wait-cursor';
 import {setSelectedTapp} from './chaynsInfo';
 import {getUrlParameters} from "../shared/utils/helper";
+import Logger from '../shared/logger';
 
 export function loadTapp(tappId) {
     FloatingButton.hide();
@@ -12,7 +13,8 @@ export function loadTapp(tappId) {
         setSelectedTapp(tapp);
         loadUrlByTappId(parseInt(tapp.id, 10), replaceUrlParams(tapp.url));
     } else {
-        throw 'No Tapp found!';
+        Logger.warning('No Tapp found!', {tappId}, 'customTapp : loadTapp');
+        console.warn('No Tapp found!');
     }
 }
 

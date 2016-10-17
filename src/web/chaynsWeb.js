@@ -8,6 +8,7 @@ import {getAccessToken, setAccessToken, resizeWindow} from '../shared/utils/nati
 import {loadLocation} from './chaynsInfo';
 import {setDynamicStyle} from '../shared/dynamic-style';
 import Navigation from '../shared/utils/navigation';
+import Logger from '../shared/logger';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -15,6 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
         locationId = getUrlParameters().locationid,
         tobitAccessToken = getUrlParameters().accesstoken;
 
+    if (tappId == -7) {
+        tappId = -2;
+    }
+
+    Logger.request(undefined, {tappId, locationId}, 'chaynsWeb.js');
 
     if (!stringisEmptyOrWhitespace(tobitAccessToken) && validateTobitAccessToken(tobitAccessToken)) {
         let decodedToken = decodeTobitAccessToken(tobitAccessToken);
@@ -22,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tappId = DEFAULT_TAPPID;
 
         setAccessToken(tobitAccessToken);
+        Logger.info('accessToken as URLParameter', {userId: decodedToken.TobitUserID});
 
         if (decodedToken.roles.indexOf('tobitBuha') !== -1 && getUrlParameters().debug !== '1') {
             document.querySelector('.navigation__element[data-tappid="251441"]').classList.add('hidden');
@@ -43,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //start of ChaynsWebLight
     loadLocation(locationId).then(() => {
+
         setDynamicStyle();
         Textstrings.init().then(() => {
             window.CustomTappCommunication.Init();
@@ -56,12 +64,10 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('tobitAccessToken', tobitAccessToken);
 
             if (tappId !== LOGIN_TAPPID && validateTobitAccessToken(tobitAccessToken)) {
-                if (tappId == -7) {
-                    tappId = -2;
-                }
-
                 loadTapp(tappId);
             } else {
+                Logger.info('ChaynsWebLight - login Tapp', {tappId});
+
                 resizeWindow(566, 766);
                 Navigation.hide();
                 loadTapp(LOGIN_TAPPID);
