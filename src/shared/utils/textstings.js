@@ -6,8 +6,6 @@ export default class Textstrings {
                     project: 'DavidAdministration', //Project Name
                     middle: 'LangRes'
                 }],
-                language: (navigator.language || navigator.userLanguage).substring(0, 2) || 'de',
-                preventOverride: false,
                 successCallback: () => {
                     save();
                     chayns.utils.lang.renderTextStrings(document.body);
