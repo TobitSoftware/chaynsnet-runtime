@@ -1,4 +1,5 @@
 import Request from './utils/request';
+import {ENV} from "../config";
 
 const fnRegex = /at\s([\w.]+)\s\(/i;
 
@@ -75,7 +76,7 @@ function log(logLevel, data = {}, section, lineNumber) {
 
 function sendLogs(force = false) {
     try {
-        if (timeOut !== null && !force) {
+        if (timeOut !== null && !force || process.env.NODE_ENV === ENV.DEV) {
             return;
         }
 
