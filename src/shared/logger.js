@@ -1,77 +1,97 @@
-let initialized = false;
+import Request from './utils/request';
+import {ENV} from "../config";
 
-const applicationName = 'ChaynsWebJS';
 const fnRegex = /at\s([\w.]+)\s\(/i;
-const appversion = 'js';
-const defaultSection = 'web';
 
-export const type = {
-    debug: 10,
-    request: 15,
-    information: 20,
-    warning: 30,
-    error: 40,
-    critical: 50
+const LOG_LEVEL = {
+    REQUEST: 15,
+    INFORMATION: 20,
+    WARNING: 30,
+    ERROR: 40,
+    CRITICAL: 50
 };
 
+let timeOut = null,
+    logs = [];
 /**
  * Initializes the logger
  */
-export function init() {
-    if (initialized) {
-        return;
+
+window.onerror = (errorMsg, url, lineNumber, column, error) => {
+    const urlParts = url.split('/');
+    const fileName = (urlParts.length > 0) ? urlParts[urlParts.length - 1] : ' - ';
+    const funcName = (error) ? fnRegex.exec(error.stack)[1] : ' - ';
+    Logger.error(errorMsg, error, `${fileName}:${funcName}`, lineNumber);
+};
+
+
+export default class Logger {
+    static request(message, data = {}, section) {
+        data.message = message;
+        log(LOG_LEVEL.REQUEST, data, section);
     }
 
-    window.onerror = logError;
+    static info(message, data = {}, section) {
+        data.message = message;
+        log(LOG_LEVEL.INFORMATION, data, section);
+    }
 
-    initialized = true;
+    static warning(message, data = {}, section) {
+        data.message = message;
+        log(LOG_LEVEL.WARNING, data, section);
+    }
+
+    static error(message, error, section, lineNumber) {
+        log(LOG_LEVEL.ERROR, {
+            'message': message,
+            'error_obj': {
+                name: error.name,
+                message: error.message,
+                stack: error.stack
+            }
+        }, section, lineNumber);
+    }
+
+    static critical(message, data = {}, section) {
+        data.message = message;
+        log(LOG_LEVEL.CRITICAL, data, section);
+    }
 }
 
-function sendLogToServer(obj) {
-    const loggerUrl = 'https://david.tobit.software/Log/Log';
+function log(logLevel, data = {}, section, lineNumber) {
 
-    const xmlhttp = new XMLHttpRequest();
-    const url = loggerUrl;
-
-    obj.appversion = appversion;
-
-    xmlhttp.open('POST', url, true);
-    xmlhttp.setRequestHeader('Content-type', 'application/json');
-    xmlhttp.send(JSON.stringify(obj));
+    if (window.ChaynsInfo && window.ChaynsInfo.LocationID) {
+        data.locationId = window.ChaynsInfo.LocationID;
+    }
+    data.env = process.env.NODE_ENV;
+    logs.push({
+        "lineNumber": lineNumber,
+        "section": section,
+        "creationTime": Date.now(),
+        "level": logLevel,
+        "data": data
+    });
+    sendLogs(logLevel === LOG_LEVEL.ERROR || logLevel === LOG_LEVEL.CRITICAL);
 }
 
-//noinspection JSUnusedLocalSymbols
-function logError(errorMsg, url, lineNumber, column, error) {
+function sendLogs(force = false) {
     try {
-        const fnName = fnRegex.exec(error.stack)[1];
-
-        const obj = {
-            msg: error.message,
-            section: fnName,
-            stacktrace: error.stack,
-            exception: error.name,
-            type: type.error,
-            applicationname: applicationName,
-            tappId: window.Navigation.GetActiveTappID()
-        };
-
-        if (window.ChaynsInfo && window.ChaynsInfo.SiteID) {
-            obj.siteid = window.ChaynsInfo.SiteID;
+        if (timeOut !== null && !force || process.env.NODE_ENV === ENV.DEV) {
+            return;
         }
 
-        sendLogToServer(obj);
-    } catch (err) {
-        //Nichts machen, um Endlosschleife zu vermeiden
+        timeOut = setTimeout(() => {
+            timeOut = null;
+
+            if (logs.length > 0) {
+                Request.post(`https://sub49.tobit.com/v0.1/Log/web`, logs, {
+                    'X-ApplicationGuid': 'B150BF1E-A955-4073-B3DD-4F2CEC864C6A'
+                });
+            }
+
+            logs = [];
+        }, (force) ? 0 : 250);
+    } catch (ex) {
+        console.error('ex while sendLogs', ex);
     }
-}
-
-export function log(logObj) {
-    logObj.section = logObj.section || defaultSection;
-    logObj.url = logObj.url || location.href;
-
-    if (typeof logObj.type !== 'number') {
-        logObj.type = type.debug;
-    }
-
-    sendLogToServer(logObj);
 }

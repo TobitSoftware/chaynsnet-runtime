@@ -31,6 +31,11 @@ export default {
     },
     devtool: 'hidden-source-map',
     plugins: [
-        new webpack.optimize.UglifyJsPlugin()
+        new webpack.optimize.UglifyJsPlugin(),
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: JSON.stringify('qa')
+            }
+        })
     ]
 };
