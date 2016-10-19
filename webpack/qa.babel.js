@@ -1,5 +1,6 @@
 import webpack from 'webpack';
 import path from 'path';
+import AppCacheWebpackPlugin from 'appcache-webpack-plugin';
 
 const ROOT_PATH = path.resolve('./');
 
@@ -36,6 +37,14 @@ export default {
             'process.env': {
                 NODE_ENV: JSON.stringify('qa')
             }
+        }),
+        new AppCacheWebpackPlugin({
+            output: 'appcache.manifest',
+            cache: [
+                'https://chayns-res.tobit.com/api/v3.1/js/chayns.min.js',
+                'https://chayns-res.tobit.com/api/v3.1/css/chayns.min.css',
+                'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css'
+            ]
         })
     ]
 };
