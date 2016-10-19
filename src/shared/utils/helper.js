@@ -96,7 +96,8 @@ let urlParameter = null,
     urlParameterNoSystem = null;
 export function getUrlParameters(withSystemParameter = true) {
     if (!urlParameter || !urlParameterNoSystem) {
-        urlParameterNoSystem = urlParameter = {};
+        urlParameterNoSystem = {};
+        urlParameter = {};
 
         let urlParams = window.location.href.split('?').length > 1 ? window.location.href.split('?')[1].split('&') : false;
 
