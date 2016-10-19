@@ -152,3 +152,25 @@ export function getRelativeColor(baseColor, percentage, opacity) {
     color += getSingleRelativeColor(b, percentage);
     return color;
 }
+
+/**
+ * converts urlParameter string to object
+ * @param {string} parameterString, e.g. '?test=1&second=hello'
+ * @returns {{}} e.g. {param1: 'param1Value', param2: 'param2Value'}
+ */
+export function parameterStringToObject(parameterString) {
+    let result = {};
+
+    if (parameterString.indexOf('?') > -1) {
+        parameterString = parameterString.split('?')[1];
+    }
+
+    for (let param of parameterString.split('&')) {
+        let parsed = param.split('=');
+        if (parsed.length > 1 && parsed[1].length > 0) {
+            result[parsed[0]] = parsed[1];
+        }
+    }
+
+    return result;
+}
