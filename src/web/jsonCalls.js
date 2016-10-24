@@ -34,6 +34,45 @@ let dateType = {
         loadTapp(value.id);
     };
 
+    jsonCalls[9] = jsonCalls.ExternOpenUrl = function (value) {
+        window.open(value.url, value.target ? value.target : '_blank');
+    };
+
+    jsonCalls[14] = jsonCalls.RequestGeoLocation = function (value, srcIframe) {
+        if (navigator.geolocation) {
+            const requestPos = (method) => method.apply(navigator.geolocation, [
+                function (pos) {
+                    const obj = {
+                        'accuracy': pos.coords.accuracy,
+                        'altitude': pos.coords.altitude,
+                        'altitudeAccuracy': pos.coords.altitudeAccuracy,
+                        'heading': pos.coords.heading,
+                        'latitude': pos.coords.latitude,
+                        'longitude': pos.coords.longitude,
+                        'speed': pos.coords.speed
+                    };
+                    jsonCalls.Helper.return(value, obj, srcIframe);
+                }, function (err) {
+                    jsonCalls.Helper.throw(14, err.code + 10, err.message, value, srcIframe);
+                }
+            ]);
+
+            //noinspection JSUnresolvedVariable
+            if (value.permanent) {
+                jsonCalls.Helper.GeoWatchNumber = requestPos(navigator.geolocation.watchPosition);
+            } else {
+                if (jsonCalls.Helper.GeoWatchNumber !== null) {
+                    navigator.geolocation.clearWatch(jsonCalls.Helper.GeoWatchNumber);
+                    jsonCalls.Helper.GeoWatchNumber = null;
+                } else {
+                    requestPos(navigator.geolocation.getCurrentPosition);
+                }
+            }
+        } else {
+            jsonCalls.Helper.throw(14, 10, 'Position unavailable', value, srcIframe);
+        }
+    };
+
     jsonCalls[16] = jsonCalls.ShowDialog = function (value, srcIframe) {
         if (value.dialog === undefined) {
             jsonCalls.Helper.throw(16, 2, 'Field dialog missing.', value, srcIframe);
@@ -178,6 +217,11 @@ let dateType = {
         }
     };
 
+    jsonCalls[78] = jsonCalls.GetWindowMetrics = function (value, srcIframe) {
+        const windowMetrics = getWindowMetrics();
+        jsonCalls.Helper.return(value, windowMetrics, srcIframe);
+    };
+
     jsonCalls[92] = jsonCalls.UpdateChaynsId = function () {
         refreshChaynsIdIcons()
     };
@@ -195,6 +239,12 @@ let dateType = {
         value.dialog.callback = (retVal) => jsonCalls.Helper.return(value, retVal, srcIframe);
 
         Dialog.show('input', value.dialog);
+    };
+
+    jsonCalls[112] = jsonCalls.sendEventToTopFrame = function (value, srcIframe) {
+        let event = new CustomEvent(value.event);
+        event.data = value.object;
+        window.dispatchEvent(event);
     };
 
     jsonCalls[114] = jsonCalls.setWebsiteTitle = function (value) {
