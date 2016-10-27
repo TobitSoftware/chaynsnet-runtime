@@ -5,6 +5,8 @@ import {getUrlParameters} from "../shared/utils/helper";
 import Logger from '../shared/logger';
 import {parameterStringToObject, htmlToElement} from '../shared/utils/convert';
 
+let $bodyContent = document.querySelector('.body-content');
+
 export function loadTapp(tappId) {
     FloatingButton.hide();
     WaitCursor.hide();
@@ -97,7 +99,13 @@ function _loadTapp(tappId, tappUrl) {
         $iframe.setAttribute('style', 'margin-top: -10px !important;');
     }
 
-    let $bodyContent = document.getElementById('BodyContent');
+    if(window.ChaynsInfo.ExclusiveMode){
+       $bodyContent.classList.add('body-content--exclusive-view');
+    }else {
+        $bodyContent.classList.remove('body-content--exclusive-view');
+    }
+
+
     $bodyContent.innerHTML = '';
     $bodyContent.appendChild($input);
     $bodyContent.appendChild($form);

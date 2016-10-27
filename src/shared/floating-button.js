@@ -16,7 +16,7 @@ export default class FloatingButton {
         if (!srcIframe || srcIframe === window) {
             srcIframe = document.querySelector('#CustomTappIframe');
             if (!srcIframe) {
-                srcIframe = document.querySelector('#BodyContent');
+                srcIframe = document.querySelector('.body-content');
                 srcIframe.name = 'default';
             }
         }
