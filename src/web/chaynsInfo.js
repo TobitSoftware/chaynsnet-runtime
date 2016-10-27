@@ -35,6 +35,7 @@ export function loadLocation(locationId = 77783) {
                     SiteID: data.siteId,
                     LocationName: data.locatioName,
                     IsMobile: false,
+                    ExclusiveMode: false,
                     IsFacebook: (document.referrer.indexOf('staticxx.facebook') > -1 || location.href.indexOf('fb=1') > -1),
                     Tapps: [],
                     LocationPersonID: data.locationPersonId,
@@ -106,12 +107,13 @@ export function loadLocation(locationId = 77783) {
 
 export function setSelectedTapp(tapp) {
     if (tapp && typeof tapp === 'object') {
+        chaynsInfo.ExclusiveMode = tapp.exclusiveView || false;
         globalData.AppInfo.TappSelected = {
             "Id": tapp.id,
             "InternalName": tapp.internalName,
             "ShowName": tapp.showName,
             "SortID": tapp.sortId,
-            "ExclusiveMode": tapp.exclusiveMode,
+            "ExclusiveMode": tapp.exclusiveView,
             "LoadAsAjax": tapp.loadAsAjax,
             "Url": tapp.url,
             "Link": tapp.link,

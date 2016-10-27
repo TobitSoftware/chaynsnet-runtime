@@ -16,7 +16,7 @@ export default class WaitCursor {
             if (srcIframe) {
                 srcIframe.name = 'CustomTappIframe';
             } else {
-                srcIframe = document.querySelector('#BodyContent');
+                srcIframe = document.querySelector('.body-content');
                 srcIframe.name = 'default';
             }
         }
