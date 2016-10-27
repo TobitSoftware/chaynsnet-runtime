@@ -4,10 +4,16 @@ body {
   overflow-x: hidden;
 }
 
-#BodyContent {
+.body-content {
   width: 566px;
   transform: translate(-50%);
   margin-left: 50%;
+
+  &.body-content--exclusive-view {
+    width: auto !important;
+    transform: translate(0, 0) !important;
+    margin: 0 !important;
+  }
 }
 
 #CustomTappIframe {
