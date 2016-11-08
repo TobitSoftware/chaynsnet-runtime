@@ -25,8 +25,8 @@ window.CustomTappCommunication = window.CustomTappCommunication || {};
 
     module.PostMessage = (method, params, source) => {
         let win = null;
-        let $customTappIframe = document.querySelector('#CustomTappIframe');
-        let iframe = source[0] ? source[0] : $customTappIframe;
+        let $TappIframe = document.querySelector('#TappIframe');
+        let iframe = source[0] ? source[0] : $TappIframe;
 
         if (iframe !== null) {
             win = iframe.contentWindow ? iframe.contentWindow : iframe;
