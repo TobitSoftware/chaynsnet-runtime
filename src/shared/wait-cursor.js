@@ -12,9 +12,9 @@ export default class WaitCursor {
      */
     static show = (timeToTextDisplay = 5000, text, srcIframe) => {
         if (!srcIframe || srcIframe === window) {
-            srcIframe = document.querySelector('#CustomTappIframe') || document.querySelector('#CustomAjaxTapp');
+            srcIframe = document.querySelector('#TappIframe') || document.querySelector('#CustomAjaxTapp');
             if (srcIframe) {
-                srcIframe.name = 'CustomTappIframe';
+                srcIframe.name = 'TappIframe';
             } else {
                 srcIframe = document.querySelector('.body-content');
                 srcIframe.name = 'default';
@@ -52,8 +52,8 @@ export default class WaitCursor {
      * @param srcIframe
      */
     static hide = (srcIframe) => {
-        let iframeName = (srcIframe && srcIframe.name) ? srcIframe.name : 'CustomTappIframe';
-        if (iframeName === 'CustomTappIframe') {
+        let iframeName = (srcIframe && srcIframe.name) ? srcIframe.name : 'TappIframe';
+        if (iframeName === 'TappIframe') {
             let defaultWaitCursor = document.querySelector('.ChaynsLoadingCursor[data-iframe="default"]');
             if (defaultWaitCursor) {
                 defaultWaitCursor.parentElement.removeChild(defaultWaitCursor);

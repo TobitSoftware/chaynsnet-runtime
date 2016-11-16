@@ -14,7 +14,7 @@ export default class FloatingButton {
      */
     static show = (text, srcIframe, bgColor, color, callback) => {
         if (!srcIframe || srcIframe === window) {
-            srcIframe = document.querySelector('#CustomTappIframe');
+            srcIframe = document.querySelector('#TappIframe');
             if (!srcIframe) {
                 srcIframe = document.querySelector('.body-content');
                 srcIframe.name = 'default';
@@ -54,7 +54,7 @@ export default class FloatingButton {
                 floatingBtnCfg['default'] = undefined;
                 return;
             }
-            srcIframe = document.querySelector('#CustomTappIframe');
+            srcIframe = document.querySelector('#TappIframe');
         }
 
         let config = (srcIframe) ? floatingBtnCfg[srcIframe.name] || null : null;

@@ -85,14 +85,14 @@ function _loadTapp(tappId, tappUrl) {
 
     let $input = htmlToElement(`<input id="ActiveTappID" name="ActiveTappID" type="hidden" value="${tappId}">`);
 
-    let $form = htmlToElement(`<form action="${tappUrl}" target="CustomTappIframe" method="get" id="TobitAccessTokenForm"></form>`);
+    let $form = htmlToElement(`<form action="${tappUrl}" target="TappIframe" method="get" id="TobitAccessTokenForm"></form>`);
 
     let parameter = parameterStringToObject(tappUrl);
     for (let key of Object.keys(parameter)) {
         $form.appendChild(htmlToElement(`<input name="${key}" value="${parameter[key]}" type="hidden">`))
     }
 
-    let $iframe = htmlToElement('<iframe frameborder="0" marginheight="0" marginwidth="0" id="CustomTappIframe" name="CustomTappIframe"></iframe>');
+    let $iframe = htmlToElement('<iframe frameborder="0" marginheight="0" marginwidth="0" id="TappIframe" name="TappIframe"></iframe>');
     $iframe.style.height = `${window.innerHeight - document.body.getBoundingClientRect().top + document.body.scrollTop}px`;
 
     if (window.ChaynsInfo.IsMobile) {
