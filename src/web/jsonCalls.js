@@ -186,14 +186,6 @@ let dateType = {
     };
 
     jsonCalls[77] = jsonCalls.SetIframeHeigth = function (value, srcIframe) {
-        if (window.ChaynsInfo.IsFacebook && window.FB) {
-            setTimeout(function () {
-                window.FB.Canvas.setSize({
-                    'height': $(document.body).height()
-                });
-            }, 500);
-        }
-
         let $iframe = srcIframe[0];
 
         if (!value.full && !('height' in value) && !('fullViewport' in value)) {
