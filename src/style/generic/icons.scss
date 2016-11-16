@@ -1,0 +1,17 @@
+.icon{
+  &-user:before{
+    content: "\f007";
+  }
+  &-comments:before{
+    content: "\f086";
+  }
+  &-ticket:before{
+    content: "\f145";
+  }
+  &-file:before{
+    content: "\f15b";
+  }
+  &-eur:before{
+    content: "\f153";
+  }
+}

@@ -42,8 +42,7 @@ export default {
             output: 'appcache.manifest',
             cache: [
                 'https://chayns-res.tobit.com/api/v3.1/js/chayns.min.js',
-                'https://chayns-res.tobit.com/api/v3.1/css/chayns.min.css',
-                'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css'
+                'https://chayns-res.tobit.com/api/v3.1/css/chayns.min.css'
             ]
         })
     ]
