@@ -37,26 +37,9 @@ export function getCookie(cCame) {
 }
 
 export function getWindowMetrics() {
-    let $body = document.querySelector('body');
-    let headerHeight = 0,
-        contentMarginTop = 0,
-        contentMarginBottom = 0,
-        scrollHeight = $body.scrollTop - headerHeight - contentMarginTop;
-
-    if (scrollHeight < 0) {
-        scrollHeight = 0;
-    }
-
-    let availHeight = window.innerHeight - headerHeight - contentMarginTop - contentMarginBottom,
-        minAvailHeight = window.innerHeight - headerHeight - contentMarginTop - contentMarginBottom;
-
-    if (availHeight < minAvailHeight) {
-        availHeight = minAvailHeight;
-    }
-
     return {
-        AvailHeight: availHeight,
-        WindowScrollTop: scrollHeight,
+        AvailHeight: window.innerHeight -10,
+        WindowScrollTop: document.body.scrollTop,
         WindowInnerHeight: window.innerHeight,
         pageYOffset: window.pageYOffset
     };
