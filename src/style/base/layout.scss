@@ -3,6 +3,9 @@ body {
   overflow-y: scroll;
   overflow-x: hidden;
 }
+body.no-scroll{
+  overflow: hidden;
+}
 
 .body-content {
   width: 566px;

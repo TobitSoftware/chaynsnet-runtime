@@ -193,8 +193,10 @@ let dateType = {
             return;
         } else if (value.full || value.fullViewport) {
             value.height = getWindowMetrics().AvailHeight;
+            document.body.classList.add('no-scroll');
         } else {
             value.height = parseInt(value.height, 10);
+            document.body.classList.remove('no-scroll');
         }
 
         if (isNaN(value.height)) {
