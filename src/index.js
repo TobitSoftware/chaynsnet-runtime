@@ -23,8 +23,13 @@ logger.init({
     overrideOnError: true,
     sessionUid: generateUUID(),
     throttleTime: 100,
-    useDevServer: process.env.NODE_ENV === ENV.DEV
+    useDevServer: process.env.NODE_ENV !== ENV.LIVE
 });
+if (process.env.NODE_ENV !== ENV.LIVE) {
+    logger.setDefaults({
+        env: process.env.NODE_ENV
+    })
+}
 
 // Console && Navigation
 Console.init();
