@@ -1,4 +1,4 @@
-import {htmlToElement, argbHexToRgba} from './utils/convert';
+import { htmlToElement, argbHexToRgba } from './utils/convert';
 import styleNames from 'stylenames';
 import classNames from 'classnames';
 
@@ -64,8 +64,8 @@ function dateTime(config) {
 
 function input(config) {
     let styles = styleNames({
-        "margin-bottom": "20px",
-        "width": "95%"
+        'margin-bottom': '20px',
+        'width': '95%'
     });
 
     let $contentWrapper = htmlToElement(`<div class="dialogContentWrapper">

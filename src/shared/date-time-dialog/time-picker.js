@@ -1,4 +1,4 @@
-import {numberToTimeString, htmlToElement} from '../utils/convert';
+import { numberToTimeString, htmlToElement } from '../utils/convert';
 
 export default class TimePicker {
     $timePicker = null;

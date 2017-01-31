@@ -1,5 +1,5 @@
-import {stringisEmptyOrWhitespace, getUrlParameters} from './helper';
-import {htmlToElement, numberToTimeString} from './convert';
+import { stringisEmptyOrWhitespace, getUrlParameters } from './helper';
+import { htmlToElement, numberToTimeString } from './convert';
 import classNames from 'classnames';
 
 const password = 'cw913';

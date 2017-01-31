@@ -1,4 +1,4 @@
-import {htmlToElement, getRelativeColor} from './utils/convert';
+import { htmlToElement, getRelativeColor } from './utils/convert';
 
 /**
  * Accept Arrays like
