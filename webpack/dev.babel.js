@@ -1,4 +1,4 @@
-import {HotModuleReplacementPlugin,NoErrorsPlugin,DefinePlugin} from 'webpack';
+import { HotModuleReplacementPlugin, NoErrorsPlugin, DefinePlugin } from 'webpack';
 import path from 'path';
 import fs from 'fs';
 
@@ -15,8 +15,8 @@ export default {
         extensions: ['', '.js', '.scss']
     },
     output: {
-        path: path.resolve(ROOT_PATH, "build"),
-        filename: "chaynsweb.bundle.js"
+        path: path.resolve(ROOT_PATH, 'build'),
+        filename: 'chaynsweb.bundle.js'
     },
     devServer: {
         historyApiFallback: true,
@@ -42,7 +42,7 @@ export default {
             }
         ]
     },
-    devtool: "inline-source-map",
+    devtool: 'inline-source-map',
     plugins: [
         new HotModuleReplacementPlugin(),
         new NoErrorsPlugin(),

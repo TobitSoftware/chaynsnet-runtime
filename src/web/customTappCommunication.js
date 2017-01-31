@@ -21,7 +21,7 @@ window.CustomTappCommunication = window.CustomTappCommunication || {};
         }
     }
 
-    module.Init = () => window.addEventListener("message", onWindowMessage, false);
+    module.Init = () => window.addEventListener('message', onWindowMessage, false);
 
     module.PostMessage = (method, params, source) => {
         let win = null;

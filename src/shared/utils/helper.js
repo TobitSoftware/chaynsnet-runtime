@@ -1,5 +1,5 @@
-import {SYSTEM_URL_PARAMETERS} from '../../config';
-import {decodeTobitAccessToken} from './convert';
+import { SYSTEM_URL_PARAMETERS } from '../../config';
+import { decodeTobitAccessToken } from './convert';
 
 /**
  * Function that do the same as query's "$(el).outerHeight(true)"
@@ -38,7 +38,7 @@ export function getCookie(cCame) {
 
 export function getWindowMetrics() {
     return {
-        AvailHeight: window.innerHeight -10,
+        AvailHeight: window.innerHeight - 10,
         WindowScrollTop: document.body.scrollTop,
         WindowInnerHeight: window.innerHeight,
         pageYOffset: window.pageYOffset

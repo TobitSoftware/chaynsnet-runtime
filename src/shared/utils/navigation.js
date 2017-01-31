@@ -1,5 +1,5 @@
-import {getUrlParameters} from './helper';
-import {loadTapp} from "../../web/customTapp";
+import { getUrlParameters } from './helper';
+import { loadTapp } from '../../web/customTapp';
 
 let $navigation = document.querySelector('.navigation');
 
