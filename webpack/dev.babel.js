@@ -48,7 +48,7 @@ export default {
         new NoErrorsPlugin(),
         new DefinePlugin({
             'process.env': {
-                NODE_ENV: JSON.stringify('dev')
+                NODE_ENV: JSON.stringify('production')
             }
         })
     ]

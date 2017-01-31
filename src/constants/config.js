@@ -5,5 +5,5 @@ export let SYSTEM_URL_PARAMETERS = ['tappid', 'locationid', 'navigation', 'conso
 export const ENV = {
     DEV: 'dev',
     QA: 'qa',
-    LIVE: 'live'
+    LIVE: 'production'
 };
