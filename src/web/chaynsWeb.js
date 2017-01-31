@@ -1,14 +1,15 @@
-import {DEFAULT_LOCATIONID, DEFAULT_TAPPID, LOGIN_TAPPID} from '../config';
-import {loadTapp} from './customTapp';
-import Textstrings from '../shared/utils/textstings';
-import {validateTobitAccessToken, getUrlParameters, stringisEmptyOrWhitespace} from '../shared/utils/helper';
-import {decodeTobitAccessToken} from '../shared/utils/convert';
+import logger from 'chayns-logger';
 import Dialog from '../shared/dialog';
-import {getAccessToken, setAccessToken, resizeWindow} from '../shared/utils/native-functions';
-import {loadLocation} from './chaynsInfo';
-import {setDynamicStyle} from '../shared/dynamic-style';
+import { loadTapp } from './customTapp';
+import { loadLocation } from './chaynsInfo';
+import { setDynamicStyle } from '../shared/dynamic-style';
+import Textstrings from '../shared/utils/textstings';
 import Navigation from '../shared/utils/navigation';
-import Logger from '../shared/logger';
+import { validateTobitAccessToken, getUrlParameters, stringisEmptyOrWhitespace } from '../shared/utils/helper';
+import { decodeTobitAccessToken } from '../shared/utils/convert';
+import { getAccessToken, setAccessToken, resizeWindow } from '../shared/utils/native-functions';
+
+import { DEFAULT_LOCATIONID, DEFAULT_TAPPID,LOGIN_TAPPID } from '../constants/config';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -20,7 +21,13 @@ document.addEventListener('DOMContentLoaded', () => {
         tappId = -2;
     }
 
-    Logger.request(undefined, {tappId, locationId}, 'chaynsWeb.js');
+    logger.info({
+        message: 'ChaynsWebLight requested',
+        data: {
+            tappId,
+            locationId
+        }
+    });
 
     if (!stringisEmptyOrWhitespace(tobitAccessToken) && validateTobitAccessToken(tobitAccessToken)) {
         let decodedToken = decodeTobitAccessToken(tobitAccessToken);
@@ -28,7 +35,12 @@ document.addEventListener('DOMContentLoaded', () => {
         tappId = DEFAULT_TAPPID;
 
         setAccessToken(tobitAccessToken);
-        Logger.info('accessToken as URLParameter', {userId: decodedToken.TobitUserID});
+        logger.info({
+            message: 'accessToken as URLParameter',
+            data: {
+                userId: decodedToken.TobitUserID,
+            }
+        });
 
         if (decodedToken.roles.indexOf('tobitBuha') !== -1 && getUrlParameters().debug !== '1') {
             document.querySelector('.navigation__element[data-tappid="251441"]').classList.add('hidden');
@@ -66,7 +78,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (tappId !== LOGIN_TAPPID && validateTobitAccessToken(tobitAccessToken)) {
                 loadTapp(tappId);
             } else {
-                Logger.info('ChaynsWebLight - login Tapp', {tappId});
+
+                logger.info({
+                    message: 'show login tapp',
+                    data: {
+                        tappId
+                    }
+                });
 
                 resizeWindow(566, 766);
                 Navigation.hide();

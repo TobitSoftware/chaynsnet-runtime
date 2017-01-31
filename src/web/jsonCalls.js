@@ -1,11 +1,11 @@
 import Dialog from '../shared/dialog';
 import WaitCursor from '../shared/wait-cursor';
 import FloatingButton from '../shared/floating-button';
-import {argbHexToRgba} from '../shared/utils/convert';
-import {getWindowMetrics} from '../shared/utils/helper';
-import {loadTapp} from './customTapp';
-import {setAccessToken, closeWindow, refreshChaynsIdIcons} from '../shared/utils/native-functions';
-import {login, logout} from '../shared/login';
+import { argbHexToRgba } from '../shared/utils/convert';
+import { getWindowMetrics } from '../shared/utils/helper';
+import { loadTapp } from './customTapp';
+import { setAccessToken, closeWindow, refreshChaynsIdIcons } from '../shared/utils/native-functions';
+import { login, logout } from '../shared/login';
 
 let dateType = {
     DATE: 1,

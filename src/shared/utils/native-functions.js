@@ -1,4 +1,4 @@
-import {setItem, getItem} from './localStorage';
+import { setItem, getItem } from './localStorage';
 
 
 let parentWindow = (document.parentWindow && document.parentWindow.external) ? document.parentWindow.external : {},

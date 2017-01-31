@@ -1,8 +1,8 @@
-import {decodeTobitAccessToken} from '../shared/utils/convert';
-import {getAccessToken} from '../shared/utils/native-functions';
+import logger from 'chayns-logger';
+import { decodeTobitAccessToken } from '../shared/utils/convert';
+import { getAccessToken } from '../shared/utils/native-functions';
 import Request from '../shared/utils/request';
-import {LOGIN_TAPP} from '../config';
-import Logger from "../shared/logger";
+import { LOGIN_TAPP } from '../constants/login-tapp';
 
 let chaynsInfo,
     globalData;
@@ -100,7 +100,15 @@ export function loadLocation(locationId = 77783) {
             })
             .catch((err) => {
                 console.error('Load location failed.', err);
-                Logger.error('Load location failed.', err, 'chaynsInfo.js : loadLocation');
+                logger.error({
+                    message: 'Load location failed.',
+                    fileName: 'chaynsInfo.js',
+                    section: 'loadLocation',
+                    ex: {
+                        message: err.message,
+                        stackTrace: err.stack
+                    }
+                });
             });
     })
 }
@@ -109,24 +117,24 @@ export function setSelectedTapp(tapp) {
     if (tapp && typeof tapp === 'object') {
         chaynsInfo.ExclusiveMode = tapp.exclusiveView || false;
         globalData.AppInfo.TappSelected = {
-            "Id": tapp.id,
-            "InternalName": tapp.internalName,
-            "ShowName": tapp.showName,
-            "SortID": tapp.sortId,
-            "ExclusiveMode": tapp.exclusiveView,
-            "LoadAsAjax": tapp.loadAsAjax,
-            "Url": tapp.url,
-            "Link": tapp.link,
-            "SendAuthenticationHeader": tapp.sendAuthenticationHeader,
-            "PostTobitAccessToken": tapp.postTobitAccessToken,
-            "UserGroupIds": tapp.uacGroupIds || [],
-            "HideFromMenu": tapp.hideFromMenu,
-            "Mobile": tapp.mobile,
-            "Desktop": tapp.desktop,
-            "ShowOnlyInAdminMode": tapp.showOnlyInAdminMode,
-            "Icon": tapp.icon,
-            "FallbackTapp": tapp.fallbackTapp,
-            "isExclusiveView": tapp.isExclusiveView
+            'Id': tapp.id,
+            'InternalName': tapp.internalName,
+            'ShowName': tapp.showName,
+            'SortID': tapp.sortId,
+            'ExclusiveMode': tapp.exclusiveView,
+            'LoadAsAjax': tapp.loadAsAjax,
+            'Url': tapp.url,
+            'Link': tapp.link,
+            'SendAuthenticationHeader': tapp.sendAuthenticationHeader,
+            'PostTobitAccessToken': tapp.postTobitAccessToken,
+            'UserGroupIds': tapp.uacGroupIds || [],
+            'HideFromMenu': tapp.hideFromMenu,
+            'Mobile': tapp.mobile,
+            'Desktop': tapp.desktop,
+            'ShowOnlyInAdminMode': tapp.showOnlyInAdminMode,
+            'Icon': tapp.icon,
+            'FallbackTapp': tapp.fallbackTapp,
+            'isExclusiveView': tapp.isExclusiveView
         };
     }
 }

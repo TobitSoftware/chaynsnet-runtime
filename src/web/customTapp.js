@@ -1,9 +1,9 @@
+import logger from 'chayns-logger';
 import FloatingButton from '../shared/floating-button';
 import WaitCursor from '../shared/wait-cursor';
-import {setSelectedTapp} from './chaynsInfo';
-import {getUrlParameters} from "../shared/utils/helper";
-import Logger from '../shared/logger';
-import {parameterStringToObject, htmlToElement} from '../shared/utils/convert';
+import { setSelectedTapp } from './chaynsInfo';
+import { getUrlParameters } from '../shared/utils/helper';
+import { parameterStringToObject, htmlToElement } from '../shared/utils/convert';
 
 let $bodyContent = document.querySelector('.body-content');
 
@@ -16,7 +16,12 @@ export function loadTapp(tappId) {
         setSelectedTapp(tapp);
         _loadTapp(parseInt(tapp.id, 10), setUrlParams(tapp.url));
     } else {
-        Logger.warning('No Tapp found!', {tappId}, 'customTapp : loadTapp');
+        logger.warning({
+            message: 'no tapp found',
+            data: { tappId },
+            fileName: 'customTapp.js',
+            section: 'loadTapp'
+        });
         console.warn('No Tapp found!');
     }
 }
@@ -28,7 +33,7 @@ export function loadTapp(tappId) {
  */
 function getTappById(tappId) {
     for (let tapp of window.ChaynsInfo.Tapps) {
-        if (tapp.id == parseInt(tappId, 10)) {
+        if (tapp.id === parseInt(tappId, 10)) {
             return tapp;
         }
     }
@@ -99,9 +104,9 @@ function _loadTapp(tappId, tappUrl) {
         $iframe.setAttribute('style', 'margin-top: -10px !important;');
     }
 
-    if(window.ChaynsInfo.ExclusiveMode){
-       $bodyContent.classList.add('body-content--exclusive-view');
-    }else {
+    if (window.ChaynsInfo.ExclusiveMode) {
+        $bodyContent.classList.add('body-content--exclusive-view');
+    } else {
         $bodyContent.classList.remove('body-content--exclusive-view');
     }
 

@@ -1,4 +1,4 @@
-import {htmlToElement} from './utils/convert';
+import { htmlToElement } from './utils/convert';
 import classNames from 'classnames';
 
 let floatingBtnCfg = {};

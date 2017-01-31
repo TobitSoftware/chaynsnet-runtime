@@ -1,5 +1,5 @@
 import Request from './utils/request';
-import {ENV} from "../config";
+import {ENV} from '../constants/config';
 
 const fnRegex = /at\s([\w.]+)\s\(/i;
 
