@@ -2,7 +2,7 @@ import logger from 'chayns-logger';
 import { decodeTobitAccessToken } from '../shared/utils/convert';
 import { getAccessToken } from '../shared/utils/native-functions';
 import Request from '../shared/utils/request';
-import { LOGIN_TAPP } from '../config';
+import { LOGIN_TAPP } from '../constants/login-tapp';
 
 let chaynsInfo,
     globalData;

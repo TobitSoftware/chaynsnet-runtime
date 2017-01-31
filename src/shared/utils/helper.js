@@ -1,4 +1,4 @@
-import { SYSTEM_URL_PARAMETERS } from '../../config';
+import { SYSTEM_URL_PARAMETERS } from '../../constants/config';
 import { decodeTobitAccessToken } from './convert';
 
 /**

@@ -1,13 +1,14 @@
 import logger from 'chayns-logger';
-
 import './shared/utils/polyfill';
 import './web/customTappCommunication';
 import './web/jsonCalls';
 import './web/chaynsWeb';
-import './config';
+import './constants/config';
 import Console from './shared/utils/console';
 import Navigation from './shared/utils/navigation';
 import generateUUID from './shared/utils/generate-uuid';
+
+import { ENV } from './constants/config';
 
 import './style/index.scss';
 

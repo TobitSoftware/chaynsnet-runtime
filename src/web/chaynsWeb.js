@@ -1,14 +1,15 @@
 import logger from 'chayns-logger';
-import { DEFAULT_LOCATIONID, DEFAULT_TAPPID, LOGIN_TAPPID } from '../config';
-import { loadTapp } from './customTapp';
-import Textstrings from '../shared/utils/textstings';
-import { validateTobitAccessToken, getUrlParameters, stringisEmptyOrWhitespace } from '../shared/utils/helper';
-import { decodeTobitAccessToken } from '../shared/utils/convert';
 import Dialog from '../shared/dialog';
-import { getAccessToken, setAccessToken, resizeWindow } from '../shared/utils/native-functions';
+import { loadTapp } from './customTapp';
 import { loadLocation } from './chaynsInfo';
 import { setDynamicStyle } from '../shared/dynamic-style';
+import Textstrings from '../shared/utils/textstings';
 import Navigation from '../shared/utils/navigation';
+import { validateTobitAccessToken, getUrlParameters, stringisEmptyOrWhitespace } from '../shared/utils/helper';
+import { decodeTobitAccessToken } from '../shared/utils/convert';
+import { getAccessToken, setAccessToken, resizeWindow } from '../shared/utils/native-functions';
+
+import { DEFAULT_LOCATIONID, DEFAULT_TAPPID,LOGIN_TAPPID } from '../constants/config';
 
 document.addEventListener('DOMContentLoaded', () => {
 
