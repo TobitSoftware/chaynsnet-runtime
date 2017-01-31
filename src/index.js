@@ -1,4 +1,5 @@
 import './style/index.scss';
+import logger from 'chayns-logger';
 
 //IE Fix
 if (!window.location.origin) {
@@ -16,6 +17,14 @@ if (typeof window.console === 'undefined') {
 import './config';
 
 chayns.ready.catch((ex) => {});
+//init logger
+logger.init({
+    applicationUid: 'B150BF1E-A955-4073-B3DD-4F2CEC864C6A',
+    overrideOnError: true,
+    sessionUid: generateUUID(),
+    throttleTime: 100,
+    useDevServer: process.env.NODE_ENV === ENV.DEV
+});
 
 //Console && Navigation
 import Console from './shared/utils/console';

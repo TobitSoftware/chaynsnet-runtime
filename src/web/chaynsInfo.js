@@ -1,8 +1,8 @@
 import {decodeTobitAccessToken} from '../shared/utils/convert';
 import {getAccessToken} from '../shared/utils/native-functions';
+import logger from 'chayns-logger';
 import Request from '../shared/utils/request';
 import {LOGIN_TAPP} from '../config';
-import Logger from "../shared/logger";
 
 let chaynsInfo,
     globalData;
@@ -100,7 +100,15 @@ export function loadLocation(locationId = 77783) {
             })
             .catch((err) => {
                 console.error('Load location failed.', err);
-                Logger.error('Load location failed.', err, 'chaynsInfo.js : loadLocation');
+                logger.error({
+                    message: 'Load location failed.',
+                    fileName: 'chaynsInfo.js',
+                    section: 'loadLocation',
+                    ex: {
+                        message: err.message,
+                        stackTrace: err.stack
+                    }
+                });
             });
     })
 }
