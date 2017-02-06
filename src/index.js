@@ -6,7 +6,6 @@ import './web/chaynsWeb';
 import './constants/config';
 import Console from './shared/utils/console';
 import Navigation from './shared/utils/navigation';
-import generateUUID from './shared/utils/generate-uuid';
 
 import { ENV } from './constants/config';
 
@@ -21,7 +20,6 @@ chayns.ready.catch((ex) => {
 logger.init({
     applicationUid: 'B150BF1E-A955-4073-B3DD-4F2CEC864C6A',
     overrideOnError: true,
-    sessionUid: generateUUID(),
     throttleTime: 100,
     useDevServer: process.env.NODE_ENV !== ENV.LIVE
 });
