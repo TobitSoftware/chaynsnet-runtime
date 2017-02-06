@@ -14,12 +14,11 @@
     "Webpack",
     "Babel"
   ],
-  "author": "Dennis & Kevin",
+  "author": "Kevin Mathmann",
   "license": "ISC",
   "bugs": {
     "url": "jira.tobit.com"
   },
-  "homepage": "https://github.com/rherwig/es6-library-template#readme",
   "devDependencies": {
     "appcache-webpack-plugin": "^1.3.0",
     "babel-core": "^6.17.0",
@@ -27,7 +26,7 @@
     "babel-polyfill": "^6.16.0",
     "babel-preset-es2015": "^6.16.0",
     "babel-preset-stage-0": "^6.16.0",
-    "chayns-logger": "^2.3.5",
+    "chayns-logger": "^2.3.7",
     "classnames": "^2.2.5",
     "css-loader": "^0.23.1",
     "gulp": "^3.9.1",
