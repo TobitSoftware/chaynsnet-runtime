@@ -1,42 +1,50 @@
 import webpack from 'webpack';
 import path from 'path';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 import AppCacheWebpackPlugin from 'appcache-webpack-plugin';
 
 const ROOT_PATH = path.resolve('./');
 
 export default {
-    entry: [
-        'babel-polyfill',
-        path.resolve(ROOT_PATH, 'src/index')
-    ],
+    entry: {
+        chaynsweb: [
+            'babel-polyfill',
+            path.resolve(ROOT_PATH, 'src/index')
+        ]
+    },
     resolve: {
-        extensions: ['', '.js', '.scss']
+        extensions: ['.js', '.scss']
     },
     output: {
         path: path.resolve(ROOT_PATH, 'build'),
-        filename: 'chaynsweb.bundle.js'
+        filename: '[name].bundle.js'
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.js$/,
-                loader: 'babel',
-                include: path.resolve(ROOT_PATH, 'src')
+                loader: 'babel-loader',
+                exclude: /node_modules/
             },
             {
                 test: /\.scss$/,
-                loader: 'style!css!sass',
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader'
+                ],
                 include: path.resolve(ROOT_PATH, 'src')
             }
         ]
     },
     devtool: 'hidden-source-map',
     plugins: [
-        new webpack.optimize.UglifyJsPlugin(),
-        new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: JSON.stringify('production')
-            }
+        new HtmlWebpackPlugin({
+            template: path.resolve(ROOT_PATH, 'index.html'),
+            hash: true
+        }),
+        new webpack.optimize.UglifyJsPlugin({
+            sourceMap: true
         }),
         new AppCacheWebpackPlugin({
             output: 'appcache.manifest',
@@ -45,6 +53,11 @@ export default {
                 'https://chayns-res.tobit.com/api/v3.1/css/chayns.min.css',
                 'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css'
             ]
-        })
+        }),
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: JSON.stringify('production')
+            }
+        }),
     ]
 };

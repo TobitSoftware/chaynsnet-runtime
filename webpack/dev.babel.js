@@ -1,22 +1,24 @@
-import { HotModuleReplacementPlugin, NoErrorsPlugin, DefinePlugin } from 'webpack';
+import { HotModuleReplacementPlugin, NoEmitOnErrorsPlugin, DefinePlugin } from 'webpack';
 import path from 'path';
 import fs from 'fs';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 const ROOT_PATH = path.resolve('./');
 
 export default {
-    entry: [
-        'webpack/hot/dev-server',
-        'webpack-dev-server/client?https://0.0.0.0:7070',
-        'babel-polyfill',
-        path.resolve(ROOT_PATH, 'src/index')
-    ],
+    entry: {
+        chaynsweb: [
+            'webpack/hot/dev-server',
+            'webpack-dev-server/client?https://0.0.0.0:7070',
+            path.resolve(ROOT_PATH, 'src/index')
+        ]
+    },
     resolve: {
-        extensions: ['', '.js', '.scss']
+        extensions: ['.js', '.scss']
     },
     output: {
         path: path.resolve(ROOT_PATH, 'build'),
-        filename: 'chaynsweb.bundle.js'
+        filename: '[name].bundle.js'
     },
     devServer: {
         historyApiFallback: true,
@@ -29,27 +31,34 @@ export default {
         }
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.js$/,
-                loader: 'babel',
+                loader: 'babel-loader',
                 exclude: /node_modules/
             },
             {
                 test: /\.scss$/,
-                loader: 'style!css!sass',
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader'
+                ],
                 include: path.resolve(ROOT_PATH, 'src')
             }
         ]
     },
     devtool: 'inline-source-map',
     plugins: [
-        new HotModuleReplacementPlugin(),
-        new NoErrorsPlugin(),
+        new HtmlWebpackPlugin({
+            template: path.resolve(ROOT_PATH, 'index.html')
+        }),
         new DefinePlugin({
             'process.env': {
-                NODE_ENV: JSON.stringify('production')
+                NODE_ENV: JSON.stringify('development')
             }
-        })
+        }),
+        new HotModuleReplacementPlugin(),
+        new NoEmitOnErrorsPlugin(),
     ]
 };
