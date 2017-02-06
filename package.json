@@ -5,8 +5,8 @@
   "scripts": {
     "start": "webpack-dev-server  --config ./webpack/dev.babel.js --progress",
     "start:https": "webpack-dev-server  --config ./webpack/dev.babel.js --progress --https",
-    "build": "webpack -p --config ./webpack/prod.babel.js && copy *.html build\\",
-    "build:qa": "webpack -p --config ./webpack/qa.babel.js && copy *.html build\\"
+    "build": "webpack -p --config ./webpack/prod.babel.js",
+    "build:qa": "webpack -p --config ./webpack/qa.babel.js"
   },
   "keywords": [
     "ChaynsWeb",
@@ -23,19 +23,17 @@
     "appcache-webpack-plugin": "^1.3.0",
     "babel-core": "^6.17.0",
     "babel-loader": "^6.2.5",
-    "babel-polyfill": "^6.16.0",
-    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-latest": "^6.22.0",
     "babel-preset-stage-0": "^6.16.0",
     "chayns-logger": "^2.3.8",
     "classnames": "^2.2.5",
-    "css-loader": "^0.23.1",
-    "gulp": "^3.9.1",
-    "gulp-uncache": "^0.3.6",
-    "node-sass": "^3.10.1",
-    "sass-loader": "^3.2.3",
+    "css-loader": "^0.26.1",
+    "html-webpack-plugin": "^2.28.0",
+    "node-sass": "^4.5.0",
+    "sass-loader": "^4.1.1",
     "style-loader": "^0.13.1",
     "stylenames": "^1.1.5",
-    "webpack": "^1.13.2",
-    "webpack-dev-server": "^1.16.1"
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.3.0"
   }
 }
