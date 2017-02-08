@@ -25,7 +25,7 @@
     "babel-loader": "^6.2.5",
     "babel-preset-latest": "^6.22.0",
     "babel-preset-stage-0": "^6.16.0",
-    "chayns-logger": "^2.4.0",
+    "chayns-logger": "^2.4.1",
     "classnames": "^2.2.5",
     "css-loader": "^0.26.1",
     "html-webpack-plugin": "^2.28.0",
