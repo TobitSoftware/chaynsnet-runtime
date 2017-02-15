@@ -17,7 +17,7 @@ export default {
     },
     output: {
         path: path.resolve(ROOT_PATH, 'build'),
-        filename: '[name].bundle.js'
+        filename: '[name].bundle.js?[hash]'
     },
     module: {
         rules: [
