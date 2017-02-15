@@ -8,6 +8,7 @@ const ROOT_PATH = path.resolve('./');
 export default {
     entry: {
         chaynsweb: [
+            'babel-polyfill',
             'webpack/hot/dev-server',
             'webpack-dev-server/client?https://0.0.0.0:7070',
             path.resolve(ROOT_PATH, 'src/index')
