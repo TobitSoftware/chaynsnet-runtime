@@ -33,7 +33,7 @@ export function loadLocation(locationId = 77783) {
                     },
                     LocationID: locationId,
                     SiteID: data.siteId,
-                    LocationName: data.locatioName,
+                    LocationName: data.locationName,
                     IsMobile: false,
                     ExclusiveMode: false,
                     IsFacebook: (document.referrer.indexOf('staticxx.facebook') > -1 || location.href.indexOf('fb=1') > -1),
