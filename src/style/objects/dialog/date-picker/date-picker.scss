@@ -1,0 +1,24 @@
+@import '../../../mixins/media-querys';
+
+.date-picker__header {
+  padding: 10px;
+  &__year {
+    color: white;
+    padding-bottom: 5px;
+    margin-left: 10px;
+  }
+  &__date {
+    color: white;
+    font-size: 20px;
+    margin-left: 10px;
+
+    @include mobile{
+      font-size: 25px;
+      padding-bottom: 5px;
+    }
+    @include desktop{
+      font-size: 30px;
+      padding-bottom: 8px;
+    }
+  }
+}

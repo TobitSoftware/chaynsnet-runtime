@@ -174,3 +174,27 @@ export function parameterStringToObject(parameterString) {
 
     return result;
 }
+
+let monthNames = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+let dayNames = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
+
+export function dateToString(date) {
+    if (typeof date === 'number') {
+        date = new Date(date)
+    }
+
+    if (!date.getTime) {
+        return null;
+    }
+
+    return `${dayNames[date.getDay()]}, ${date.getDate()}. ${monthNames[date.getMonth()]}`;
+}
+
+export function numberToMonthName(number) {
+    number = parseInt(number, 10);
+    return (number >= 0 && number < monthNames.length) ? monthNames[number] : null;
+}
+export function numberToDayName(number, length = null) {
+    number = parseInt(number, 10);
+    return (number >= 0 && number < dayNames.length) ? (length) ? dayNames[number].substr(0, length) : dayNames[number] : null;
+}

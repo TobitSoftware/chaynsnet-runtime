@@ -1,0 +1,6 @@
+@import '../../../constants/dialog';
+
+.input-dialog {
+  margin: $dialog-component-margin;
+  width: calc(100% - 36px);
+}

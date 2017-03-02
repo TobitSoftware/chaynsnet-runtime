@@ -1,0 +1,81 @@
+@import '../../mixins/media-querys';
+@import '../../constants/device-width';
+@import '../../constants/z-index';
+@import '../../constants/dialog';
+
+.dialog {
+  overflow: hidden;
+
+  width: $dialog-width-min;
+  @include mobile {
+    width: $dialog-width-mobile;
+  }
+  @include desktop {
+    width: $dialog-width-desktop;
+  }
+
+  //position
+  position: fixed;
+  z-index: $Z_DIALOG;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  //font & colors
+  background-color: #FFFFFF;
+  font-family: 'Roboto', 'Tahoma', 'Segoe UI Emoji', 'Segoe UI Symbol', serif;
+  font-size: 14px;
+  line-height: 23px;
+
+  padding-bottom: 10px;
+
+  &__background-layer {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: $Z_DIALOG_BGLayer;
+  }
+
+  &__header {
+    margin-bottom: 5px;
+
+    .headline {
+      margin: $dialog-component-margin;
+      font-size: 24px;
+    }
+
+    .description {
+      margin: $dialog-component-margin;
+      color: #545454;
+    }
+    .search {
+      width: calc(100% - 26px);
+      margin: $dialog-component-margin;
+      padding: 3px;
+      display: block;
+      font: inherit;
+      line-height: inherit;
+    }
+  }
+
+  &__header ~ &__content {
+    max-height: calc(100vh - 280px);
+  }
+
+  &__content {
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: calc(100vh - 90px);
+  }
+
+  &__buttons {
+    text-align: center;
+    margin: $dialog-component-margin;
+    .button {
+      min-width: 90px;
+      margin: 0 5px;
+    }
+  }
+}

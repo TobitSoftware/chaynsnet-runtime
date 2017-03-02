@@ -1,4 +1,4 @@
-import Dialog from '../ui/dialog';
+import Dialog from '../ui/dialog/dialog';
 import WaitCursor from '../ui/wait-cursor';
 import FloatingButton from '../ui/floating-button';
 import { argbHexToRgba } from '../utils/convert';

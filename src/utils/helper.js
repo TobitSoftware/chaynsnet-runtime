@@ -97,3 +97,29 @@ export function getUrlParameters(withSystemParameter = true) {
 
     return withSystemParameter ? urlParameter : urlParameterNoSystem;
 }
+
+/**
+ * shortcut for querySelector.
+ *    select from document like: _('selector')
+ *    from other elements like: _('selector', element)
+ * @param selector
+ * @param element
+ * @returns {Element}
+ * @private
+ */
+export function _(selector, element = document) {
+    return element.querySelector(selector);
+}
+
+/**
+ * Compares date1 with date2. Compares Year, Month, Day & if withTime is true also hours, minutes, seconds.
+ * @param date1
+ * @param date2
+ * @param withTime
+ * @returns {boolean}
+ */
+export function compareDate(date1, date2, withTime = false) {
+    let dateEquals = date1.getDate() === date2.getDate() && date1.getMonth() === date2.getMonth() && date1.getFullYear() === date2.getFullYear();
+
+    return (!withTime) ? dateEquals : dateEquals && date1.getHours() === date2.getHours() && date1.getMinutes() === date2.getMinutes() && date1.getSeconds() === date2.getSeconds();
+}
