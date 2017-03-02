@@ -1,4 +1,4 @@
-import { answerJsonCall } from '../tapp/customTappCommunication';
+import { answerJsonCall } from '../tapp/custom-tapp-communication';
 
 let jsonCallEventListener = [];
 

@@ -1,9 +1,9 @@
 import logger from 'chayns-logger';
-import FloatingButton from '../shared/floating-button';
-import WaitCursor from '../shared/wait-cursor';
-import { setSelectedTapp } from './chaynsInfo';
-import { getUrlParameters } from '../shared/utils/helper';
-import { parameterStringToObject, htmlToElement } from '../shared/utils/convert';
+import FloatingButton from '../ui/floating-button';
+import WaitCursor from '../ui/wait-cursor';
+import { setSelectedTapp } from '../chaynsInfo';
+import { getUrlParameters } from '../utils/helper';
+import { parameterStringToObject, htmlToElement } from '../utils/convert';
 
 let $bodyContent = document.querySelector('.body-content');
 
@@ -19,7 +19,7 @@ export function loadTapp(tappId) {
         logger.warning({
             message: 'no tapp found',
             data: { tappId },
-            fileName: 'customTapp.js',
+            fileName: 'custom-tapp.js',
             section: 'loadTapp'
         });
         console.warn('No Tapp found!');

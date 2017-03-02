@@ -1,6 +1,6 @@
 import logger from 'chayns-logger';
 import Dialog from './ui/dialog';
-import { loadTapp } from './tapp/customTapp';
+import { loadTapp } from './tapp/custom-tapp';
 import { loadLocation } from './chaynsInfo';
 import { setDynamicStyle } from './ui/dynamic-style';
 import Textstrings from './utils/textstings';

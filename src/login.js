@@ -1,4 +1,4 @@
-import { loadTapp } from './tapp/customTapp';
+import { loadTapp } from './tapp/custom-tapp';
 import { setAccessToken, closeWindow } from './utils/native-functions';
 import { LOGIN_TAPPID } from './constants/config';
 

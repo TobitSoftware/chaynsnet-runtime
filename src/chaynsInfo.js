@@ -3,11 +3,12 @@ import { decodeTobitAccessToken } from './utils/convert';
 import { getAccessToken } from './utils/native-functions';
 import Request from './utils/request';
 import { LOGIN_TAPP } from './constants/login-tapp';
+import { DEFAULT_LOCATIONID } from './constants/config';
 
 export let chaynsInfo;
 let globalData;
 
-export function loadLocation(locationId = 77783) {
+export function loadLocation(locationId = DEFAULT_LOCATIONID) {
     return new Promise((resolve) => {
         locationId = parseInt(locationId, 10);
         Request.get(`https://chaynssvc.tobit.com/v0.4/${locationId}/LocationSettings`)

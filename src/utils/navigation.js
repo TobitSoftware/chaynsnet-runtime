@@ -1,5 +1,5 @@
 import { getUrlParameters } from './helper';
-import { loadTapp } from '../tapp/customTapp';
+import { loadTapp } from '../tapp/custom-tapp';
 
 let $navigation = document.querySelector('.navigation');
 

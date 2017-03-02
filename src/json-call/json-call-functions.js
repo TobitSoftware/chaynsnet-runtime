@@ -3,11 +3,11 @@ import WaitCursor from '../ui/wait-cursor';
 import FloatingButton from '../ui/floating-button';
 import { argbHexToRgba } from '../utils/convert';
 import { getWindowMetrics } from '../utils/helper';
-import { loadTapp } from '../tapp/customTapp';
+import { loadTapp } from '../tapp/custom-tapp';
 import { setAccessToken, closeWindow, refreshChaynsIdIcons } from '../utils/native-functions';
 import { login, logout } from '../login';
 import * as jsonCallHelper from './json-call-helper';
-import { answerJsonCall } from '../tapp/customTappCommunication';
+import { answerJsonCall } from '../tapp/custom-tapp-communication';
 import {chaynsInfo} from '../chaynsInfo';
 
 let dateType = {
