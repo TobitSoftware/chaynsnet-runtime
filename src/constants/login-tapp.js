@@ -1,4 +1,4 @@
-import { getUrlParameters } from '../shared/utils/helper';
+import { getUrlParameters } from '../utils/helper';
 
 const loginUrl = {
     devBase: 'http://localhost:8080/',

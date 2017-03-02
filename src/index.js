@@ -1,11 +1,11 @@
 import logger from 'chayns-logger';
-import './shared/utils/polyfill';
-import './web/customTappCommunication';
-import './web/jsonCalls';
-import './web/chaynsWeb';
+import './utils/polyfill';
+import './tapp/customTappCommunication';
+import './json-call/json-call-functions';
+import './chaynsWeb';
 import './constants/config';
-import Console from './shared/utils/console';
-import Navigation from './shared/utils/navigation';
+import Console from './utils/console';
+import Navigation from './utils/navigation';
 
 import { ENV } from './constants/config';
 
