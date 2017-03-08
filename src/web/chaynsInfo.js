@@ -102,6 +102,7 @@ export function loadLocation(locationId = 77783) {
                 console.error('Load location failed.', err);
                 logger.error({
                     message: 'Load location failed.',
+                    locationId: locationId,
                     fileName: 'chaynsInfo.js',
                     section: 'loadLocation',
                     ex: {
