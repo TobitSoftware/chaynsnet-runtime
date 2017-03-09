@@ -4,7 +4,7 @@ import './tapp/custom-tapp-communication';
 import './json-call/json-call-functions';
 import './chayns-web';
 import './constants/config';
-import Navigation from './utils/navigation';
+import Navigation from './ui/navigation';
 import './window-objects';
 
 import { isLIVE } from './constants/environments';

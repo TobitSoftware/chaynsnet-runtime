@@ -4,7 +4,7 @@ import { loadTapp } from './tapp/custom-tapp';
 import { loadLocation } from './chayns-info';
 import { setDynamicStyle } from './ui/dynamic-style';
 import Textstrings from './utils/textstings';
-import Navigation from './utils/navigation';
+import Navigation from './ui/navigation';
 import { validateTobitAccessToken, getUrlParameters, stringisEmptyOrWhitespace } from './utils/helper';
 import { decodeTobitAccessToken } from './utils/convert';
 import { getAccessToken, setAccessToken, resizeWindow } from './utils/native-functions';
