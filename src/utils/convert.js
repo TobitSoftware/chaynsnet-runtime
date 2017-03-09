@@ -1,3 +1,5 @@
+import { chaynsInfo } from '../chaynsInfo';
+
 /**
  * convert string to node
  * @param html
@@ -108,7 +110,7 @@ export function getRelativeColor(baseColor, percentage, opacity) {
 
     if (typeof baseColor === 'number') {
         percentage = baseColor;
-        baseColor = window.ChaynsInfo.ColorScheme.BaseColor;
+        baseColor = chaynsInfo.ColorScheme.BaseColor;
     }
 
     if (percentage < 0 || percentage === undefined) {

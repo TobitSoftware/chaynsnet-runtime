@@ -92,5 +92,3 @@ function getWaitCursor(frameName) {
                     </div>
             </div>`);
 }
-
-window.waitCursor = WaitCursor;

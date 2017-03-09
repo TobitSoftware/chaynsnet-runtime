@@ -1,4 +1,5 @@
 import logger from 'chayns-logger';
+import { chaynsInfo } from '../chaynsInfo';
 import FloatingButton from '../ui/floating-button';
 import WaitCursor from '../ui/wait-cursor';
 import { setSelectedTapp } from '../chaynsInfo';
@@ -18,7 +19,7 @@ export function loadTapp(tappId) {
     } else {
         logger.warning({
             message: 'no tapp found',
-            data: { tappId },
+            data: {tappId},
             fileName: 'custom-tapp.js',
             section: 'loadTapp'
         });
@@ -32,7 +33,7 @@ export function loadTapp(tappId) {
  * @returns {*}
  */
 function getTappById(tappId) {
-    for (let tapp of window.ChaynsInfo.Tapps) {
+    for (let tapp of chaynsInfo.Tapps) {
         if (tapp.id === parseInt(tappId, 10)) {
             return tapp;
         }
@@ -46,18 +47,18 @@ function getTappById(tappId) {
  * @returns {string} url
  */
 function setUrlParams(url) {
-    url = url.replace(/##apname##/ig, window.ChaynsInfo.LocationName);
-    url = url.replace(/##siteid##/ig, window.ChaynsInfo.SiteID);
+    url = url.replace(/##apname##/ig, chaynsInfo.LocationName);
+    url = url.replace(/##siteid##/ig, chaynsInfo.SiteID);
     url = url.replace(/##os##/ig, 'webshadowlight');
-    url = url.replace(/##version##/ig, window.ChaynsInfo.Version);
-    url = url.replace(/##colormode##/ig, window.ChaynsInfo.ColorMode.toString());
-    url = url.replace(/##color##/ig, window.ChaynsInfo.Color.replace('#', ''));
-    url = url.replace(/##adminmode##/ig, (window.ChaynsInfo.AdminMode ? 1 : 0).toString());
-    url = url.replace(/##tobituserid##/ig, window.ChaynsInfo.User.ID.toString());
+    url = url.replace(/##version##/ig, chaynsInfo.Version);
+    url = url.replace(/##colormode##/ig, chaynsInfo.ColorMode.toString());
+    url = url.replace(/##color##/ig, chaynsInfo.Color.replace('#', ''));
+    url = url.replace(/##adminmode##/ig, (chaynsInfo.AdminMode ? 1 : 0).toString());
+    url = url.replace(/##tobituserid##/ig, chaynsInfo.User.ID.toString());
 
-    if (window.ChaynsInfo.User !== undefined && window.ChaynsInfo.User.ID !== '' && window.ChaynsInfo.User.ID > 0) {
-        url = url.replace(/##firstname##/ig, window.ChaynsInfo.User.FirstName);
-        url = url.replace(/##lastname##/ig, window.ChaynsInfo.User.LastName);
+    if (chaynsInfo.User !== undefined && chaynsInfo.User.ID !== '' && chaynsInfo.User.ID > 0) {
+        url = url.replace(/##firstname##/ig, chaynsInfo.User.FirstName);
+        url = url.replace(/##lastname##/ig, chaynsInfo.User.LastName);
     }
 
     url = url.replace(/##.*?##/g, ''); // removes unused parameters
@@ -100,11 +101,11 @@ function _loadTapp(tappId, tappUrl) {
     let $iframe = htmlToElement('<iframe frameborder="0" marginheight="0" marginwidth="0" id="TappIframe" name="TappIframe"></iframe>');
     $iframe.style.height = `${window.innerHeight - document.body.getBoundingClientRect().top + document.body.scrollTop}px`;
 
-    if (window.ChaynsInfo.IsMobile) {
+    if (chaynsInfo.IsMobile) {
         $iframe.setAttribute('style', 'margin-top: -10px !important;');
     }
 
-    if (window.ChaynsInfo.ExclusiveMode) {
+    if (chaynsInfo.ExclusiveMode) {
         $bodyContent.classList.add('body-content--exclusive-view');
     } else {
         $bodyContent.classList.remove('body-content--exclusive-view');

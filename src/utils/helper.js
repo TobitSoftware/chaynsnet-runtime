@@ -1,3 +1,4 @@
+import { chaynsInfo } from '../chaynsInfo';
 import { SYSTEM_URL_PARAMETERS } from '../constants/config';
 import { decodeTobitAccessToken } from './convert';
 
@@ -72,7 +73,7 @@ export function stringisEmptyOrWhitespace(value) {
 
 export function validateTobitAccessToken(tobitAccessToken) {
     let tokenData = decodeTobitAccessToken(tobitAccessToken);
-    return tokenData && new Date(tokenData.exp) > new Date() && (!window.ChaynsInfo || tokenData.LocationID == window.ChaynsInfo.LocationID);
+    return tokenData && new Date(tokenData.exp) > new Date() && (!chaynsInfo || tokenData.LocationID == chaynsInfo.LocationID);
 }
 
 let urlParameter = null,

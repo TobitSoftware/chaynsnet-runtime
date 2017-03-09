@@ -1,3 +1,5 @@
+import { chaynsInfo } from '../chaynsInfo';
+
 import { htmlToElement } from '../utils/convert';
 import classNames from 'classnames';
 
@@ -74,9 +76,9 @@ function getFloatingButton(frameName) {
 
     let classes = classNames('floatingButton', 'hidden', {
         'chayns-id': (frameName === 'ChaynsIDFrame'),
-        'menu-right': window.ChaynsInfo.Webshadow.MenuPosition === 1,
-        'menu-left': window.ChaynsInfo.Webshadow.MenuPosition === 0,
-        'is-mobile': window.ChaynsInfo.IsMobile
+        'menu-right': chaynsInfo.Webshadow.MenuPosition === 1,
+        'menu-left': chaynsInfo.Webshadow.MenuPosition === 0,
+        'is-mobile': chaynsInfo.IsMobile
     });
     return htmlToElement(`<div class="${classes}" data-iframe="${frameName}"></div>`);
 }

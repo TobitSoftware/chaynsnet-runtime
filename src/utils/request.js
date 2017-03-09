@@ -1,3 +1,4 @@
+import { chaynsInfo } from '../chaynsInfo';
 export default class Request {
     static get(url, customHeader) {
         return request('get', url, customHeader)
@@ -32,7 +33,7 @@ function request(method, url, body, customHeader) {
     config.headers = {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${(window.ChaynsInfo) ? window.ChaynsInfo.User.TobitAccessToken : ''}`
+        'Authorization': `Bearer ${(chaynsInfo) ? chaynsInfo.User.TobitAccessToken : ''}`
     };
 
     for (let type of Object.keys(customHeader || {})) {

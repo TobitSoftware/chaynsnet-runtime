@@ -9,7 +9,7 @@ import { validateTobitAccessToken, getUrlParameters, stringisEmptyOrWhitespace }
 import { decodeTobitAccessToken } from './utils/convert';
 import { getAccessToken, setAccessToken, resizeWindow } from './utils/native-functions';
 
-import { DEFAULT_LOCATIONID, DEFAULT_TAPPID,LOGIN_TAPPID } from './constants/config';
+import { DEFAULT_LOCATIONID, DEFAULT_TAPPID, LOGIN_TAPPID } from './constants/config';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -65,12 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         setDynamicStyle();
         Textstrings.init().then(() => {
-
-            window.alert = (message, title) => Dialog.show('alert', {
-                title: title || null,
-                message
-            });
-
             let tobitAccessToken = getAccessToken();
             console.log('tobitAccessToken', tobitAccessToken);
 

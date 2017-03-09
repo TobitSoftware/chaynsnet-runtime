@@ -73,7 +73,7 @@ export function showDialogAlert(value, srcIframe) {
 }
 
 export function getGlobalData(value, srcIframe) {
-    let data = ChaynsInfo.getGlobalData();
+    let data = chaynsInfo.getGlobalData();
     answerJsonCall(value, data, srcIframe);
 }
 
