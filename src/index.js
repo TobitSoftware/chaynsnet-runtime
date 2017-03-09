@@ -4,7 +4,6 @@ import './tapp/custom-tapp-communication';
 import './json-call/json-call-functions';
 import './chaynsWeb';
 import './constants/config';
-import Console from './utils/console';
 import Navigation from './utils/navigation';
 
 import { ENV } from './constants/config';
@@ -28,30 +27,4 @@ if (process.env.NODE_ENV !== ENV.LIVE) {
         env: process.env.NODE_ENV
     })
 }
-
-// Console && Navigation
-Console.init();
 Navigation.init();
-
-// Activate Console by clicking activationElement
-let timeout, count = 0;
-let activateCB = () => {
-    if (!timeout) {
-        timeout = setTimeout(() => {
-            count = 0;
-            timeout = null;
-        }, 10000);
-    }
-    count++;
-    if (count > 5) {
-        count = 0;
-        Console.show();
-        Navigation.show(true);
-    }
-};
-
-let activationElements = document.querySelectorAll('.activationElement');
-for (let element of activationElements) {
-    element.addEventListener('click', activateCB);
-}
-
