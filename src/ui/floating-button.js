@@ -1,7 +1,6 @@
-import { chaynsInfo } from '../chayns-info';
-
-import { htmlToElement } from '../utils/convert';
+import htmlToElement from 'html-to-element'
 import classNames from 'classnames';
+import { chaynsInfo } from '../chayns-info';
 
 let floatingBtnCfg = {};
 

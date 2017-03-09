@@ -1,16 +1,5 @@
 import { chaynsInfo } from '../chayns-info';
 
-/**
- * convert string to node
- * @param html
- * @returns {*|Node}
- */
-export function htmlToElement(html) {
-    const template = document.createElement('div');
-    template.innerHTML = html.trim();
-    return template.firstChild;
-}
-
 export function argbHexToRgba(hex) {
     let result;
 

@@ -1,4 +1,4 @@
-import {htmlToElement} from '../../../utils/convert';
+import htmlToElement from 'html-to-element';
 
 export default class InputDialog {
 

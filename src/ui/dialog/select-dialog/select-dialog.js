@@ -2,9 +2,10 @@
 // $FlowIgnore
 import classNames from 'classnames';
 import styleNames from 'stylenames';
+import htmlToElement from 'html-to-element';
 import {chaynsInfo} from '../../../chayns-info';
 import memorize from '../../../utils/memorize';
-import { htmlToElement, argbHexToRgba } from '../../../utils/convert';
+import { argbHexToRgba } from '../../../utils/convert';
 
 import { DISPLAY_INIT, DISPLAY_ADD } from '../../../constants/select-dialog';
 

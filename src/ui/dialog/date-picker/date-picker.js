@@ -1,4 +1,5 @@
-import {htmlToElement, dateToString} from '../../../utils/convert';
+import htmlToElement from 'html-to-element';
+import {dateToString} from '../../../utils/convert';
 import {_} from '../../../utils/helper';
 
 import DayPicker from './day-picker/day-picker';

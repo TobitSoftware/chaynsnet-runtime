@@ -1,6 +1,6 @@
 // @flow
+import htmlToElement from 'html-to-element';
 import { _ } from '../../../../utils/helper';
-import { htmlToElement } from '../../../../utils/convert';
 
 export default class MonthPicker {
 

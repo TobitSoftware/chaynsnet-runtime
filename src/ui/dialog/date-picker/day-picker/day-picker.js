@@ -1,5 +1,6 @@
 import classNames from 'classnames';
-import {htmlToElement, numberToDayName, numberToMonthName} from '../../../../utils/convert';
+import htmlToElement from 'html-to-element';
+import {numberToDayName, numberToMonthName} from '../../../../utils/convert';
 import {_} from '../../../../utils/helper';
 
 export default class DayPicker {

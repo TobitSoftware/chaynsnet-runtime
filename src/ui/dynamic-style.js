@@ -1,5 +1,6 @@
+import htmlToElement from 'html-to-element';
 import { chaynsInfo } from '../chayns-info';
-import { htmlToElement, getRelativeColor } from '../utils/convert';
+import { getRelativeColor } from '../utils/convert';
 
 /**
  * Accept Arrays like
@@ -93,12 +94,12 @@ export function setDynamicStyle() {
             styles: {
                 'background-color': `${getColor(20)}!important`
             }
-        },{
+        }, {
             selector: '.ChaynsCS-BgColor',
             styles: {
                 'background-color': `${getColor(100)}!important`
             }
-        },{
+        }, {
             selector: '.ChaynsCS-Color',
             styles: {
                 'color': `${getColor(100)}!important`

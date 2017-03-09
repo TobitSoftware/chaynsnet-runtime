@@ -1,10 +1,11 @@
 import logger from 'chayns-logger';
+import htmlToElement from 'html-to-element';
 import { chaynsInfo } from '../chayns-info';
 import FloatingButton from '../ui/floating-button';
 import WaitCursor from '../ui/wait-cursor';
 import { setSelectedTapp } from '../chayns-info';
 import { getUrlParameters } from '../utils/helper';
-import { parameterStringToObject, htmlToElement } from '../utils/convert';
+import { parameterStringToObject } from '../utils/convert';
 
 let $bodyContent = document.querySelector('.body-content');
 

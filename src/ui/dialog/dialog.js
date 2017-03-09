@@ -1,4 +1,5 @@
-import {htmlToElement, argbHexToRgba} from '../../utils/convert';
+import htmlToElement from 'html-to-element';
+import {argbHexToRgba} from '../../utils/convert';
 import Fade from '../../utils/fade';
 
 import TimePicker from './time-picker/time-picker';

@@ -1,4 +1,5 @@
-import {numberToTimeString, htmlToElement} from '../../../utils/convert';
+import htmlToElement from 'html-to-element';
+import {numberToTimeString} from '../../../utils/convert';
 import {compareDate} from '../../../utils/helper';
 
 export default class TimePicker {
