@@ -8,13 +8,7 @@ import { setAccessToken, closeWindow, refreshChaynsIdIcons } from '../utils/nati
 import { login, logout } from '../login';
 import * as jsonCallHelper from './json-call-helper';
 import { answerJsonCall } from '../tapp/custom-tapp-communication';
-import {chaynsInfo} from '../chaynsInfo';
-
-let dateType = {
-    DATE: 1,
-    TIME: 2,
-    DATE_TIME: 3
-};
+import { chaynsInfo } from '../chaynsInfo';
 
 export function toggleWaitCursor(value, srcIframe) {
     if (value.enabled) {
@@ -24,36 +18,33 @@ export function toggleWaitCursor(value, srcIframe) {
     WaitCursor.hide(srcIframe[0]);
 }
 
-export function selectTab (value, srcIframe) {
+export function selectTab(value, srcIframe) {
     FloatingButton.hide(srcIframe[0]);
 
     loadTapp(value.id);
 }
 
-export function externOpenUrl (value) {
+export function externOpenUrl(value) {
     window.open(value.url, value.target ? value.target : '_blank');
 }
 
-export function requestGeoLocation (value, srcIframe) {
+export function requestGeoLocation(value, srcIframe) {
     if (navigator.geolocation) {
-        const requestPos = (method) => method.apply(navigator.geolocation, [
-            function (pos) {
-                const obj = {
-                    'accuracy': pos.coords.accuracy,
-                    'altitude': pos.coords.altitude,
-                    'altitudeAccuracy': pos.coords.altitudeAccuracy,
-                    'heading': pos.coords.heading,
-                    'latitude': pos.coords.latitude,
-                    'longitude': pos.coords.longitude,
-                    'speed': pos.coords.speed
-                };
-                answerJsonCall(value, obj, srcIframe);
-            }, function (err) {
-                jsonCallHelper.throwEvent(14, err.code + 10, err.message, value, srcIframe);
-            }
-        ]);
+        const requestPos = (method) => method.apply(navigator.geolocation, [function (pos) {
+            const obj = {
+                'accuracy': pos.coords.accuracy,
+                'altitude': pos.coords.altitude,
+                'altitudeAccuracy': pos.coords.altitudeAccuracy,
+                'heading': pos.coords.heading,
+                'latitude': pos.coords.latitude,
+                'longitude': pos.coords.longitude,
+                'speed': pos.coords.speed
+            };
+            answerJsonCall(value, obj, srcIframe);
+        }, function (err) {
+            jsonCallHelper.throwEvent(14, err.code + 10, err.message, value, srcIframe);
+        }]);
 
-        //noinspection JSUnresolvedVariable
         if (value.permanent) {
             jsonCallHelper.GeoWatchNumber = requestPos(navigator.geolocation.watchPosition);
         } else {
@@ -69,75 +60,111 @@ export function requestGeoLocation (value, srcIframe) {
     }
 }
 
-export function showDialogAlert (value, srcIframe) {
+export function showDialogAlert(value, srcIframe) {
     if (value.dialog === undefined) {
-        jsonCallHelper.throwEvent(16, 2, 'Field dialog missing.', value, srcIframe);
-        return;
+        return jsonCallHelper.throwEvent(16, 2, 'Field dialog missing.', value, srcIframe);
     }
     if ((value.dialog.buttons || []).length === 0) {
-        jsonCallHelper.throwEvent(16, 2, 'Field dialog.buttons missing.', value, srcIframe);
-        return;
+        return jsonCallHelper.throwEvent(16, 2, 'Field dialog.buttons missing.', value, srcIframe);
     }
 
-    value.dialog.callback = (buttonType) => answerJsonCall(value, buttonType, srcIframe);
-
-    Dialog.show('alert', value.dialog);
+    Dialog.show(Dialog.type.ALERT, value.dialog)
+        .then(buttonType => answerJsonCall(value, buttonType, srcIframe));
 }
 
-export function getGlobalData (value, srcIframe) {
+export function getGlobalData(value, srcIframe) {
     let data = ChaynsInfo.getGlobalData();
     answerJsonCall(value, data, srcIframe);
 }
 
-export function dateTimePicker (value, srcIframe) {
+export function dateTimePicker(value, srcIframe) {
     if (!value.dialog) {
-        value.dialog = {}
+        value.dialog = {};
     }
 
     value.dialog.selectedDate = (value.selectedDate === -1) ? null : value.selectedDate;
     value.dialog.minDate = (value.minDate === -1) ? null : value.minDate;
     value.dialog.maxDate = (value.maxDate === -1) ? null : value.maxDate;
-    value.dialog.callback = (ret) => answerJsonCall(value, ret, srcIframe);
 
     let dialogType;
     switch (value.type) {
         case dateType.DATE_TIME:
-            dialogType = 'dateTime';
+            dialogType = Dialog.type.DATETIME;
             break;
         case dateType.DATE:
-            dialogType = 'date';
+            dialogType = Dialog.type.DATE;
             break;
         case dateType.TIME:
-            dialogType = 'time';
+            dialogType = Dialog.type.TIME;
             break;
         default:
-            dialogType = 'dateTime';
+            dialogType = Dialog.type.DATETIME;
     }
 
-    Dialog.show(dialogType, value.dialog);
+    // If Device is Mobile (width smaller 451px) and DialogType is DateTime
+    // -> show first Date and then Time Dialog.
+    if (window.outerWidth <= 450 && dialogType === Dialog.type.DATETIME) {
+        const { dialog: { minDateTS, maxDateTS, selectedDateTS } } = value;
+        Dialog.show(Dialog.type.DATE, value.dialog)
+            .then((dateRes) => {
+                const { selectedDate: selectedDateTs } = dateRes;
+                const selectedDate = new Date(selectedDateTs * 1000);
+
+                if (compareDate(new Date(minDateTS * 1000), selectedDate)) {
+                    value.dialog.minDate = minDateTS;
+                } else {
+                    value.dialog.minDate = null;
+                }
+
+                if (compareDate(new Date(maxDateTS * 1000), selectedDate)) {
+                    value.dialog.maxDate = maxDateTS;
+                } else {
+                    value.dialog.maxDate = null;
+                }
+
+                value.dialog.selectedDate = selectedDateTS;
+
+                Dialog.show(Dialog.type.TIME, value.dialog)
+                    .then((timeRes) => {
+                        const timeDate = new Date(timeRes.selectedDate * 1000);
+
+                        selectedDate.setHours(timeDate.getHours());
+                        selectedDate.setMinutes(timeDate.getMinutes());
+
+                        dateRes.selectedDate = (selectedDate.getTime() / 1000).toFixed(0);
+                        dateRes.buttonType = timeRes.buttonType;
+
+                        answerJsonCall(value, dateRes, srcIframe);
+                    });
+            });
+    } else {
+        Dialog.show(dialogType, value.dialog)
+            .then((ret) => {
+                answerJsonCall(value, ret, srcIframe);
+            });
+    }
 }
 
-export function multiSelectDialog (value, srcIframe) {
+export function multiSelectDialog(value, srcIframe) {
     if (value.dialog === undefined) {
-        jsonCallHelper.throwEvent(50, 2, 'Field dialog missing.', value, srcIframe);
-        return;
+        return jsonCallHelper.throwEvent(50, 2, 'Field dialog missing.', value, srcIframe);
     }
+
     if ((value.dialog.buttons || []).length === 0) {
-        jsonCallHelper.throwEvent(50, 2, 'Field dialog.buttons missing.', value, srcIframe);
-        return;
+        return jsonCallHelper.throwEvent(50, 2, 'Field dialog.buttons missing.', value, srcIframe);
     }
+
     if ((value.list || []).length === 0) {
-        jsonCallHelper.throwEvent(50, 2, 'Field list missing.', value, srcIframe);
-        return;
+        return jsonCallHelper.throwEvent(50, 2, 'Field list missing.', value, srcIframe);
     }
 
     value.dialog.list = value.list;
-    value.dialog.callback = (retVal) => answerJsonCall(value, retVal, srcIframe);
 
-    Dialog.show('select', value.dialog);
+    Dialog.show(Dialog.type.SELECT, value.dialog)
+        .then(retVal => answerJsonCall(value, retVal, srcIframe));
 }
 
-export function tobitWebTokenLogin (value) {
+export function tobitWebTokenLogin(value) {
     if ('tobitAccessToken' in value) {
         setAccessToken(value.tobitAccessToken);
         closeWindow();
@@ -145,15 +172,15 @@ export function tobitWebTokenLogin (value) {
     }
 }
 
-export function tobitLogin () {
+export function tobitLogin() {
     login();
 }
 
-export function tobitLogout () {
+export function tobitLogout() {
     logout();
 }
 
-export function showFloatingButton (value, srcIfame) {
+export function showFloatingButton(value, srcIfame) {
     if (value.enabled) {
         let bgColor = argbHexToRgba(value.color);
         bgColor = bgColor ? `rgba(${bgColor.r}, ${bgColor.g}, ${bgColor.b}, ${bgColor.a})` : '';
@@ -177,11 +204,11 @@ export function showFloatingButton (value, srcIfame) {
     }
 }
 
-export function addChaynsCallErrorListener (value, srcIframe) {
+export function addChaynsCallErrorListener(value, srcIframe) {
     jsonCallHelper.AddJsonCallEventListener(75, value, srcIframe);
 }
 
-export function setIframeHeigth (value, srcIframe) {
+export function setIframeHeigth(value, srcIframe) {
     let $iframe = srcIframe[0];
 
     if (!value.full && !('height' in value) && !('fullViewport' in value)) {
@@ -207,37 +234,35 @@ export function setIframeHeigth (value, srcIframe) {
     }
 }
 
-export function getWindowMetricsCall (value, srcIframe) {
+export function getWindowMetricsCall(value, srcIframe) {
     const windowMetrics = getWindowMetrics();
     answerJsonCall(value, windowMetrics, srcIframe);
 }
 
-export function updateChaynsId () {
+export function updateChaynsId() {
     refreshChaynsIdIcons()
 }
 
-export function showDialogInput (value, srcIframe) {
+export function showDialogInput(value, srcIframe) {
     if (value.dialog === undefined) {
-        jsonCallHelper.throwEvent(103, 2, 'Field dialog missing.', value, srcIframe);
-        return;
+        return jsonCallHelper.throwEvent(103, 2, 'Field dialog missing.', value, srcIframe);
     }
+
     if ((value.dialog.buttons || []).length === 0) {
-        jsonCallHelper.throwEvent(103, 2, 'Field dialog.buttons missing.', value, srcIframe);
-        return;
+        return jsonCallHelper.throwEvent(103, 2, 'Field dialog.buttons missing.', value, srcIframe);
     }
 
-    value.dialog.callback = (retVal) => answerJsonCall(value, retVal, srcIframe);
-
-    Dialog.show('input', value.dialog);
+    Dialog.show(Dialog.type.INPUT, value.dialog)
+        .then(retVal => answerJsonCall(value, retVal, srcIframe));
 }
 
-export function sendEventToTopFrame (value, srcIframe) {
+export function sendEventToTopFrame(value, srcIframe) {
     let event = new CustomEvent(value.event);
     event.data = value.object;
     window.dispatchEvent(event);
 }
 
-export function setWebsiteTitle (value) {
+export function setWebsiteTitle(value) {
     if (value.title) {
         document.title = value.title;
     }
