@@ -2,7 +2,7 @@ import logger from 'chayns-logger';
 import './utils/polyfill';
 import './tapp/custom-tapp-communication';
 import './json-call/json-call-functions';
-import './chaynsWeb';
+import './chayns-web';
 import './constants/config';
 import Navigation from './utils/navigation';
 import './window-objects';
