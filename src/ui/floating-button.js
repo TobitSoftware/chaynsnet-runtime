@@ -1,4 +1,4 @@
-import { chaynsInfo } from '../chaynsInfo';
+import { chaynsInfo } from '../chayns-info';
 
 import { htmlToElement } from '../utils/convert';
 import classNames from 'classnames';

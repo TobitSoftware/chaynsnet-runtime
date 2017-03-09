@@ -1,8 +1,8 @@
 import logger from 'chayns-logger';
-import { chaynsInfo } from '../chaynsInfo';
+import { chaynsInfo } from '../chayns-info';
 import FloatingButton from '../ui/floating-button';
 import WaitCursor from '../ui/wait-cursor';
-import { setSelectedTapp } from '../chaynsInfo';
+import { setSelectedTapp } from '../chayns-info';
 import { getUrlParameters } from '../utils/helper';
 import { parameterStringToObject, htmlToElement } from '../utils/convert';
 

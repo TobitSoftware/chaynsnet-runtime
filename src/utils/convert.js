@@ -1,4 +1,4 @@
-import { chaynsInfo } from '../chaynsInfo';
+import { chaynsInfo } from '../chayns-info';
 
 /**
  * convert string to node

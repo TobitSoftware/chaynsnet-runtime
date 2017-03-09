@@ -2,7 +2,7 @@
 // $FlowIgnore
 import classNames from 'classnames';
 import styleNames from 'stylenames';
-import {chaynsInfo} from '../../../chaynsInfo';
+import {chaynsInfo} from '../../../chayns-info';
 import memorize from '../../../utils/memorize';
 import { htmlToElement, argbHexToRgba } from '../../../utils/convert';
 

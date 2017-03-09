@@ -1,4 +1,4 @@
-import { chaynsInfo } from '../chaynsInfo';
+import { chaynsInfo } from '../chayns-info';
 export default class Request {
     static get(url, customHeader) {
         return request('get', url, customHeader)

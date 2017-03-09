@@ -8,7 +8,7 @@ import { setAccessToken, closeWindow, refreshChaynsIdIcons } from '../utils/nati
 import { login, logout } from '../login';
 import * as jsonCallHelper from './json-call-helper';
 import { answerJsonCall } from '../tapp/custom-tapp-communication';
-import { chaynsInfo } from '../chaynsInfo';
+import { chaynsInfo } from '../chayns-info';
 
 export function toggleWaitCursor(value, srcIframe) {
     if (value.enabled) {

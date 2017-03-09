@@ -1,4 +1,4 @@
-import { chaynsInfo } from '../chaynsInfo';
+import { chaynsInfo } from '../chayns-info';
 import { SYSTEM_URL_PARAMETERS } from '../constants/config';
 import { decodeTobitAccessToken } from './convert';
 
