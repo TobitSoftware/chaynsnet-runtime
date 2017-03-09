@@ -5,6 +5,7 @@ import './json-call/json-call-functions';
 import './chaynsWeb';
 import './constants/config';
 import Navigation from './utils/navigation';
+import './window-objects';
 
 import { ENV } from './constants/config';
 
