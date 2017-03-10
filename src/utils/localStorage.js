@@ -1,5 +1,5 @@
 let lsExists = true;
-let chaynsWebStorage;
+let chaynsWebStorage = {};
 let storagePrefix = 'ChaynsWeb_';
 
 /***
@@ -9,9 +9,9 @@ try {
     localStorage.setItem('test123', 123);
     localStorage.getItem('test123');
     lsExists = true;
+    localStorage.removeItem('test123');
 } catch (err) {
     lsExists = false;
-    chaynsWebStorage = window.Storage = {};
 }
 
 
@@ -30,10 +30,8 @@ export function setItem(key, value) {
 export function removeItem(key) {
     if (lsExists) {
         localStorage.removeItem(`${storagePrefix}${key}`);
-    } else {
-        if (chaynsWebStorage.hasOwnProperty(key)) {
-            delete chaynsWebStorage[key];
-        }
+    } else if (chaynsWebStorage.hasOwnProperty(key)) {
+        delete chaynsWebStorage[key];
     }
 }
 

@@ -14,10 +14,13 @@ export default function (env) {
         case ENVIRONMENTS.MN:
             reloadWithUrl('https://w-mn.tobit.ag:7070/');
             break;
+        default:
+            reloadWithUrl('https://chayns2.tobit.com/ChaynsWebLight/');
+            break;
     }
 }
 
 function reloadWithUrl(url) {
     const urlParameter = location.href.substring(location.href.indexOf('?') + 1);
-    location.href = `${url}?${urlParameter}`
+    location.href = `${url}?${urlParameter}`;
 }

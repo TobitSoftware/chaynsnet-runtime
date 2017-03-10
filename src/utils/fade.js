@@ -1,7 +1,11 @@
-let transitionDuration = null;
+const FADE_MODE = {
+    IN: 1,
+    OUT: 2
+};
+
+let defaultTransitionDuration = null;
 
 export default class Fade {
-    //noinspection ReservedWordAsName
     /**
      * Fades element in.
      * @param element
@@ -9,26 +13,11 @@ export default class Fade {
      * @returns {Promise}
      */
     static in(element, transition) {
-        return new Promise((resolve) => {
-            if (element && element.classList) {
-                if (!transition) {
-                    element.classList.add('transition--fade');
-                } else {
-                    element.style.transition = transition;
-                }
-
-                element.classList.remove('fade-out');
-
-                if (!transitionDuration)
-                    getTransitionDuration(element);
-
-                setTimeout(() => {
-                    element.classList.remove('transition--fade');
-                    //element.removeAttribute('style');
-                    resolve();
-                }, transitionDuration);
-            }
-        })
+        return fade({
+            fadeMode: FADE_MODE.IN,
+            element,
+            transition
+        });
     }
 
     /**
@@ -38,33 +27,52 @@ export default class Fade {
      * @returns {Promise}
      */
     static out(element, transition) {
-        return new Promise((resolve) => {
-            if (element && element.classList) {
-                if (!transition) {
-                    element.classList.add('transition--fade', 'fade-out');
-                } else {
-                    element.classList.add('fade-out');
-                    element.style.transition = transition;
-                }
-
-                if (!transitionDuration)
-                    getTransitionDuration(element);
-
-                setTimeout(() => {
-                    element.classList.remove('transition--fade');
-                    element.removeAttribute('style');
-                    resolve();
-                }, transitionDuration);
-            }
-        })
+        return fade({
+            fadeMode: FADE_MODE.OUT,
+            element,
+            transition
+        });
     }
 }
 
+function fade({ fadeMode, element, transition }) {
+    return new Promise((resolve) => {
+        if (element && element.classList) {
+            let transitionDuration = null;
+
+            if (transition) {
+                element.style.transition = transition;
+                transitionDuration = getTransitionDuration(element);
+            } else {
+                element.classList.add('transition--fade');
+                if (defaultTransitionDuration) {
+                    transitionDuration = defaultTransitionDuration;
+                } else {
+                    transitionDuration = defaultTransitionDuration = getTransitionDuration(element);
+                }
+            }
+
+            if (fadeMode === FADE_MODE.IN) {
+                element.classList.remove('fade-out');
+            } else if (fadeMode === FADE_MODE.OUT) {
+                element.classList.add('fade-out');
+            }
+
+            setTimeout(() => {
+                element.classList.remove('transition--fade');
+                element.style.transition = '';
+                resolve();
+            }, transitionDuration);
+        }
+    });
+}
+
 /**
- * Set transitionDuration to transitionDuration of that element
+ * Returns transitionDuration to transitionDuration of that element
  * @param element
+ * @return number
  */
 function getTransitionDuration(element) {
-    transitionDuration = window.getComputedStyle(element, null).transitionDuration;
-    transitionDuration = transitionDuration.indexOf('ms') === -1 ? parseFloat(transitionDuration) * 1000 : parseFloat(transitionDuration);
+    const elementTransitionDuration = window.getComputedStyle(element, null).transitionDuration;
+    return elementTransitionDuration.indexOf('ms') === -1 ? parseFloat(elementTransitionDuration) * 1000 : parseFloat(elementTransitionDuration);
 }
