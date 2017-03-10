@@ -2,7 +2,6 @@ import logger from 'chayns-logger';
 import { loadTapp } from './tapp/custom-tapp';
 import { loadLocation } from './chayns-info';
 import { setDynamicStyle } from './ui/dynamic-style';
-import Textstrings from './utils/textstings';
 import Navigation from './ui/navigation';
 import { validateTobitAccessToken, getUrlParameters, stringisEmptyOrWhitespace } from './utils/helper';
 import { decodeTobitAccessToken } from './utils/convert';
@@ -60,21 +59,19 @@ document.addEventListener('DOMContentLoaded', () => {
     loadLocation(locationId).then(() => {
         setDynamicStyle();
 
-        Textstrings.init().then(() => {
-            const tobitAccessToken = getAccessToken();
+        const tobitAccessToken = getAccessToken();
 
-            if (tappId !== LOGIN_TAPPID && validateTobitAccessToken(tobitAccessToken)) {
-                loadTapp(tappId);
-            } else {
-                logger.info({
-                    message: 'show login tapp',
-                    customNumber: tappId
-                });
+        if (tappId !== LOGIN_TAPPID && validateTobitAccessToken(tobitAccessToken)) {
+            loadTapp(tappId);
+        } else {
+            logger.info({
+                message: 'show login tapp',
+                customNumber: tappId
+            });
 
-                resizeWindow(566, 766);
-                Navigation.hide();
-                loadTapp(LOGIN_TAPPID);
-            }
-        });
+            resizeWindow(566, 766);
+            Navigation.hide();
+            loadTapp(LOGIN_TAPPID);
+        }
     });
 }, false);
