@@ -3,22 +3,12 @@ import path from 'path';
 import fs from 'fs';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
+import BASE_CONFIG from './configs/base-config';
+
 const ROOT_PATH = path.resolve('./');
 
 export default {
-    entry: {
-        chaynsweb: [
-            'babel-polyfill',
-            path.resolve(ROOT_PATH, 'src/index')
-        ]
-    },
-    resolve: {
-        extensions: ['.js', '.scss']
-    },
-    output: {
-        path: path.resolve(ROOT_PATH, 'build'),
-        filename: '[name].bundle.js'
-    },
+    ...BASE_CONFIG,
     devServer: {
         historyApiFallback: true,
         cert: fs.readFileSync(path.join(__dirname, 'ssl', 'tobitag.crt')),
@@ -28,24 +18,6 @@ export default {
         stats: {
             colors: true
         }
-    },
-    module: {
-        rules: [
-            {
-                test: /\.js$/,
-                loader: 'babel-loader',
-                exclude: /node_modules/
-            },
-            {
-                test: /\.scss$/,
-                use: [
-                    'style-loader',
-                    'css-loader',
-                    'sass-loader'
-                ],
-                include: path.resolve(ROOT_PATH, 'src')
-            }
-        ]
     },
     devtool: 'inline-source-map',
     plugins: [
