@@ -41,9 +41,9 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.23.0",
-    "html-to-element": "^0.1.0",
     "chayns-logger": "^2.4.1",
     "classnames": "^2.2.5",
+    "html-to-element": "^0.1.0",
     "stylenames": "^1.1.5"
   }
 }

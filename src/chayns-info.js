@@ -20,7 +20,7 @@ export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
                 message: 'No location found.',
                 fileName: 'chaynsInfo.js',
                 section: 'loadLocation',
-                locationId: locationId
+                locationId
             });
         }
 
@@ -30,8 +30,8 @@ export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
 
         locationSettings.design.color = `#${locationSettings.design.color}`;
 
-        let accessToken = getAccessToken();
-        let payload = decodeTobitAccessToken(accessToken);
+        const accessToken = getAccessToken();
+        const payload = decodeTobitAccessToken(accessToken);
 
         chaynsInfo = {
             Version: VERSION,
@@ -124,7 +124,7 @@ async function loadTapps(locationId) {
                 fileName: 'chaynsInfo.js',
                 customNumber: request.status,
                 section: 'loadTapps',
-                locationId: locationId
+                locationId
             });
         } else if (request.status !== 200) {
             console.warn('Get locationTapps failed.', request.status);
@@ -133,7 +133,7 @@ async function loadTapps(locationId) {
                 fileName: 'chaynsInfo.js',
                 customNumber: request.status,
                 section: 'loadTapps',
-                locationId: locationId
+                locationId
             });
         }
 
@@ -141,7 +141,7 @@ async function loadTapps(locationId) {
         const data = jsonResponse.data || [];
 
         const tapps = [];
-        for (let entry of data) {
+        for (const entry of data) {
             if (entry.tapps && typeof entry.tapps === 'object') {
                 tapps.push(...entry.tapps);
             } else {
@@ -152,12 +152,11 @@ async function loadTapps(locationId) {
         tapps.push(LOGIN_TAPP);
 
         return tapps;
-    }
-    catch
+    } catch
         (e) {
         logger.error({
             message: 'Load Tapps failed.',
-            locationId: locationId,
+            locationId,
             fileName: 'chaynsInfo.js',
             section: 'loadTapps',
             ex: {
@@ -174,24 +173,24 @@ export function setSelectedTapp(tapp) {
     if (tapp && typeof tapp === 'object') {
         chaynsInfo.ExclusiveMode = tapp.exclusiveView || false;
         globalData.AppInfo.TappSelected = {
-            'Id': tapp.id,
-            'InternalName': tapp.internalName,
-            'ShowName': tapp.showName,
-            'SortID': tapp.sortId,
-            'ExclusiveMode': tapp.exclusiveView,
-            'LoadAsAjax': tapp.loadAsAjax,
-            'Url': tapp.url,
-            'Link': tapp.link,
-            'SendAuthenticationHeader': tapp.sendAuthenticationHeader,
-            'PostTobitAccessToken': tapp.postTobitAccessToken,
-            'UserGroupIds': tapp.uacGroupIds || [],
-            'HideFromMenu': tapp.hideFromMenu,
-            'Mobile': tapp.mobile,
-            'Desktop': tapp.desktop,
-            'ShowOnlyInAdminMode': tapp.showOnlyInAdminMode,
-            'Icon': tapp.icon,
-            'FallbackTapp': tapp.fallbackTapp,
-            'isExclusiveView': tapp.isExclusiveView
+            Id: tapp.id,
+            InternalName: tapp.internalName,
+            ShowName: tapp.showName,
+            SortID: tapp.sortId,
+            ExclusiveMode: tapp.exclusiveView,
+            LoadAsAjax: tapp.loadAsAjax,
+            Url: tapp.url,
+            Link: tapp.link,
+            SendAuthenticationHeader: tapp.sendAuthenticationHeader,
+            PostTobitAccessToken: tapp.postTobitAccessToken,
+            UserGroupIds: tapp.uacGroupIds || [],
+            HideFromMenu: tapp.hideFromMenu,
+            Mobile: tapp.mobile,
+            Desktop: tapp.desktop,
+            ShowOnlyInAdminMode: tapp.showOnlyInAdminMode,
+            Icon: tapp.icon,
+            FallbackTapp: tapp.fallbackTapp,
+            isExclusiveView: tapp.isExclusiveView
         };
     }
 }
