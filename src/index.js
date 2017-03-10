@@ -1,6 +1,6 @@
 import logger from 'chayns-logger';
 import { chaynsInfo } from './chayns-info';
-import './utils/polyfill';
+import './polyfill/index';
 import './tapp/custom-tapp-communication';
 import './json-call/json-call-functions';
 import './chayns-web';
