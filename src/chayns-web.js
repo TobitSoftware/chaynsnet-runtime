@@ -5,10 +5,12 @@ import { setDynamicStyle } from './ui/dynamic-style';
 import Navigation from './ui/navigation';
 import { validateTobitAccessToken, getUrlParameters, stringisEmptyOrWhitespace } from './utils/helper';
 import { decodeTobitAccessToken } from './utils/convert';
-import { getAccessToken, setAccessToken, resizeWindow } from './utils/native-functions';
+import { getAccessToken, setAccessToken } from './utils/native-functions';
 
-import { DEFAULT_LOCATIONID, DEFAULT_TAPPID, LOGIN_TAPPID } from './constants/config';
+import { DEFAULT_LOCATIONID, DEFAULT_TAPPID } from './constants/defaults';
+import LOGIN_TAPP from './constants/login-tapp';
 import TAPPIDS from './constants/tapp-ids';
+import { login } from './login';
 
 document.addEventListener('DOMContentLoaded', () => {
     let tappId = getUrlParameters().tappid;
@@ -61,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const tobitAccessToken = getAccessToken();
 
-        if (tappId !== LOGIN_TAPPID && validateTobitAccessToken(tobitAccessToken)) {
+        if (tappId !== LOGIN_TAPP.id && validateTobitAccessToken(tobitAccessToken)) {
             loadTapp(tappId);
         } else {
             logger.info({
@@ -69,9 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 customNumber: tappId
             });
 
-            resizeWindow(566, 766);
-            Navigation.hide();
-            loadTapp(LOGIN_TAPPID);
+            login();
         }
     });
 }, false);

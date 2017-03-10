@@ -7,7 +7,7 @@ export function chaynscall(param, srcIframe) {
 
     if (typeof (param) === 'string') {
         try {
-            let temp = JSON.parse(param);
+            const temp = JSON.parse(param);
             value = temp.value;
             action = temp.action;
         } catch (e) {
@@ -33,7 +33,7 @@ export function chaynscall(param, srcIframe) {
     if (typeof jsonCalls[action] === 'function') {
         jsonCalls[action](value, srcIframe);
     } else {
-        jsonCallHelper.throwEvent(action, 3, 'chaynsCall ' + action + ' doesn\'t exist', value, srcIframe);
+        jsonCallHelper.throwEvent(action, 3, `chaynsCall ${action} doesn't exist`, value, srcIframe);
     }
 }
 

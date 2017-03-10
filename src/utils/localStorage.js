@@ -1,8 +1,8 @@
 let lsExists = true;
-let chaynsWebStorage = {};
-let storagePrefix = 'ChaynsWeb_';
+const chaynsWebStorage = {};
+const storagePrefix = 'ChaynsWeb_';
 
-/***
+/**
  * Inits localStorage helper.
  */
 try {

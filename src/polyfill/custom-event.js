@@ -1,7 +1,7 @@
 try {
-    new window.CustomEvent("test");
-} catch(e) {
-    let CustomEvent = function(event, params) {
+    new window.CustomEvent('test');
+} catch (e) {
+    const CustomEvent = function (event, params) {
         let evt;
 
         params = params || {
@@ -10,7 +10,7 @@ try {
                 detail: undefined
             };
 
-        evt = document.createEvent("CustomEvent");
+        evt = document.createEvent('CustomEvent');
         evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
 
         return evt;

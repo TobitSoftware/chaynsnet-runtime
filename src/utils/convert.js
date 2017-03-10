@@ -39,10 +39,11 @@ export function numberToTimeString(number) {
 export function utf8Decode(utftext) {
     let string = '';
     let i = 0;
-    let c, c1, c2;
+    let c;
+    let c1;
+    let c2;
 
     while (i < utftext.length) {
-
         c = utftext.charCodeAt(i);
 
         if (c < 128) {
@@ -72,7 +73,7 @@ export function decodeTobitAccessToken(tobitAccessToken) {
 
                 return JSON.parse(utf8Decode(atob(spl[1])));
             } catch (e) {
-                //TODO Logging
+                // TODO Logging
             }
         }
     }
@@ -86,7 +87,7 @@ export function getRelativeColor(baseColor, percentage, opacity) {
         }
 
         let dec = parseInt(hex, 16);
-        dec = (255 - dec) * percentage / 100;
+        dec = ((255 - dec) * percentage) / 100;
         dec = dec >= 255 ? 0 : Math.floor(255 - dec);
         dec = dec.toString(16).toUpperCase();
 
@@ -103,7 +104,7 @@ export function getRelativeColor(baseColor, percentage, opacity) {
     }
 
     if (percentage < 0 || percentage === undefined) {
-        //noinspection Eslint
+        // noinspection Eslint
         throw {
             name: 'OutOfRangeException',
             message: 'Percentage has at least to be 0'
@@ -115,9 +116,11 @@ export function getRelativeColor(baseColor, percentage, opacity) {
     }
 
     let color = baseColor.substr(1);
-    let l = color.length;
+    const l = color.length;
 
-    let r, g, b;
+    let r,
+        g,
+        b;
     if (l === 3) {
         r = color.substring(0, 1);
         g = color.substring(1, 2);
@@ -127,14 +130,14 @@ export function getRelativeColor(baseColor, percentage, opacity) {
         g = color.substring(2, 4);
         b = color.substring(4, 6);
     } else {
-        //noinspection Eslint
+        // noinspection Eslint
         throw {
             name: 'WrongFormatException',
             message: 'Invalid color-format'
         };
     }
     if (opacity) {
-        return `rgba(${parseInt(getSingleRelativeColor(r, percentage), 16)},${parseInt(getSingleRelativeColor(g, percentage), 16)},${parseInt(getSingleRelativeColor(b, percentage), 16)},${opacity})`
+        return `rgba(${parseInt(getSingleRelativeColor(r, percentage), 16)},${parseInt(getSingleRelativeColor(g, percentage), 16)},${parseInt(getSingleRelativeColor(b, percentage), 16)},${opacity})`;
     }
 
     color = '#';
@@ -150,14 +153,14 @@ export function getRelativeColor(baseColor, percentage, opacity) {
  * @returns {{}} e.g. {param1: 'param1Value', param2: 'param2Value'}
  */
 export function parameterStringToObject(parameterString) {
-    let result = {};
+    const result = {};
 
     if (parameterString.indexOf('?') > -1) {
         parameterString = parameterString.split('?')[1];
     }
 
-    for (let param of parameterString.split('&')) {
-        let parsed = param.split('=');
+    for (const param of parameterString.split('&')) {
+        const parsed = param.split('=');
         if (parsed.length > 1 && parsed[1].length > 0) {
             result[parsed[0]] = parsed[1];
         }
@@ -166,12 +169,12 @@ export function parameterStringToObject(parameterString) {
     return result;
 }
 
-let monthNames = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
-let dayNames = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
+const monthNames = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+const dayNames = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
 
 export function dateToString(date) {
     if (typeof date === 'number') {
-        date = new Date(date)
+        date = new Date(date);
     }
 
     if (!date.getTime) {

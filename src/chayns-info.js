@@ -2,9 +2,9 @@ import logger from 'chayns-logger';
 import { decodeTobitAccessToken } from './utils/convert';
 import { getAccessToken } from './utils/native-functions';
 import Request from './utils/request';
-import { LOGIN_TAPP } from './constants/login-tapp';
-import { DEFAULT_LOCATIONID } from './constants/config';
-import  VERSION  from './constants/version';
+import LOGIN_TAPP from './constants/login-tapp';
+import { DEFAULT_LOCATIONID } from './constants/defaults';
+import VERSION from './constants/version';
 
 export let chaynsInfo;
 let globalData;

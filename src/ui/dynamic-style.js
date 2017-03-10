@@ -16,9 +16,9 @@ import { getRelativeColor } from '../utils/convert';
  */
 function addStyle(classArray) {
     let css = '';
-    for (let cssClass of classArray) {
+    for (const cssClass of classArray) {
         let body = '';
-        for (let style of Object.keys(cssClass.styles)) {
+        for (const style of Object.keys(cssClass.styles)) {
             body += `\n\t${style}:${cssClass.styles[style]};`;
         }
         if (body.length > 0) {
@@ -30,16 +30,16 @@ function addStyle(classArray) {
 
 export function setDynamicStyle() {
     new Promise(() => {
-        let getColor = (percentage, opacity) => getRelativeColor(chaynsInfo.Color, percentage, opacity);
+        const getColor = (percentage, opacity) => getRelativeColor(chaynsInfo.Color, percentage, opacity);
 
-        let chaynsCss = document.querySelector('link[href^="https://chayns-res.tobit.com/API/"]');
-        let chaynsCssColor = htmlToElement(`<link rel="stylesheet" href="${chaynsCss.href}?color=${getColor(100).substr(1, 6)}">`);
+        const chaynsCss = document.querySelector('link[href^="https://chayns-res.tobit.com/API/"]');
+        const chaynsCssColor = htmlToElement(`<link rel="stylesheet" href="${chaynsCss.href}?color=${getColor(100).substr(1, 6)}">`);
         if (chaynsCss) {
             document.head.insertBefore(chaynsCssColor, chaynsCss);
-            document.head.removeChild(chaynsCss)
+            document.head.removeChild(chaynsCss);
         }
 
-        //Body
+        // Body
         addStyle([{
             selector: 'body',
             styles: {
@@ -48,11 +48,11 @@ export function setDynamicStyle() {
         }, {
             selector: 'h1',
             styles: {
-                'color': getColor(100)
+                color: getColor(100)
             }
         }]);
 
-        //Dialog
+        // Dialog
         addStyle([{
             selector: '.chaynsBtn',
             styles: {
@@ -65,7 +65,7 @@ export function setDynamicStyle() {
             }
         }]);
 
-        //WaitCursor
+        // WaitCursor
         addStyle([{
             selector: '.ChaynsLoadingCursor > .loading-spinner-wrapper',
             styles: {
@@ -83,7 +83,7 @@ export function setDynamicStyle() {
             }
         }]);
 
-        //.ChaynsCS-*
+        // .ChaynsCS-*
         addStyle([{
             selector: '.ChaynsCS-Border-30Pcnt',
             styles: {
@@ -102,7 +102,7 @@ export function setDynamicStyle() {
         }, {
             selector: '.ChaynsCS-Color',
             styles: {
-                'color': `${getColor(100)}!important`
+                color: `${getColor(100)}!important`
             }
         }]);
     });

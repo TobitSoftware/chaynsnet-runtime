@@ -2,8 +2,8 @@ import { answerJsonCall } from '../tapp/custom-tapp-communication';
 
 let jsonCallEventListener = [];
 
-export let geoWatchNumber = null;
-export let overlayCloseParam = {};
+export const geoWatchNumber = null;
+export const overlayCloseParam = {};
 
 export function addJsonCallEventListener(action, request, srcIframe) {
     jsonCallEventListener.push({

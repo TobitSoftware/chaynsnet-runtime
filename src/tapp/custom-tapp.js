@@ -7,13 +7,13 @@ import { setSelectedTapp } from '../chayns-info';
 import { getUrlParameters } from '../utils/helper';
 import { parameterStringToObject } from '../utils/convert';
 
-let $bodyContent = document.querySelector('.body-content');
+const $bodyContent = document.querySelector('.body-content');
 
 export function loadTapp(tappId) {
     FloatingButton.hide();
     WaitCursor.hide();
 
-    let tapp = getTappById(tappId);
+    const tapp = getTappById(tappId);
     if (tapp) {
         setSelectedTapp(tapp);
         _loadTapp(parseInt(tapp.id, 10), setUrlParams(tapp.url));
@@ -34,7 +34,7 @@ export function loadTapp(tappId) {
  * @returns {*}
  */
 function getTappById(tappId) {
-    for (let tapp of chaynsInfo.Tapps) {
+    for (const tapp of chaynsInfo.Tapps) {
         if (tapp.id === parseInt(tappId, 10)) {
             return tapp;
         }
@@ -64,10 +64,10 @@ function setUrlParams(url) {
 
     url = url.replace(/##.*?##/g, ''); // removes unused parameters
 
-    let urlParam = Object.assign(getUrlParameters(false), parameterStringToObject(url));
+    const urlParam = Object.assign(getUrlParameters(false), parameterStringToObject(url));
 
-    let paramString = Object.keys(urlParam).map((key) => `${key}=${urlParam[key]}`);
-    let timeStamp = url.match(/(?:_=)\b(\d*)/i);
+    const paramString = Object.keys(urlParam).map(key => `${key}=${urlParam[key]}`);
+    const timeStamp = url.match(/(?:_=)\b(\d*)/i);
 
     return `${url.split('?')[0]}?${paramString.join('&')}${(!timeStamp) ? `&_=${Date.now()}` : ''}`;
 }
@@ -78,28 +78,28 @@ function setUrlParams(url) {
  * @param {string} tappUrl
  */
 function _loadTapp(tappId, tappUrl) {
-    if (typeof tappId != 'number') {
+    if (typeof tappId !== 'number') {
         tappId = parseInt(tappId, 10);
         if (Number.isNaN(tappId)) {
             console.error('TappId is not a number');
             return;
         }
     }
-    if (!tappUrl || typeof tappUrl != 'string') {
+    if (!tappUrl || typeof tappUrl !== 'string') {
         console.error('TappUrl is not a string');
         return;
     }
 
-    let $input = htmlToElement(`<input id="ActiveTappID" name="ActiveTappID" type="hidden" value="${tappId}">`);
+    const $input = htmlToElement(`<input id="ActiveTappID" name="ActiveTappID" type="hidden" value="${tappId}">`);
 
-    let $form = htmlToElement(`<form action="${tappUrl}" target="TappIframe" method="get" id="TobitAccessTokenForm"></form>`);
+    const $form = htmlToElement(`<form action="${tappUrl}" target="TappIframe" method="get" id="TobitAccessTokenForm"></form>`);
 
-    let parameter = parameterStringToObject(tappUrl);
-    for (let key of Object.keys(parameter)) {
-        $form.appendChild(htmlToElement(`<input name="${key}" value="${parameter[key]}" type="hidden">`))
+    const parameter = parameterStringToObject(tappUrl);
+    for (const key of Object.keys(parameter)) {
+        $form.appendChild(htmlToElement(`<input name="${key}" value="${parameter[key]}" type="hidden">`));
     }
 
-    let $iframe = htmlToElement('<iframe frameborder="0" marginheight="0" marginwidth="0" id="TappIframe" name="TappIframe"></iframe>');
+    const $iframe = htmlToElement('<iframe frameborder="0" marginheight="0" marginwidth="0" id="TappIframe" name="TappIframe"></iframe>');
     $iframe.style.height = `${window.innerHeight - document.body.getBoundingClientRect().top + document.body.scrollTop}px`;
 
     if (chaynsInfo.IsMobile) {

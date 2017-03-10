@@ -46,7 +46,6 @@ function getNavigationElement() {
     const $newNavigation = htmlToElement('<div class="navigation"><ul></ul></div>');
 
     NAVIGATION_ITEMS.forEach((item) => {
-
         if (!item.disabled) {
             const $navItem = htmlToElement(`<li class="navigation__element">
                                            <span class="ChaynsIdIcon fa ${item.icon}"></span>

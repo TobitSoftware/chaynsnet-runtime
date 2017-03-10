@@ -1,4 +1,4 @@
-import changeEnv from './utils/change-env'
+import changeEnv from './utils/change-env';
 import { loadTapp } from './tapp/custom-tapp';
 
 import { ENVIRONMENTS } from './constants/environments';

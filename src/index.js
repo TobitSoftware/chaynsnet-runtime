@@ -4,7 +4,7 @@ import './polyfill/index';
 import './tapp/custom-tapp-communication';
 import './json-call/json-call-functions';
 import './chayns-web';
-import './constants/config';
+import './constants/system-url-parameter';
 import './window-objects';
 
 import VERSION from './constants/version';
@@ -62,5 +62,4 @@ if (!isLIVE) {
     defaults.env = process.env.NODE_ENV;
 }
 
-logger.setDefaults(defaults)
-
+logger.setDefaults(defaults);

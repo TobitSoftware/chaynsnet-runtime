@@ -29,13 +29,13 @@ export function setAccessToken(accessToken) {
     }
 
     if (parentWindow.Chayns && 'SetAccessToken' in parentWindow.Chayns) {
-        functions.setAccessToken = (accessToken) => document.parentWindow.external.Chayns.SetAccessToken(accessToken);
+        functions.setAccessToken = accessToken => document.parentWindow.external.Chayns.SetAccessToken(accessToken);
     } else if (defaultView.chayns && 'setAccessToken' in defaultView.chayns) {
-        functions.setAccessToken = (accessToken) => document.defaultView.external.chayns.setAccessToken(accessToken);
+        functions.setAccessToken = accessToken => document.defaultView.external.chayns.setAccessToken(accessToken);
     } else if (windowExternal.chayns && 'setAccessToken' in windowExternal.chayns) {
-        functions.setAccessToken = (accessToken) => window.external.chayns.setAccessToken(accessToken);
+        functions.setAccessToken = accessToken => window.external.chayns.setAccessToken(accessToken);
     } else {
-        functions.setAccessToken = (accessToken) => setItem('*accessToken', accessToken);
+        functions.setAccessToken = accessToken => setItem('*accessToken', accessToken);
     }
     functions.setAccessToken(accessToken);
 }
@@ -46,11 +46,11 @@ export function getKeyValue(key) {
     }
 
     if (parentWindow.Chayns && 'GetKeyValue' in parentWindow.Chayns) {
-        functions.getKeyValue = (key) => document.parentWindow.external.Chayns.GetKeyValue(key);
+        functions.getKeyValue = key => document.parentWindow.external.Chayns.GetKeyValue(key);
     } else if (defaultView.chayns && 'getKeyValue' in defaultView.chayns) {
-        functions.getKeyValue = (key) => document.defaultView.external.chayns.getKeyValue(key);
+        functions.getKeyValue = key => document.defaultView.external.chayns.getKeyValue(key);
     } else if (windowExternal.chayns && 'getKeyValue' in windowExternal.chayns) {
-        functions.getKeyValue = (key) => window.external.chayns.getKeyValue(key);
+        functions.getKeyValue = key => window.external.chayns.getKeyValue(key);
     } else {
         functions.getKeyValue = getItem;
     }

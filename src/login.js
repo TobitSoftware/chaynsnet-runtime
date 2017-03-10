@@ -1,9 +1,12 @@
 import { loadTapp } from './tapp/custom-tapp';
-import { setAccessToken, closeWindow } from './utils/native-functions';
-import { LOGIN_TAPPID } from './constants/config';
+import { setAccessToken, closeWindow, resizeWindow } from './utils/native-functions';
+import LOGIN_TAPP from './constants/login-tapp';
+import Navigation from './ui/navigation';
 
 export function login() {
-    loadTapp(LOGIN_TAPPID);
+    resizeWindow(566, 766);
+    Navigation.hide();
+    loadTapp(LOGIN_TAPP.id);
 }
 
 export function logout() {

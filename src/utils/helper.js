@@ -1,5 +1,5 @@
 import { chaynsInfo } from '../chayns-info';
-import { SYSTEM_URL_PARAMETERS } from '../constants/config';
+import SYSTEM_URL_PARAMETERS from '../constants/system-url-parameter';
 import { decodeTobitAccessToken } from './convert';
 
 /**
@@ -9,28 +9,31 @@ import { decodeTobitAccessToken } from './convert';
  */
 export function outerHeight(el) {
     let height = el.offsetHeight;
-    let style = getComputedStyle(el);
+    const style = getComputedStyle(el);
 
     height += parseInt(style.marginTop) + parseInt(style.marginBottom);
     return height;
 }
 
 export function setCookie(cName, value, exdays) {
-    let exdate = new Date();
+    const exdate = new Date();
     exdate.setDate(exdate.getDate() + exdays);
-    //noinspection JSDeprecatedSymbols
-    let cValue = escape(value) + ((exdays === null) ? '' : '; expires=' + exdate.toUTCString());
+    // noinspection JSDeprecatedSymbols
+    const cValue = escape(value) + ((exdays === null) ? '' : `; expires=${exdate.toUTCString()}`);
     document.cookie = `${cName}=${cValue}`;
 }
 
 export function getCookie(cCame) {
-    let i, x, y, ARRcookies = document.cookie.split(';');
+    let i,
+        x,
+        y,
+        ARRcookies = document.cookie.split(';');
     for (i = 0; i < ARRcookies.length; i++) {
         x = ARRcookies[i].substr(0, ARRcookies[i].indexOf('='));
         y = ARRcookies[i].substr(ARRcookies[i].indexOf('=') + 1);
         x = x.replace(/^\s+|\s+$/g, '');
         if (x === cCame) {
-            //noinspection JSDeprecatedSymbols
+            // noinspection JSDeprecatedSymbols
             return unescape(y);
         }
     }
@@ -72,18 +75,19 @@ export function stringisEmptyOrWhitespace(value) {
 }
 
 export function validateTobitAccessToken(tobitAccessToken) {
-    let tokenData = decodeTobitAccessToken(tobitAccessToken);
+    const tokenData = decodeTobitAccessToken(tobitAccessToken);
     return tokenData && new Date(tokenData.exp) > new Date() && (!chaynsInfo || tokenData.LocationID == chaynsInfo.LocationID);
 }
 
-let urlParameter = null,
-    urlParameterNoSystem = null;
+let urlParameter = null;
+let urlParameterNoSystem = null;
+
 export function getUrlParameters(withSystemParameter = true) {
     if (!urlParameter || !urlParameterNoSystem) {
         urlParameterNoSystem = {};
         urlParameter = {};
 
-        let urlParams = window.location.href.split('?').length > 1 ? window.location.href.split('?')[1].split('&') : false;
+        const urlParams = window.location.href.split('?').length > 1 ? window.location.href.split('?')[1].split('&') : false;
 
         if (urlParams) {
             for (let param of urlParams) {
@@ -120,7 +124,7 @@ export function _(selector, element = document) {
  * @returns {boolean}
  */
 export function compareDate(date1, date2, withTime = false) {
-    let dateEquals = date1.getDate() === date2.getDate() && date1.getMonth() === date2.getMonth() && date1.getFullYear() === date2.getFullYear();
+    const dateEquals = date1.getDate() === date2.getDate() && date1.getMonth() === date2.getMonth() && date1.getFullYear() === date2.getFullYear();
 
     return (!withTime) ? dateEquals : dateEquals && date1.getHours() === date2.getHours() && date1.getMinutes() === date2.getMinutes() && date1.getSeconds() === date2.getSeconds();
 }
