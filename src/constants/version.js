@@ -1,1 +1,2 @@
-export const VERSION = 'dev';
+const VERSION = 'dev';
+export default VERSION;

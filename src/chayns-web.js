@@ -13,7 +13,7 @@ import TAPPIDS from './constants/tapp-ids';
 
 document.addEventListener('DOMContentLoaded', () => {
     let tappId = getUrlParameters().tappid;
-    let locationId = getUrlParameters().locationid;
+    let locationId = parseInt(getUrlParameters().locationid, 10);
 
     if (parseInt(tappId, 10) === -7) {
         tappId = -2;
@@ -21,8 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     logger.info({
         message: 'ChaynsWebLight requested',
-        customNumber: tappId,
         locationId,
+        customNumber: tappId,
     });
 
     const parameterAccessToken = getUrlParameters().accesstoken;
@@ -34,9 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setAccessToken(parameterAccessToken);
         logger.info({
             message: 'accessToken as URLParameter',
-            data: {
-                userId: decodedToken.TobitUserID,
-            }
+            personId: decodedToken.PersonID,
         });
 
         if (decodedToken.roles.indexOf('tobitBuha') !== -1) {

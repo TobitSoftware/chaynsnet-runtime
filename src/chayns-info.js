@@ -4,14 +4,13 @@ import { getAccessToken } from './utils/native-functions';
 import Request from './utils/request';
 import { LOGIN_TAPP } from './constants/login-tapp';
 import { DEFAULT_LOCATIONID } from './constants/config';
-import { VERSION } from './constants/version';
+import  VERSION  from './constants/version';
 
 export let chaynsInfo;
 let globalData;
 
 export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
     try {
-        locationId = parseInt(locationId, 10);
         const locationSettingsRequest = await Request.get(`https://chaynssvc.tobit.com/v0.4/${locationId}/LocationSettings`);
 
         if (locationSettingsRequest.status === 204) {
@@ -101,6 +100,7 @@ export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
     } catch (e) {
         logger.error({
             message: 'Load location failed.',
+            locationId,
             fileName: 'chaynsInfo.js',
             section: 'loadLocation',
             ex: {
@@ -121,19 +121,19 @@ async function loadTapps(locationId) {
             console.warn('Location has no tapps');
             logger.warning({
                 message: 'Location has no tapps. (CustomNumber:Status)',
-                fileName: 'chaynsInfo.js',
+                locationId,
                 customNumber: request.status,
+                fileName: 'chaynsInfo.js',
                 section: 'loadTapps',
-                locationId
             });
         } else if (request.status !== 200) {
             console.warn('Get locationTapps failed.', request.status);
             logger.error({
                 message: 'Get locationTapps failed. (CustomNumber:Status)',
-                fileName: 'chaynsInfo.js',
+                locationId,
                 customNumber: request.status,
+                fileName: 'chaynsInfo.js',
                 section: 'loadTapps',
-                locationId
             });
         }
 
