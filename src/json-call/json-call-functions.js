@@ -2,13 +2,14 @@ import Dialog from '../ui/dialog/dialog';
 import WaitCursor from '../ui/wait-cursor';
 import FloatingButton from '../ui/floating-button';
 import { argbHexToRgba } from '../utils/convert';
-import { getWindowMetrics } from '../utils/helper';
+import { getWindowMetrics, compareDate } from '../utils/helper';
 import { loadTapp } from '../tapp/custom-tapp';
 import { setAccessToken, closeWindow, refreshChaynsIdIcons } from '../utils/native-functions';
 import { login, logout } from '../login';
 import * as jsonCallHelper from './json-call-helper';
 import { answerJsonCall } from '../tapp/custom-tapp-communication';
 import { chaynsInfo } from '../chayns-info';
+import DATE_TYPE from '../constants/date-type';
 
 export function toggleWaitCursor(value, srcIframe) {
     if (value.enabled) {
@@ -30,30 +31,31 @@ export function externOpenUrl(value) {
 
 export function requestGeoLocation(value, srcIframe) {
     if (navigator.geolocation) {
-        const requestPos = (method) => method.apply(navigator.geolocation, [function (pos) {
-            const obj = {
-                'accuracy': pos.coords.accuracy,
-                'altitude': pos.coords.altitude,
-                'altitudeAccuracy': pos.coords.altitudeAccuracy,
-                'heading': pos.coords.heading,
-                'latitude': pos.coords.latitude,
-                'longitude': pos.coords.longitude,
-                'speed': pos.coords.speed
-            };
-            answerJsonCall(value, obj, srcIframe);
-        }, function (err) {
-            jsonCallHelper.throwEvent(14, err.code + 10, err.message, value, srcIframe);
-        }]);
+        const requestPos = method => method.apply(navigator.geolocation, [
+            (pos) => {
+                const obj = {
+                    accuracy: pos.coords.accuracy,
+                    altitude: pos.coords.altitude,
+                    altitudeAccuracy: pos.coords.altitudeAccuracy,
+                    heading: pos.coords.heading,
+                    latitude: pos.coords.latitude,
+                    longitude: pos.coords.longitude,
+                    speed: pos.coords.speed
+                };
+                answerJsonCall(value, obj, srcIframe);
+            },
+            (err) => {
+                jsonCallHelper.throwEvent(14, err.code + 10, err.message, value, srcIframe);
+            }
+        ]);
 
         if (value.permanent) {
             jsonCallHelper.GeoWatchNumber = requestPos(navigator.geolocation.watchPosition);
+        } else if (jsonCallHelper.GeoWatchNumber !== null) {
+            navigator.geolocation.clearWatch(jsonCallHelper.GeoWatchNumber);
+            jsonCallHelper.GeoWatchNumber = null;
         } else {
-            if (jsonCallHelper.GeoWatchNumber !== null) {
-                navigator.geolocation.clearWatch(jsonCallHelper.GeoWatchNumber);
-                jsonCallHelper.GeoWatchNumber = null;
-            } else {
-                requestPos(navigator.geolocation.getCurrentPosition);
-            }
+            requestPos(navigator.geolocation.getCurrentPosition);
         }
     } else {
         jsonCallHelper.throwEvent(14, 10, 'Position unavailable', value, srcIframe);
@@ -73,7 +75,7 @@ export function showDialogAlert(value, srcIframe) {
 }
 
 export function getGlobalData(value, srcIframe) {
-    let data = chaynsInfo.getGlobalData();
+    const data = chaynsInfo.getGlobalData();
     answerJsonCall(value, data, srcIframe);
 }
 
@@ -88,13 +90,13 @@ export function dateTimePicker(value, srcIframe) {
 
     let dialogType;
     switch (value.type) {
-        case dateType.DATE_TIME:
+        case DATE_TYPE.DATE_TIME:
             dialogType = Dialog.type.DATETIME;
             break;
-        case dateType.DATE:
+        case DATE_TYPE.DATE:
             dialogType = Dialog.type.DATE;
             break;
-        case dateType.TIME:
+        case DATE_TYPE.TIME:
             dialogType = Dialog.type.TIME;
             break;
         default:
@@ -184,7 +186,6 @@ export function showFloatingButton(value, srcIfame) {
     if (value.enabled) {
         let bgColor = argbHexToRgba(value.color);
         bgColor = bgColor ? `rgba(${bgColor.r}, ${bgColor.g}, ${bgColor.b}, ${bgColor.a})` : '';
-        //noinspection JSUnresolvedVariable
         let color = argbHexToRgba(value.colorText);
         color = color ? `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})` : '';
         let text;
@@ -196,7 +197,7 @@ export function showFloatingButton(value, srcIfame) {
             text = '!';
         }
 
-        let callback = window.CustomTappCommunication.AnswerJsonCall.bind(undefined, value, null, srcIfame);
+        const callback = () => answerJsonCall(value, null, srcIfame);
 
         FloatingButton.show(text, srcIfame[0], bgColor, color, callback);
     } else {
@@ -205,11 +206,11 @@ export function showFloatingButton(value, srcIfame) {
 }
 
 export function addChaynsCallErrorListener(value, srcIframe) {
-    jsonCallHelper.AddJsonCallEventListener(75, value, srcIframe);
+    jsonCallHelper.addJsonCallEventListener(75, value, srcIframe);
 }
 
 export function setIframeHeigth(value, srcIframe) {
-    let $iframe = srcIframe[0];
+    const $iframe = srcIframe[0];
 
     if (!value.full && !('height' in value) && !('fullViewport' in value)) {
         jsonCallHelper.throwEvent(77, 2, 'Field height missing.', value, srcIframe);
@@ -240,7 +241,7 @@ export function getWindowMetricsCall(value, srcIframe) {
 }
 
 export function updateChaynsId() {
-    refreshChaynsIdIcons()
+    refreshChaynsIdIcons();
 }
 
 export function showDialogInput(value, srcIframe) {
@@ -257,7 +258,7 @@ export function showDialogInput(value, srcIframe) {
 }
 
 export function sendEventToTopFrame(value, srcIframe) {
-    let event = new CustomEvent(value.event);
+    const event = new CustomEvent(value.event);
     event.data = value.object;
     window.dispatchEvent(event);
 }
