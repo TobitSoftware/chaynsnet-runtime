@@ -1,6 +1,6 @@
 import logger from 'chayns-logger';
 import { decodeTobitAccessToken } from './utils/convert';
-import { getAccessToken } from './utils/native-functions';
+import { getTobitAccessToken } from './json-native-calls/calls/index';
 import Request from './utils/request';
 import LOGIN_TAPP from './constants/login-tapp';
 import { DEFAULT_LOCATIONID } from './constants/defaults';
@@ -29,7 +29,11 @@ export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
 
         locationSettings.design.color = `#${locationSettings.design.color}`;
 
-        const accessToken = getAccessToken();
+        console.debug('before await');
+        const getTobitAccessTokenRes = await getTobitAccessToken();
+        console.debug('getToken res', getTobitAccessTokenRes);
+        const accessToken = getTobitAccessTokenRes.data.tobitAccessToken;
+
         const payload = decodeTobitAccessToken(accessToken);
 
         chaynsInfo = {

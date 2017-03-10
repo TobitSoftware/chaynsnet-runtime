@@ -1,5 +1,6 @@
 import { loadTapp } from './tapp/custom-tapp';
-import { setAccessToken, closeWindow, resizeWindow } from './utils/native-functions';
+import { closeWindow, resizeWindow } from './utils/native-functions';
+import { setTobitAccessToken } from './json-native-calls/calls/index';
 import LOGIN_TAPP from './constants/login-tapp';
 import Navigation from './ui/navigation';
 
@@ -10,7 +11,7 @@ export function login() {
 }
 
 export function logout() {
-    setAccessToken('');
+    setTobitAccessToken('');
     closeWindow();
     location.reload();
 }

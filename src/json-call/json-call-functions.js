@@ -4,7 +4,8 @@ import FloatingButton from '../ui/floating-button';
 import { argbHexToRgba } from '../utils/convert';
 import { getWindowMetrics, compareDate } from '../utils/helper';
 import { loadTapp } from '../tapp/custom-tapp';
-import { setAccessToken, closeWindow, refreshChaynsIdIcons } from '../utils/native-functions';
+import { closeWindow, refreshChaynsIdIcons } from '../utils/native-functions';
+import { setTobitAccessToken } from '../json-native-calls/calls/index';
 import { login, logout } from '../login';
 import * as jsonCallHelper from './json-call-helper';
 import { answerJsonCall } from '../tapp/custom-tapp-communication';
@@ -168,9 +169,8 @@ export function multiSelectDialog(value, srcIframe) {
 
 export function tobitWebTokenLogin(value) {
     if ('tobitAccessToken' in value) {
-        setAccessToken(value.tobitAccessToken);
+        setTobitAccessToken(value.tobitAccessToken);
         closeWindow();
-        location.reload();
     }
 }
 
