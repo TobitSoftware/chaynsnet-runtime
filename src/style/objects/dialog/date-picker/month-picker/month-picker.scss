@@ -1,0 +1,69 @@
+@import '../../../../mixins/media-querys';
+
+.month-picker {
+  position: relative;
+  margin: 5px 0;
+
+  &__year-select {
+    position: absolute;
+    top: 4px;
+    right: 0;
+    left: 0;
+
+    span {
+      font-size: 25px;
+      position: absolute;
+      cursor: pointer;
+
+    }
+    &__previous {
+      left: 20px;
+    }
+
+    &__next {
+      right: 20px;
+    }
+  }
+
+  &__year-table {
+    display: table;
+    height: 318px;
+    width: 90%;
+    margin: auto;
+    font-size: 16px;
+
+    &__year {
+      display: table-caption;
+      text-align: center;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    &__month-row {
+      display: table-row;
+      text-align: center;
+
+      div {
+        display: table-cell;
+        vertical-align: middle;
+
+        width: 100px; //because when text becomes bold field changes height and width
+
+        span {
+          cursor: pointer;
+          padding: 5px;
+
+          &.month--blocked {
+            color: #dcdcdc;;
+            cursor: default;
+          }
+          &.month--selected {
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,9 +1,18 @@
+* {
+  margin: 0;
+  padding: 0;
+  border-width: 0;
+  -webkit-tap-highlight-color: transparent;
+  outline: none
+}
+
 body {
   background-color: #f5f5f5;
   overflow-y: scroll;
   overflow-x: hidden;
 }
-body.no-scroll{
+
+body.no-scroll {
   overflow: hidden;
 }
 

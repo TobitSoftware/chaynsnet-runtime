@@ -1,0 +1,19 @@
+@import '../constants/device-width';
+
+@mixin mobile-small {
+  @media (max-width: #{$MOBILE_SMALL_MAX}) {
+    @content
+  }
+}
+
+@mixin mobile {
+  @media (min-width: #{$MOBILE_SMALL_MAX + 1px}) and (max-width: #{$MOBILE_MAX}) {
+    @content
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{$DESKTOP_MIN}) {
+    @content
+  }
+}

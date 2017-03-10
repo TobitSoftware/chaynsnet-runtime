@@ -1,0 +1,95 @@
+@import '../../../../mixins/media-querys';
+
+.day-picker {
+  position: relative;
+  margin: 5px 0;
+
+  .day-picker__month-select {
+    position: absolute;
+    top: 4px;
+    right: 0;
+    left: 0;
+    @include mobile-small {
+      top: 4px
+    }
+    @include mobile {
+      top: 4px
+    }
+    span {
+      cursor: pointer;
+      font-size: 25px !important;
+      position: absolute;
+
+      &.month-select__previous {
+        left: 20px;
+      }
+
+      &.month-select__next {
+        right: 20px;
+      }
+    }
+  }
+
+  .day-picker__day-table {
+    display: table;
+    height: 315px;
+
+    width: 90%;
+    margin: auto;
+
+    .day-table__month {
+      display: table-caption;
+      text-align: center;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      font-weight: bold;
+      font-size: 16px;
+
+      @include mobile-small {
+        margin-top: 5px;
+      }
+      @include mobile {
+        margin-top: 5px;
+      }
+
+      span {
+        cursor: pointer;
+      }
+    }
+
+    .day-table__week-days {
+      display: table-row;
+      text-align: center;
+
+      div {
+        display: table-cell;
+      }
+    }
+
+    .day-table__week-row {
+      display: table-row;
+      text-align: center;
+      font-size: 18px;
+      cursor: pointer;
+
+      div {
+        display: table-cell;
+        @include desktop {
+          padding: 8px;
+        }
+
+        width: 27px; //because when text becomes bold (day--selected) field changes width
+
+        &.day--out-of-month {
+          color: #dcdcdc;
+        }
+        &.day--blocked {
+          color: #dcdcdc;
+        }
+        &.day--selected {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}

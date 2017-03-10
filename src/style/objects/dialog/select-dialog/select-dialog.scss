@@ -1,0 +1,51 @@
+@import '../../../constants/dialog';
+
+.select-dialog {
+  max-height: 500px;
+  margin: $dialog-component-margin;
+
+  &__item {
+    cursor: pointer;
+    padding: 5px 0 5px 5px;
+    line-height: 36px;
+    border-width: 0 0 1px 0 !important;
+    border-bottom: solid;
+    clear: both;
+
+    &:last-child {
+      border: none;
+    }
+
+    &--no-border {
+      border: none;
+    }
+
+    &__image, &__icon {
+      padding: 3px 5px 3px 3px;
+      float: left;
+      height: 30px;
+      width: 30px;
+    }
+
+    &__image {
+      img {
+        max-height: 30px;
+        max-width: 30px;
+        position: relative;
+        transform: translate(-50%, -50%);
+        margin: 50% 0 0 50%;
+
+      }
+    }
+
+    &_icon {
+      font-size: 20px;
+      width: 25px;
+      span {
+        position: relative;
+        transform: translate(-50%, -50%);
+        margin: 50% 0 0 50%;
+      }
+    }
+  }
+}
