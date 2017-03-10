@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server  --config ./webpack/dev.babel.js --progress",
-    "start:https": "webpack-dev-server  --config ./webpack/dev.babel.js --progress --https",
+    "start": "webpack-dev-server  --config ./webpack/dev.babel.js --progress --https",
+    "start:http": "webpack-dev-server  --config ./webpack/dev.babel.js --progress",
     "build": "webpack -p --config ./webpack/prod.babel.js",
     "build:qa": "webpack -p --config ./webpack/qa.babel.js"
   },
