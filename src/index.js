@@ -7,6 +7,7 @@ import './chayns-web';
 import './constants/config';
 import './window-objects';
 
+import VERSION from './constants/version';
 import { isLIVE } from './constants/environments';
 
 import './style/index.scss';
@@ -53,8 +54,13 @@ logger.init({
     }
 });
 
+const defaults = {
+    version: VERSION
+};
+
 if (!isLIVE) {
-    logger.setDefaults({
-        env: process.env.NODE_ENV
-    });
+    defaults.env = process.env.NODE_ENV;
 }
+
+logger.setDefaults(defaults)
+

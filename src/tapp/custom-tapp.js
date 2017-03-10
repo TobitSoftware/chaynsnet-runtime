@@ -20,7 +20,7 @@ export function loadTapp(tappId) {
     } else {
         logger.warning({
             message: 'no tapp found',
-            data: {tappId},
+            customNumber: parseInt(tappId, 10),
             fileName: 'custom-tapp.js',
             section: 'loadTapp'
         });
