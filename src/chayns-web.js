@@ -10,6 +10,7 @@ import { decodeTobitAccessToken } from './utils/convert';
 import { getAccessToken, setAccessToken, resizeWindow } from './utils/native-functions';
 
 import { DEFAULT_LOCATIONID, DEFAULT_TAPPID, LOGIN_TAPPID } from './constants/config';
+import TAPPIDS from './constants/tapp-ids';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -42,8 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        if (decodedToken.roles.indexOf('tobitBuha') !== -1 && getUrlParameters().debug !== '1') {
-            document.querySelector('.navigation__element[data-tappid="251441"]').classList.add('hidden');
+        if (decodedToken.roles.indexOf('tobitBuha') !== -1) {
+            Navigation.disableTappId(TAPPIDS.INTERCOM);
         }
 
     } else if ((!locationId || !tappId)) {
@@ -60,9 +61,10 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    //start of ChaynsWebLight
-    loadLocation(locationId).then(() => {
+    Navigation.init();
 
+    // start of ChaynsWebLight
+    loadLocation(locationId).then(() => {
         setDynamicStyle();
         Textstrings.init().then(() => {
             let tobitAccessToken = getAccessToken();
