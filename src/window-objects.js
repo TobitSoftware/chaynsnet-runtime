@@ -1,5 +1,5 @@
 import changeEnv from './utils/change-env';
-import { loadTapp } from './tapp/custom-tapp';
+import loadTapp from './tapp/custom-tapp';
 import { callbackHandler } from './json-native-calls/json-native-calls';
 import ConsoleLogger from './utils/console-logger';
 

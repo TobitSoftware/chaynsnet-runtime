@@ -3,7 +3,7 @@ import WaitCursor from '../ui/wait-cursor';
 import FloatingButton from '../ui/floating-button';
 import { argbHexToRgba } from '../utils/convert';
 import { getWindowMetrics, compareDate } from '../utils/helper';
-import { loadTapp } from '../tapp/custom-tapp';
+import loadTapp from '../tapp/custom-tapp';
 import { closeWindow, refreshChaynsIdIcons, setTobitAccessToken } from '../json-native-calls/calls/index';
 import { login, logout } from '../login';
 import * as jsonCallHelper from './json-call-helper';

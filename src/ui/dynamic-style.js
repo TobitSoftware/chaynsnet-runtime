@@ -1,6 +1,9 @@
 import htmlToElement from 'html-to-element';
 import { chaynsInfo } from '../chayns-info';
+import ConsoleLogger from '../utils/console-logger';
 import { getRelativeColor } from '../utils/convert';
+
+const consoleLogger = new ConsoleLogger('(dynamic-styles.js)');
 
 /**
  * Accept Arrays like
@@ -106,6 +109,6 @@ export async function setDynamicStyle() {
             }
         }]);
     } catch (e) {
-        console.error(e);
+        consoleLogger.error(e);
     }
 }

@@ -1,16 +1,19 @@
 import logger from 'chayns-logger';
-import { loadTapp } from './tapp/custom-tapp';
+import loadTapp from './tapp/custom-tapp';
 import { loadLocation } from './chayns-info';
 import { setDynamicStyle } from './ui/dynamic-style';
 import Navigation from './ui/navigation';
 import { validateTobitAccessToken, getUrlParameters, stringisEmptyOrWhitespace } from './utils/helper';
 import { decodeTobitAccessToken } from './utils/convert';
 import { setTobitAccessToken, getTobitAccessToken } from './json-native-calls/calls/index';
+import { login } from './login';
+import ConsoleLogger from './utils/console-logger';
 
 import { DEFAULT_LOCATIONID, DEFAULT_TAPPID } from './constants/defaults';
 import LOGIN_TAPP from './constants/login-tapp';
 import TAPPIDS from './constants/tapp-ids';
-import { login } from './login';
+
+const consoleLogger = new ConsoleLogger('(chayns-web.js)');
 
 document.addEventListener('DOMContentLoaded', () => {
     let tappId = getUrlParameters().tappid;
@@ -77,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 login();
             }
         } catch (e) {
-            console.error(e);
+            consoleLogger.error(e);
         }
     });
 }, false);

@@ -1,10 +1,15 @@
 import logger from 'chayns-logger';
+import ConsoleLogger from './utils/console-logger';
 import { decodeTobitAccessToken } from './utils/convert';
 import { getTobitAccessToken } from './json-native-calls/calls/index';
 import Request from './utils/request';
+
 import LOGIN_TAPP from './constants/login-tapp';
 import { DEFAULT_LOCATIONID } from './constants/defaults';
 import VERSION from './constants/version';
+
+const consoleLoggerLocation = new ConsoleLogger('loadLocation(chayns-info.js)');
+const consoleLoggerTapps = new ConsoleLogger('loadTapps(chayns-info.js)');
 
 export let chaynsInfo;
 let globalData;
@@ -14,7 +19,7 @@ export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
         const locationSettingsRequest = await Request.get(`https://chaynssvc.tobit.com/v0.4/${locationId}/LocationSettings`);
 
         if (locationSettingsRequest.status === 204) {
-            console.warning('no location found');
+            consoleLoggerLocation.warning('no location found');
             logger.warn({
                 message: 'No location found.',
                 fileName: 'chaynsInfo.js',
@@ -110,7 +115,7 @@ export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
                 stackTrace: e.stack
             }
         });
-        console.error('Load location failed.', e);
+        consoleLoggerLocation.error('Load location failed.', e);
         return false;
     }
 }
@@ -120,7 +125,7 @@ async function loadTapps(locationId) {
         const request = await Request.get(`https://chaynssvc.tobit.com/v0.4/${locationId}/Tapp?forWeb=true`);
 
         if (request.status === 204) {
-            console.warn('Location has no tapps');
+            consoleLoggerTapps.warn('Location has no tapps');
             logger.warning({
                 message: 'Location has no tapps. (CustomNumber:Status)',
                 locationId,
@@ -129,7 +134,7 @@ async function loadTapps(locationId) {
                 section: 'loadTapps',
             });
         } else if (request.status !== 200) {
-            console.warn('Get locationTapps failed.', request.status);
+            consoleLoggerTapps.warn('Get locationTapps failed.', request.status);
             logger.error({
                 message: 'Get locationTapps failed. (CustomNumber:Status)',
                 locationId,
@@ -166,7 +171,7 @@ async function loadTapps(locationId) {
                 stackTrace: e.stack
             }
         });
-        console.error('Load Tapps failed.', e);
+        consoleLoggerTapps.error('Load Tapps failed.', e);
         return [LOGIN_TAPP];
     }
 }
