@@ -30,9 +30,17 @@ export default async function executeCall(config) {
         if (typeof fallback === 'function') {
             func({
                 parameter: parameter || {},
-                data: fallback(data),
+                data: fallback(data) || {},
                 status: {
                     code: RESULT_STATUS.FALLBACK
+                }
+            });
+        } else {
+            func({
+                parameter: parameter || {},
+                data: {},
+                status: {
+                    code: RESULT_STATUS.NOT_AVAILABLE
                 }
             });
         }
@@ -54,7 +62,8 @@ export default async function executeCall(config) {
     callbacks[callId] = {
         func,
         executeOnlyOnce,
-        fallback
+        fallback,
+        callData: data
     };
 
     console.debug('callback config', callConfig);
@@ -69,22 +78,32 @@ export function callBackHandler(result) {
 
         const callback = callbacks[callId];
         if (callback !== undefined) {
-            const { func, executeOnlyOnce, fallback } = callback;
+            const { func, executeOnlyOnce, fallback, callData } = callback;
 
             if (result.status.code === RESULT_STATUS.NOT_AVAILABLE) {
-                console.warn('Call is not supported');
-                func({
-                    parameter: parameter || {},
-                    data: fallback() || {},
-                    status: status || {}
-                });
+                console.warn('Call is not supported.');
+                if (typeof fallback === 'function') {
+                    func({
+                        parameter: parameter || {},
+                        data: fallback(callData) || {},
+                        status: {
+                            code: RESULT_STATUS.FALLBACK
+                        },
+                    });
+                } else {
+                    func({
+                        parameter: parameter || {},
+                        data: data || {},
+                        status: status || {},
+                    });
+                }
 
                 delete callbacks[callId];
             } else {
                 func({
                     parameter: parameter || {},
                     data: data || {},
-                    status: status || {}
+                    status: status || {},
                 });
 
                 if (executeOnlyOnce) {

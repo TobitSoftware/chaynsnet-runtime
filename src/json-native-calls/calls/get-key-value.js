@@ -18,6 +18,7 @@ export default function getKeyValue(key) {
             },
             fallback: () => ({ value: getItem(key) }),
         });
+
         return defer.promise;
     } catch (e) {
         return errorHandler(e);

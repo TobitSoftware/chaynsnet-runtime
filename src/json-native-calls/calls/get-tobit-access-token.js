@@ -5,8 +5,9 @@ import { getItem } from '../../utils/localStorage';
 import { getUrlParameters } from '../../utils/helper';
 
 export default function getTobitAccessToken() {
-    const defer = getDefer();
     try {
+        const defer = getDefer();
+
         executeCall({
             action: 1,
             callback: {
@@ -15,8 +16,9 @@ export default function getTobitAccessToken() {
             },
             fallback: () => ({ tobitAccessToken: getItem(`chaynsWebLight_tobitAccessToken_${getUrlParameters().locationid}`) }),
         });
+
         return defer.promise;
     } catch (e) {
-        return defer.resolve(errorHandler(e));
+        return errorHandler(e);
     }
 }

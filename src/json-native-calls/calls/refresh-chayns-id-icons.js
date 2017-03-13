@@ -16,6 +16,7 @@ export default function refreshChaynsIdIcons() {
                 console.debug('refreshChaynsIdIcons fallback');
             },
         });
+
         return defer.promise;
     } catch (e) {
         return errorHandler(e);

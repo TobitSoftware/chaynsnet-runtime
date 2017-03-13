@@ -5,8 +5,7 @@ import { setDynamicStyle } from './ui/dynamic-style';
 import Navigation from './ui/navigation';
 import { validateTobitAccessToken, getUrlParameters, stringisEmptyOrWhitespace } from './utils/helper';
 import { decodeTobitAccessToken } from './utils/convert';
-import  setTobitAccessToken  from './json-native-calls/calls/setTobitAccessToken';
-import getTobitAccessToken from './json-native-calls/calls/getTobitAccessToken';
+import { setTobitAccessToken, getTobitAccessToken } from './json-native-calls/calls/index';
 
 import { DEFAULT_LOCATIONID, DEFAULT_TAPPID } from './constants/defaults';
 import LOGIN_TAPP from './constants/login-tapp';

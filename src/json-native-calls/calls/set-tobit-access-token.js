@@ -1,36 +1,29 @@
-import logger from 'chayns-logger';
 import executeCall from '../json-native-calls';
+import errorHandler from '../call-error-handler';
 import getDefer from '../../utils/defer';
 import { setItem } from '../../utils/localStorage';
+import { getUrlParameters } from '../../utils/helper';
 
-export default function setKeyValue(key, value) {
+export default function setTobitAccessToken(tobitAccessToken) {
     try {
         const defer = getDefer();
 
         executeCall({
-            action: 3,
+            action: 2,
             data: {
-                key,
-                value
+                tobitAccessToken
             },
             callback: {
                 func: defer.resolve,
                 executeOnlyOnce: true,
             },
             fallback: () => {
-                setItem(key, value);
+                setItem(`chaynsWebLight_tobitAccessToken_${getUrlParameters().locationid}`, tobitAccessToken);
             },
         });
+
         return defer.promise;
     } catch (e) {
-        logger.error({
-            ex: {
-                message: e.message,
-                stackTrace: e.stack
-            }
-        });
-        console.error(e);
-        return Promise.resolve('');
+        return errorHandler(e);
     }
 }
-window.setKeyValue = setKeyValue;
