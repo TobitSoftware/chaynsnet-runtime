@@ -1,10 +1,11 @@
 import logger from 'chayns-logger';
 import RESULT_STATUS from '../constants/native-calls-status';
 import { isLIVE } from '../constants/environments';
+import { getUrlParameters } from '../utils/helper';
 
-export default (e, section, fileName) => {
+export default (e, section = 'NativeCallErrorHandler.', fileName = 'call-error-handler.js') => {
     logger.error({
-        message: 'NativeCall error handler',
+        message: 'JSONNativeCall error handler.',
         section,
         fileName,
         ex: {
@@ -13,15 +14,16 @@ export default (e, section, fileName) => {
         }
     });
 
-    if (!isLIVE) {
-        console.error(e);
+    if (!isLIVE || !getUrlParameters().debug === '1') {
+        console.error('NativeCallErrorHandler', e);
     }
 
-    return {
+    return Promise.resolve({
+        parameter: {},
         data: {},
         status: {
             code: RESULT_STATUS.ERROR,
             description: e.message
         }
-    };
+    });
 }
