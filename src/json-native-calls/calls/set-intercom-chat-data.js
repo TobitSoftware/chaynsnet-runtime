@@ -1,10 +1,15 @@
 import executeCall from '../json-native-calls';
 import errorHandler from '../call-error-handler';
 import getDefer from '../../utils/defer';
+import ConsoleLogger from '../../utils/console-logger';
 
-export default function setIntercomMessageData(data) {
+const consoleLogger = new ConsoleLogger('setIntercomChatData(native-call)');
+
+export default function setIntercomChatData(data) {
     try {
         const defer = getDefer();
+
+        consoleLogger.info('setIntercomChatData data:', data);
 
         executeCall({
             action: 9,

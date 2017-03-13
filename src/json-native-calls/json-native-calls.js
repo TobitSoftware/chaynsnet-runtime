@@ -1,6 +1,10 @@
 import logger from 'chayns-logger';
+import ConsoleLogger from '../utils/console-logger';
 
 import RESULT_STATUS from '../constants/native-calls-status';
+
+const consoleLoggerExecute = new ConsoleLogger('executeCall(json-native-calls.js)');
+const consoleLoggerCallback = new ConsoleLogger('callbackHandler(json-native-calls.js)');
 
 const callbacks = {};
 let id = 0;
@@ -11,7 +15,7 @@ let id = 0;
  */
 export default async function executeCall(config) {
     if (typeof config !== 'object' || config === null) {
-        console.warn('config must be an object. Take a look at the wiki');
+        consoleLoggerExecute.error('Config must be an object. Take a look at the wiki');
         return false;
     }
 
@@ -27,6 +31,8 @@ export default async function executeCall(config) {
     } = config;
 
     if (typeof window.external.jsonCall !== 'function') {
+        consoleLoggerExecute.warn('native-calls are not supported.');
+
         if (typeof fallback === 'function') {
             func({
                 parameter: parameter || {},
@@ -66,66 +72,63 @@ export default async function executeCall(config) {
         callData: data
     };
 
-    console.debug('callback config', callConfig);
+    consoleLoggerExecute.debug(`execute call { callId: ${callId} }`, callConfig);
     window.external.jsonCall(JSON.stringify(callConfig));
     return true;
 }
 
-export function callBackHandler(result) {
+export function callbackHandler(result) {
     try {
-        console.debug('callback result', result);
         const { id: callId, parameter, data, status } = result;
+
+        consoleLoggerCallback.debug(`result { callId: ${callId} }`, result);
 
         const callback = callbacks[callId];
         if (callback !== undefined) {
             const { func, executeOnlyOnce, fallback, callData } = callback;
 
-            if (result.status.code === RESULT_STATUS.NOT_AVAILABLE) {
-                console.warn('Call is not supported.');
-                if (typeof fallback === 'function') {
-                    func({
-                        parameter: parameter || {},
-                        data: fallback(callData) || {},
-                        status: {
-                            code: RESULT_STATUS.FALLBACK
-                        },
-                    });
-                } else {
-                    func({
-                        parameter: parameter || {},
-                        data: data || {},
-                        status: status || {},
-                    });
+            if (result.status.code === RESULT_STATUS.NOT_AVAILABLE && typeof fallback === 'function') {
+                consoleLoggerCallback.debug(`Call is not Supported -> use fallback. { callId: ${callId} }`);
+                func({
+                    parameter: parameter || {},
+                    data: fallback(callData) || {},
+                    status: {
+                        code: RESULT_STATUS.FALLBACK
+                    },
+                });
+            } else {
+                if (result.status.code === RESULT_STATUS.NOT_AVAILABLE) {
+                    consoleLoggerCallback.error(`Call is not Supported. { callId: ${callId} }`);
                 }
 
-                delete callbacks[callId];
-            } else {
                 func({
                     parameter: parameter || {},
                     data: data || {},
                     status: status || {},
                 });
+            }
 
-                if (executeOnlyOnce) {
-                    delete callbacks[callId];
-                }
+            if (executeOnlyOnce) {
+                delete callbacks[callId];
             }
         } else {
-            console.warn('no callback found', callId, callbacks);
+            consoleLoggerCallback.error('no callback found', callId, callback);
             logger.error({
                 message: 'no json NativeCalls callback found',
                 customNumber: callId,
+                fileName: 'json-native-calls',
+                section: 'callbackHandler',
             });
         }
     } catch (e) {
+        consoleLoggerCallback.error(e);
         logger.error({
             fileName: 'json-native-calls',
-            section: 'callBackHandler',
+            section: 'callbackHandler',
             ex: {
                 message: e.message,
                 stackTrace: e.stack
             }
         });
-        console.error(e);
     }
 }

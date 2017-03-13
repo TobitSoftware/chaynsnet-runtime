@@ -3,10 +3,16 @@ import errorHandler from '../call-error-handler';
 import getDefer from '../../utils/defer';
 import { getItem } from '../../utils/localStorage';
 import { getUrlParameters } from '../../utils/helper';
+import ConsoleLogger from '../../utils/console-logger';
+
+const consoleLogger = new ConsoleLogger('getTobitAccessToken(native-call)');
+
 
 export default function getTobitAccessToken() {
     try {
         const defer = getDefer();
+
+        consoleLogger.info('getTobitAccessToken');
 
         executeCall({
             action: 1,

@@ -29,9 +29,7 @@ export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
 
         locationSettings.design.color = `#${locationSettings.design.color}`;
 
-        console.debug('before await');
         const getTobitAccessTokenRes = await getTobitAccessToken();
-        console.debug('getToken res', getTobitAccessTokenRes);
         const accessToken = getTobitAccessTokenRes.data.tobitAccessToken;
 
         const payload = decodeTobitAccessToken(accessToken);

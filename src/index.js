@@ -1,5 +1,7 @@
 import logger from 'chayns-logger';
 import { chaynsInfo } from './chayns-info';
+import { getUrlParameters } from './utils/helper';
+import ConsoleLogger from './utils/console-logger';
 import './polyfill/index';
 import './tapp/custom-tapp-communication';
 import './json-call/json-call-functions';
@@ -63,3 +65,11 @@ if (!isLIVE) {
 }
 
 logger.setDefaults(defaults);
+
+const logLevelParameter = parseInt(getUrlParameters().loglevel, 10);
+
+if (!isNaN(logLevelParameter)) {
+    ConsoleLogger.setLevel(logLevelParameter);
+} else if (!isLIVE) {
+    ConsoleLogger.setLevel(ConsoleLogger.LEVELS.INFO);
+}

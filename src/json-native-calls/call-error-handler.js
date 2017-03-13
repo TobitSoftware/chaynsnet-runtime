@@ -1,7 +1,8 @@
 import logger from 'chayns-logger';
 import RESULT_STATUS from '../constants/native-calls-status';
-import { isLIVE } from '../constants/environments';
-import { getUrlParameters } from '../utils/helper';
+import ConsoleLogger from '../utils/console-logger';
+
+const consoleLogger = new ConsoleLogger('call-error-hander.js');
 
 export default (e, section = 'NativeCallErrorHandler.', fileName = 'call-error-handler.js') => {
     logger.error({
@@ -14,9 +15,7 @@ export default (e, section = 'NativeCallErrorHandler.', fileName = 'call-error-h
         }
     });
 
-    if (!isLIVE || !getUrlParameters().debug === '1') {
-        console.error('NativeCallErrorHandler', e);
-    }
+    consoleLogger.error(e);
 
     return Promise.resolve({
         parameter: {},

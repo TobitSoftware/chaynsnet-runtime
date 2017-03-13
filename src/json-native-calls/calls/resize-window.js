@@ -1,10 +1,15 @@
 import errorHandler from '../call-error-handler';
 import executeCall from '../json-native-calls';
 import getDefer from '../../utils/defer';
+import ConsoleLogger from '../../utils/console-logger';
+
+const consoleLogger = new ConsoleLogger('resizeWindow(native-call)');
 
 export default function resizeWindow(x, y) {
     try {
         const defer = getDefer();
+
+        consoleLogger.info(`resizeWindow { x:${x}, y:${y} }`);
 
         executeCall({
             action: 7,
@@ -15,9 +20,6 @@ export default function resizeWindow(x, y) {
             callback: {
                 func: defer.resolve,
                 executeOnlyOnce: true,
-            },
-            fallback: () => {
-                console.debug(`resizeWindow fallback. | {x:${x}, | y:${y}`);
             },
         });
 
