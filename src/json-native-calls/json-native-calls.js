@@ -32,7 +32,7 @@ export default async function executeCall(config) {
                 parameter: parameter || {},
                 data: fallback(data),
                 status: {
-                    code: 1
+                    code: RESULT_STATUS.FALLBACK
                 }
             });
         }
@@ -91,7 +91,6 @@ export function callBackHandler(result) {
                     delete callbacks[callId];
                 }
             }
-
         } else {
             console.warn('no callback found', callId, callbacks);
             logger.error({
