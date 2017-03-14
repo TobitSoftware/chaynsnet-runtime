@@ -4,8 +4,8 @@ import FloatingButton from '../ui/floating-button';
 import { argbHexToRgba } from '../utils/convert';
 import { getWindowMetrics, compareDate } from '../utils/helper';
 import loadTapp from '../tapp/custom-tapp';
-import { closeWindow, refreshChaynsIdIcons, setTobitAccessToken } from '../json-native-calls/calls/index';
-import { login, logout } from '../login';
+import { refreshChaynsIdIcons } from '../json-native-calls/calls/index';
+import { showLogin, logout, login } from '../login';
 import * as jsonCallHelper from './json-call-helper';
 import { answerJsonCall } from '../tapp/custom-tapp-communication';
 import { chaynsInfo } from '../chayns-info';
@@ -169,13 +169,12 @@ export function multiSelectDialog(value, srcIframe) {
 
 export function tobitWebTokenLogin(value) {
     if ('tobitAccessToken' in value) {
-        setTobitAccessToken(value.tobitAccessToken);
-        closeWindow();
+        login(value.tobitAccessToken);
     }
 }
 
 export function tobitLogin() {
-    login();
+    showLogin();
 }
 
 export function tobitLogout() {

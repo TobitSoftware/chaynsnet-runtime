@@ -6,7 +6,7 @@ import Navigation from './ui/navigation';
 import { validateTobitAccessToken, getUrlParameters, stringisEmptyOrWhitespace } from './utils/helper';
 import { decodeTobitAccessToken } from './utils/convert';
 import { setTobitAccessToken, getTobitAccessToken } from './json-native-calls/calls/index';
-import { login } from './login';
+import { showLogin } from './login';
 import ConsoleLogger from './utils/console-logger';
 
 import { DEFAULT_LOCATIONID, DEFAULT_TAPPID } from './constants/defaults';
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     customNumber: tappId
                 });
 
-                login();
+                showLogin();
             }
         } catch (e) {
             consoleLogger.error(e);
