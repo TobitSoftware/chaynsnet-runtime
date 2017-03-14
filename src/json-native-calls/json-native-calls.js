@@ -15,7 +15,7 @@ let id = 0;
  */
 export default async function executeCall(config) {
     if (typeof config !== 'object' || config === null) {
-        consoleLoggerExecute.error('Config must be an object. Take a look at the wiki');
+        consoleLoggerExecute.error('Config must be an object. Take a look at the git repositories wiki.');
         return false;
     }
 
@@ -31,9 +31,8 @@ export default async function executeCall(config) {
     } = config;
 
     if (typeof window.external.jsonCall !== 'function') {
-        consoleLoggerExecute.warn('native-calls are not supported.');
-
         if (typeof fallback === 'function') {
+            consoleLoggerExecute.debug('native-calls are not supported -> fallback.');
             func({
                 parameter: parameter || {},
                 data: fallback(data) || {},
@@ -42,6 +41,7 @@ export default async function executeCall(config) {
                 }
             });
         } else {
+            consoleLoggerExecute.debug('native-calls are not supported.');
             func({
                 parameter: parameter || {},
                 data: {},
