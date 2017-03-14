@@ -42,8 +42,12 @@
   "dependencies": {
     "babel-polyfill": "^6.23.0",
     "chayns-logger": "^2.4.1",
+    "classlist-polyfill": "^1.0.3",
     "classnames": "^2.2.5",
+    "custom-event-polyfill": "^0.3.0",
+    "es6-promise": "^4.1.0",
     "html-to-element": "^0.1.0",
-    "stylenames": "^1.1.5"
+    "stylenames": "^1.1.5",
+    "whatwg-fetch": "^2.0.3"
   }
 }
