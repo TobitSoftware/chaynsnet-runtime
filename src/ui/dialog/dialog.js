@@ -1,6 +1,7 @@
 import htmlToElement from 'html-to-element';
-import {argbHexToRgba} from '../../utils/convert';
+import { argbHexToRgba } from '../../utils/convert';
 import Fade from '../../utils/fade';
+import getDefer from '../../utils/defer';
 
 import TimePicker from './time-picker/time-picker';
 import DatePicker from './date-picker/date-picker';
@@ -29,7 +30,7 @@ export default class Dialog {
      * @returns {Promise} - {buttonType: number, ...}
      */
     static show(type, config) {
-        promise = chayns.utils.defer();
+        promise = getDefer();
         if ($currentDialog) {
             return Dialog.hide().then(() => Dialog.show(type, config));
         }
@@ -161,11 +162,11 @@ function dateTime(config) {
     config.selectedDate *= 1000;
 
     currentInstances.timePicker = new TimePicker(config);
-    currentInstances.datePicker = new DatePicker(config, (date) => currentInstances.timePicker.updateSelectedDate(date));
+    currentInstances.datePicker = new DatePicker(config, date => currentInstances.timePicker.updateSelectedDate(date));
 
     currentInstances.timePicker.updateSelectedDate(currentInstances.datePicker.dayPicker.selectedDate);
 
-    let $content = [currentInstances.datePicker.element, currentInstances.timePicker.element];
+    const $content = [currentInstances.datePicker.element, currentInstances.timePicker.element];
     return getDialog(config.title, config.message, null, $content, getButtonWrapper(config.buttons));
 }
 
@@ -215,7 +216,7 @@ function select(config) {
  * @returns {{buttonType: number, ...}}
  */
 function getResultObj(buttonType) {
-    let ret = {
+    const ret = {
         buttonType
     };
 
@@ -227,14 +228,14 @@ function getResultObj(buttonType) {
                 ret.selectedDate = (currentInstances.datePicker.selectedDate.getTime() / 1000).toFixed(0);
                 break;
             case 'time':
-                let time = new Date();
+                const time = new Date();
                 time.setHours(currentInstances.timePicker.hours);
                 time.setMinutes(currentInstances.timePicker.minutes);
                 time.setSeconds(0);
                 ret.selectedDate = (time.getTime() / 1000).toFixed(0);
                 break;
             case 'dateTime':
-                let date = currentInstances.datePicker.selectedDate;
+                const date = currentInstances.datePicker.selectedDate;
                 date.setHours(currentInstances.timePicker.hours);
                 date.setMinutes(currentInstances.timePicker.minutes);
                 date.setSeconds(0);
@@ -284,17 +285,17 @@ function getButtonWrapper(buttons) {
         buttons = [{
             text: 'OK',
             buttonType: Dialog.buttonType.POSITIVE
-        }]
+        }];
     }
 
-    let $btnWrapper = document.createElement('div');
+    const $btnWrapper = document.createElement('div');
     $btnWrapper.classList.add('dialog__buttons');
 
-    for (let button of buttons) {
+    for (const button of buttons) {
         let icon = '';
 
         if (button.icon) {
-            let rgba = argbHexToRgba(button.icon.color) || {
+            const rgba = argbHexToRgba(button.icon.color) || {
                     r: 255,
                     g: 255,
                     b: 255,
@@ -307,7 +308,7 @@ function getButtonWrapper(buttons) {
                     </span>)`;
         }
 
-        let $currentBtn = htmlToElement(`<div class="button">${icon} ${button.text}</div>`);
+        const $currentBtn = htmlToElement(`<div class="button">${icon} ${button.text}</div>`);
         $currentBtn.addEventListener('click', () => Dialog.hide(button.buttonType));
         $btnWrapper.appendChild($currentBtn);
     }
@@ -325,23 +326,23 @@ function getButtonWrapper(buttons) {
  * @returns {HTMLElement}
  */
 function getDialog(headline, description, quickFind, $content, $buttonWrapper, lazyLoad = null) {
-    headline = headline ? headline : '';
-    description = description ? description : '';
+    headline = headline || '';
+    description = description || '';
 
-    let $dialog = htmlToElement(`<div class="dialog__background-layer">
+    const $dialog = htmlToElement(`<div class="dialog__background-layer">
                             <div class="dialog"></div>
                            </div>`);
 
-    $dialog.addEventListener('click', (e) => e.stopPropagation());
+    $dialog.addEventListener('click', e => e.stopPropagation());
 
-    if(headline || description || quickFind){
-        let $header = htmlToElement(`<div class="dialog__header">
+    if (headline || description || quickFind) {
+        const $header = htmlToElement(`<div class="dialog__header">
                                         ${(headline) ? `<div class="ChaynsCS-Color headline">${headline}</div>` : ''}
                                         ${(description) ? `<div class="description">${description}</div>` : ''}
                                     </div>`);
 
         if (quickFind) {
-            let $search = htmlToElement(`<input class="search input" placeholder="Suchen" />`);
+            const $search = htmlToElement('<input class="search input" placeholder="Suchen" />');
 
             $search.addEventListener('input', () => quickFind($search.value));
 
@@ -352,10 +353,10 @@ function getDialog(headline, description, quickFind, $content, $buttonWrapper, l
     }
 
     if ($content) {
-        let $wrapper = htmlToElement(`<div class="dialog__content"></div>`);
+        const $wrapper = htmlToElement('<div class="dialog__content"></div>');
 
         if ($content.length != undefined) {
-            for (let $element of $content) {
+            for (const $element of $content) {
                 $wrapper.appendChild($element);
             }
         } else {
@@ -363,7 +364,7 @@ function getDialog(headline, description, quickFind, $content, $buttonWrapper, l
         }
 
         if (lazyLoad) {
-            $wrapper.addEventListener('scroll', () => lazyLoad($wrapper))
+            $wrapper.addEventListener('scroll', () => lazyLoad($wrapper));
         }
 
         $dialog.firstElementChild.appendChild($wrapper);
