@@ -1,4 +1,4 @@
-import getReleaseConfig from './configs/base-config';
+import getReleaseConfig from './configs/release-config';
 
 const config = getReleaseConfig(true);
 

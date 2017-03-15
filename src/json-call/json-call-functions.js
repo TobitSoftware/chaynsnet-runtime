@@ -3,13 +3,14 @@ import WaitCursor from '../ui/wait-cursor';
 import FloatingButton from '../ui/floating-button';
 import { argbHexToRgba } from '../utils/convert';
 import { getWindowMetrics, compareDate } from '../utils/helper';
-import { loadTapp } from '../tapp/custom-tapp';
-import { setAccessToken, closeWindow, refreshChaynsIdIcons } from '../utils/native-functions';
-import { login, logout } from '../login';
+import loadTapp from '../tapp/custom-tapp';
+import { refreshChaynsIdIcons } from '../json-native-calls/calls/index';
+import { showLogin, logout, login } from '../login';
 import * as jsonCallHelper from './json-call-helper';
 import { answerJsonCall } from '../tapp/custom-tapp-communication';
 import { chaynsInfo } from '../chayns-info';
 import DATE_TYPE from '../constants/date-type';
+import { removeKeyForTapp, setKeyForTapp, getKeyForTapp } from '../utils/chayns-storage';
 
 export function toggleWaitCursor(value, srcIframe) {
     if (value.enabled) {
@@ -168,14 +169,12 @@ export function multiSelectDialog(value, srcIframe) {
 
 export function tobitWebTokenLogin(value) {
     if ('tobitAccessToken' in value) {
-        setAccessToken(value.tobitAccessToken);
-        closeWindow();
-        location.reload();
+        login(value.tobitAccessToken);
     }
 }
 
 export function tobitLogin() {
-    login();
+    showLogin();
 }
 
 export function tobitLogout() {
@@ -203,6 +202,23 @@ export function showFloatingButton(value, srcIfame) {
     } else {
         FloatingButton.hide(srcIfame[0]);
     }
+}
+
+export function setObjectForKey(value, srcIframe) {
+    const tappId = chaynsInfo.getGlobalData().AppInfo.TappSelected.Id;
+
+    if (value.object == null) {
+        removeKeyForTapp(tappId, value.key, value.accessMode);
+    } else {
+        setKeyForTapp(tappId, value.key, value.object, value.accessMode, value.tappIDs);
+    }
+}
+
+export async function getObjectForKey(value, srcIframe) {
+    const tappId = chaynsInfo.getGlobalData().AppInfo.TappSelected.Id;
+
+    const item = await getKeyForTapp(tappId, value.key, value.accessMode);
+    answerJsonCall(value, { object: item }, srcIframe);
 }
 
 export function addChaynsCallErrorListener(value, srcIframe) {

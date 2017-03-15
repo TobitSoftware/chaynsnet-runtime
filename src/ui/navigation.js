@@ -1,6 +1,6 @@
 import htmlToElement from 'html-to-element';
 import { getUrlParameters } from '../utils/helper';
-import { loadTapp } from '../tapp/custom-tapp';
+import loadTapp from '../tapp/custom-tapp';
 import NAVIGATION_ITEMS from '../constants/navigation-items';
 
 let $navigation = null;

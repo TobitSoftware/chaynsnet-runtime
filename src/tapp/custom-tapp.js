@@ -1,22 +1,25 @@
 import logger from 'chayns-logger';
 import htmlToElement from 'html-to-element';
-import { chaynsInfo } from '../chayns-info';
+import { chaynsInfo, setSelectedTapp } from '../chayns-info';
 import FloatingButton from '../ui/floating-button';
 import WaitCursor from '../ui/wait-cursor';
-import { setSelectedTapp } from '../chayns-info';
 import { getUrlParameters } from '../utils/helper';
 import { parameterStringToObject } from '../utils/convert';
+import ConsoleLogger from '../utils/console-logger';
+
+const loggerLoadTappById = new ConsoleLogger('loadTappById(custom-tapp.js)');
+const loggerLoadTapp = new ConsoleLogger('loadTapp(custom-tapp.js)');
 
 const $bodyContent = document.querySelector('.body-content');
 
-export function loadTapp(tappId) {
+export default function loadTappById(tappId) {
     FloatingButton.hide();
     WaitCursor.hide();
 
     const tapp = getTappById(tappId);
     if (tapp) {
         setSelectedTapp(tapp);
-        _loadTapp(parseInt(tapp.id, 10), setUrlParams(tapp.url));
+        loadTapp(parseInt(tapp.id, 10), setUrlParams(tapp.url));
     } else {
         logger.warning({
             message: 'no tapp found',
@@ -24,7 +27,7 @@ export function loadTapp(tappId) {
             fileName: 'custom-tapp.js',
             section: 'loadTapp'
         });
-        console.warn('No Tapp found!');
+        loggerLoadTappById.warn('No Tapp found!');
     }
 }
 
@@ -77,16 +80,16 @@ function setUrlParams(url) {
  * @param {number} tappId
  * @param {string} tappUrl
  */
-function _loadTapp(tappId, tappUrl) {
+function loadTapp(tappId, tappUrl) {
     if (typeof tappId !== 'number') {
         tappId = parseInt(tappId, 10);
         if (Number.isNaN(tappId)) {
-            console.error('TappId is not a number');
+            loggerLoadTapp.error('TappId is not a number');
             return;
         }
     }
     if (!tappUrl || typeof tappUrl !== 'string') {
-        console.error('TappUrl is not a string');
+        loggerLoadTapp.error('TappUrl is not a string');
         return;
     }
 

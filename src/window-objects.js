@@ -1,11 +1,24 @@
 import changeEnv from './utils/change-env';
-import { loadTapp } from './tapp/custom-tapp';
+import loadTapp from './tapp/custom-tapp';
+import { callbackHandler } from './json-native-calls/json-native-calls';
+import ConsoleLogger from './utils/console-logger';
 
 import { ENVIRONMENTS } from './constants/environments';
 import TAPPIDS from './constants/tapp-ids';
 
-window.changeEnv = changeEnv;
-window.ENV = ENVIRONMENTS;
+window.cwl = {
+    ConsoleLogger,
+    changeEnv,
+    ENV: ENVIRONMENTS,
+    loadTapp,
+    TAPPIDS,
+};
 
-window.loadTapp = loadTapp;
-window.TAPPIDS = TAPPIDS;
+try {
+    window.external = {
+        ...window.external,
+        callback: callbackHandler
+    };
+} catch (e) {
+    new ConsoleLogger('window-objects').info('window.external is readonly');
+}

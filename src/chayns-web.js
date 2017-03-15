@@ -1,16 +1,19 @@
 import logger from 'chayns-logger';
-import { loadTapp } from './tapp/custom-tapp';
+import loadTapp from './tapp/custom-tapp';
 import { loadLocation } from './chayns-info';
 import { setDynamicStyle } from './ui/dynamic-style';
 import Navigation from './ui/navigation';
 import { validateTobitAccessToken, getUrlParameters, stringisEmptyOrWhitespace } from './utils/helper';
 import { decodeTobitAccessToken } from './utils/convert';
-import { getAccessToken, setAccessToken } from './utils/native-functions';
+import { setTobitAccessToken, getTobitAccessToken } from './json-native-calls/calls/index';
+import { showLogin } from './login';
+import ConsoleLogger from './utils/console-logger';
 
 import { DEFAULT_LOCATIONID, DEFAULT_TAPPID } from './constants/defaults';
 import LOGIN_TAPP from './constants/login-tapp';
 import TAPPIDS from './constants/tapp-ids';
-import { login } from './login';
+
+const consoleLogger = new ConsoleLogger('(chayns-web.js)');
 
 document.addEventListener('DOMContentLoaded', () => {
     let tappId = getUrlParameters().tappid;
@@ -32,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         locationId = decodedToken.LocationID;
         tappId = DEFAULT_TAPPID;
 
-        setAccessToken(parameterAccessToken);
+        setTobitAccessToken(parameterAccessToken);
         logger.info({
             message: 'accessToken as URLParameter',
             personId: decodedToken.PersonID,
@@ -58,20 +61,26 @@ document.addEventListener('DOMContentLoaded', () => {
     Navigation.init();
 
     // start of ChaynsWebLight
-    loadLocation(locationId).then(() => {
-        setDynamicStyle();
+    loadLocation(locationId).then(async() => {
+        try {
+            setDynamicStyle();
 
-        const tobitAccessToken = getAccessToken();
+            const getTobitAccessTokenRes = await getTobitAccessToken();
 
-        if (tappId !== LOGIN_TAPP.id && validateTobitAccessToken(tobitAccessToken)) {
-            loadTapp(tappId);
-        } else {
-            logger.info({
-                message: 'show login tapp',
-                customNumber: tappId
-            });
+            const tobitAccessToken = getTobitAccessTokenRes.data.tobitAccessToken;
 
-            login();
+            if (tappId !== LOGIN_TAPP.id && validateTobitAccessToken(tobitAccessToken)) {
+                loadTapp(tappId);
+            } else {
+                logger.info({
+                    message: 'show login tapp',
+                    customNumber: tappId
+                });
+
+                showLogin();
+            }
+        } catch (e) {
+            consoleLogger.error(e);
         }
     });
 }, false);

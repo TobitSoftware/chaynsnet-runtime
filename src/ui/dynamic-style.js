@@ -1,6 +1,9 @@
 import htmlToElement from 'html-to-element';
 import { chaynsInfo } from '../chayns-info';
+import ConsoleLogger from '../utils/console-logger';
 import { getRelativeColor } from '../utils/convert';
+
+const consoleLogger = new ConsoleLogger('(dynamic-styles.js)');
 
 /**
  * Accept Arrays like
@@ -28,8 +31,8 @@ function addStyle(classArray) {
     document.head.appendChild(htmlToElement(`<style type="text/css">${css}</style>`));
 }
 
-export function setDynamicStyle() {
-    new Promise(() => {
+export async function setDynamicStyle() {
+    try {
         const getColor = (percentage, opacity) => getRelativeColor(chaynsInfo.Color, percentage, opacity);
 
         const chaynsCss = document.querySelector('link[href^="https://chayns-res.tobit.com/API/"]');
@@ -105,5 +108,7 @@ export function setDynamicStyle() {
                 color: `${getColor(100)}!important`
             }
         }]);
-    });
+    } catch (e) {
+        consoleLogger.error(e);
+    }
 }

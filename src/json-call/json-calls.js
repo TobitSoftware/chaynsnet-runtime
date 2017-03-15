@@ -13,6 +13,8 @@ const jsonCalls = {
     54: jsonCallFunctions.tobitLogin,
     56: jsonCallFunctions.tobitLogout,
     72: jsonCallFunctions.showFloatingButton,
+    73: jsonCallFunctions.setObjectForKey,
+    74: jsonCallFunctions.getObjectForKey,
     75: jsonCallFunctions.addChaynsCallErrorListener,
     77: jsonCallFunctions.setIframeHeigth,
     78: jsonCallFunctions.getWindowMetricsCall,
