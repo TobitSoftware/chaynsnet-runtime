@@ -1,0 +1,7 @@
+@import './device-width';
+
+$dialog-width-min: $MOBILE_MIN - 6px;
+$dialog-width-mobile: 340px;
+$dialog-width-desktop: 430px;
+
+$dialog-component-margin: 10px 10px 0 10px;

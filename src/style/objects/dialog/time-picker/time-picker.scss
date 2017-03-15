@@ -1,0 +1,101 @@
+@import '../../../mixins/media-querys';
+@import '../../../constants/dialog';
+
+.time-picker {
+  margin: $dialog-component-margin;
+
+  %input {
+    position: relative;
+    font-size: 33px;
+    width: 37px;
+
+    @include mobile-small {
+      font-size: 30px;
+      width: 34px;
+    }
+    input {
+      width: inherit;
+      text-align: -webkit-center;
+
+      appearance: textfield;
+      &::-webkit-outer-spin-button{
+        display: none;
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      &::-webkit-inner-spin-button{
+        display: none;
+        -webkit-appearance: none;
+        margin: 0;
+      }
+    }
+  }
+
+  &__hours {
+    @extend %input;
+  }
+
+  &__separator {
+    position: relative;
+    top: 6px;
+    padding-left: 4px;
+    padding-right: 6px;
+    font-size: 33px;
+  }
+
+  &__minutes {
+    @extend %input;
+  }
+
+  .table {
+    margin: 0 auto;
+    width: 110px;
+
+    &__cell {
+      &.hours, &.minutes {
+        @include mobile-small {
+          padding: 0;
+        }
+      }
+    }
+  }
+  .arrow i{
+    padding-left: 12px;
+    font-size: 18px;
+    cursor: pointer;
+  }
+}
+
+@include desktop {
+  .time-picker {
+
+    %input-desktop {
+      width: 60px;
+      font-size: 50px;
+    }
+
+    &__hours {
+      @extend %input-desktop;
+    }
+
+    &__separator {
+      position: relative;
+      top: 16px;
+      padding-left: 6px;
+      font-size: 50px;
+    }
+
+    &__minutes {
+      @extend %input-desktop;
+    }
+
+    .table {
+      width: 130px !important;
+
+    }
+    .arrow i{
+      padding-left: 21px;
+      font-size: 26px;
+    }
+  }
+}

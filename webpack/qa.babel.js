@@ -1,15 +1,5 @@
-import webpack from 'webpack';
-import config from './prod.babel';
+import getReleaseConfig from './configs/release-config';
 
-config.devtool = 'inline-source-map';
-
-config.plugins.pop();
-config.plugins.push(
-    new webpack.DefinePlugin({
-        'process.env': {
-            NODE_ENV: JSON.stringify('qa')
-        }
-    })
-);
+const config = getReleaseConfig(true);
 
 export default config;

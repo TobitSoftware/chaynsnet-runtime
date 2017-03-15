@@ -1,57 +1,72 @@
 import logger from 'chayns-logger';
-import './shared/utils/polyfill';
-import './web/customTappCommunication';
-import './web/jsonCalls';
-import './web/chaynsWeb';
-import './constants/config';
-import Console from './shared/utils/console';
-import Navigation from './shared/utils/navigation';
+import { chaynsInfo } from './chayns-info';
+import { getUrlParameters } from './utils/helper';
+import ConsoleLogger from './utils/console-logger';
+import './polyfill/index';
+import './tapp/custom-tapp-communication';
+import './json-call/json-call-functions';
+import './chayns-web';
+import './constants/system-url-parameter';
+import './window-objects';
 
-import { ENV } from './constants/config';
+import VERSION from './constants/version';
+import { isLIVE } from './constants/environments';
 
 import './style/index.scss';
 
-// catches chayns error
-chayns.ready.catch((ex) => {
-    // ignore
-});
-
-//init logger
 logger.init({
     applicationUid: 'B150BF1E-A955-4073-B3DD-4F2CEC864C6A',
     overrideOnError: true,
     throttleTime: 100,
-    useDevServer: process.env.NODE_ENV !== ENV.LIVE
+    useDevServer: !isLIVE,
+    middleware: (payload) => {
+        if (payload.customText) {
+            payload.data = {
+                url: location.href,
+                ...payload.data
+            };
+        } else {
+            payload.customText = location.href;
+        }
+
+        if (chaynsInfo) {
+            const activeTappId = chaynsInfo.getGlobalData().AppInfo.TappSelected.Id;
+            if (activeTappId) {
+                if (payload.customNumber) {
+                    payload.data = {
+                        tappId: activeTappId,
+                        ...payload.data,
+                    };
+                } else {
+                    payload.customNumber = activeTappId;
+                }
+            }
+
+            payload = {
+                locationId: chaynsInfo.LocationID,
+                personId: chaynsInfo.User.PersonID,
+                ...payload
+            };
+        }
+
+        return true;
+    }
 });
-if (process.env.NODE_ENV !== ENV.LIVE) {
-    logger.setDefaults({
-        env: process.env.NODE_ENV
-    })
-}
 
-// Console && Navigation
-Console.init();
-Navigation.init();
-
-// Activate Console by clicking activationElement
-let timeout, count = 0;
-let activateCB = () => {
-    if (!timeout) {
-        timeout = setTimeout(() => {
-            count = 0;
-            timeout = null;
-        }, 10000);
-    }
-    count++;
-    if (count > 5) {
-        count = 0;
-        Console.show();
-        Navigation.show(true);
-    }
+const defaults = {
+    version: VERSION
 };
 
-let activationElements = document.querySelectorAll('.activationElement');
-for (let element of activationElements) {
-    element.addEventListener('click', activateCB);
+if (!isLIVE) {
+    defaults.env = process.env.NODE_ENV;
 }
 
+logger.setDefaults(defaults);
+
+const logLevelParameter = parseInt(getUrlParameters().loglevel, 10);
+
+if (!isNaN(logLevelParameter)) {
+    ConsoleLogger.setLevel(logLevelParameter);
+} else if (!isLIVE) {
+    ConsoleLogger.setLevel(ConsoleLogger.LEVELS.INFO);
+}
