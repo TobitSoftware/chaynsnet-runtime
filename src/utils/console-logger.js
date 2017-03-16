@@ -1,6 +1,6 @@
 const LEVELS = {
     NONE: 0,
-    error: 1,
+    ERROR: 1,
     WARNING: 2,
     INFO: 3,
     DEBUG: 4,
