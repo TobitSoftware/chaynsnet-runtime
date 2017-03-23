@@ -1,5 +1,5 @@
 import logger from 'chayns-logger';
-import loadTapp from './tapp/custom-tapp';
+import loadTapp, { getTappById } from './tapp/custom-tapp';
 import { loadLocation } from './chayns-info';
 import { setDynamicStyle } from './ui/dynamic-style';
 import Navigation from './ui/navigation';
@@ -15,11 +15,12 @@ import TAPPIDS from './constants/tapp-ids';
 
 const consoleLogger = new ConsoleLogger('(chayns-web.js)');
 
-document.addEventListener('DOMContentLoaded', () => {
-    let tappId = getUrlParameters().tappid;
+
+function init() {
+    let tappId = parseInt(getUrlParameters().tappid, 10);
     let locationId = parseInt(getUrlParameters().locationid, 10);
 
-    if (parseInt(tappId, 10) === -7) {
+    if (tappId === -7) {
         tappId = -2;
     }
 
@@ -60,27 +61,56 @@ document.addEventListener('DOMContentLoaded', () => {
 
     Navigation.init();
 
-    // start of ChaynsWebLight
-    loadLocation(locationId).then(async() => {
+    loadLocation(locationId).then(async(success) => {
         try {
+            if (!success) {
+                return;
+            }
+
             setDynamicStyle();
 
             const getTobitAccessTokenRes = await getTobitAccessToken();
-
             const tobitAccessToken = getTobitAccessTokenRes.data.tobitAccessToken;
 
-            if (tappId !== LOGIN_TAPP.id && validateTobitAccessToken(tobitAccessToken)) {
-                loadTapp(tappId);
-            } else {
+            const tapp = getTappById(tappId);
+            if (!tapp) {
+                consoleLogger.warn('No Tapp found!');
+                logger.warning({
+                    message: 'no tapp found',
+                    locationId,
+                    customNumber: tappId,
+                    fileName: 'custom-tapp.js',
+                    section: 'loadTapp'
+                });
+                return;
+            }
+
+            if (tappId === LOGIN_TAPP.id || (tapp.requiresLogin && !validateTobitAccessToken(tobitAccessToken))) {
                 logger.info({
                     message: 'show login tapp',
+                    locationId,
                     customNumber: tappId
                 });
 
                 showLogin();
+            } else {
+                loadTapp(tappId);
             }
         } catch (e) {
             consoleLogger.error(e);
+            logger.error({
+                message: 'Init of ChaynsWebLight failed.',
+                locationId,
+                customNumeber: tappId,
+                fileName: 'chayns-web.js',
+                section: 'loadLocation(locationId)',
+                ex: {
+                    message: e.message,
+                    stackTrace: e.stack
+                }
+            });
         }
     });
-}, false);
+}
+
+document.addEventListener('DOMContentLoaded', () => init(), false);
