@@ -24,7 +24,7 @@ export function login(tobitAccessToken) {
 export function logout() {
     setTobitAccessToken('');
 
-    const activeTapp = getTappById(chaynsInfo.getGlobalData().AppInfo.TappSelected);
+    const activeTapp = getTappById(chaynsInfo.getGlobalData().AppInfo.TappSelected.Id);
     const tappRequiresLogin = activeTapp && activeTapp.requiresLogin;
 
     if (tappRequiresLogin) {

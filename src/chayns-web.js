@@ -61,7 +61,7 @@ function init() {
 
     Navigation.init();
 
-    loadLocation(locationId).then(async (success) => {
+    loadLocation(locationId).then(async(success) => {
         try {
             if (!success) {
                 return;
@@ -73,16 +73,28 @@ function init() {
             const tobitAccessToken = getTobitAccessTokenRes.data.tobitAccessToken;
 
             const tapp = getTappById(tappId);
+            if (!tapp) {
+                consoleLogger.warn('No Tapp found!');
+                logger.warning({
+                    message: 'no tapp found',
+                    locationId,
+                    customNumber: tappId,
+                    fileName: 'custom-tapp.js',
+                    section: 'loadTapp'
+                });
+                return;
+            }
 
-            if (tappId !== LOGIN_TAPP.id && (validateTobitAccessToken(tobitAccessToken) || (tapp && !tapp.requiresLogin))) {
-                loadTapp(tappId);
-            } else {
+            if (tappId === LOGIN_TAPP.id || (tapp.requiresLogin && !validateTobitAccessToken(tobitAccessToken))) {
                 logger.info({
                     message: 'show login tapp',
+                    locationId,
                     customNumber: tappId
                 });
 
                 showLogin();
+            } else {
+                loadTapp(tappId);
             }
         } catch (e) {
             consoleLogger.error(e);
