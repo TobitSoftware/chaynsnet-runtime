@@ -2,7 +2,8 @@ export const ENVIRONMENTS = {
     MN: 'mn',
     DEV: 'development',
     QA: 'qa',
-    LIVE: 'production'
+    LIVE: 'production',
+    LIVE_V1: 'production:v1'
 };
 
 export const isLIVE = process.env.NODE_ENV === ENVIRONMENTS.LIVE;
