@@ -61,8 +61,12 @@ function init() {
 
     Navigation.init();
 
-    loadLocation(locationId).then(async() => {
+    loadLocation(locationId).then(async (success) => {
         try {
+            if (!success) {
+                return;
+            }
+
             setDynamicStyle();
 
             const getTobitAccessTokenRes = await getTobitAccessToken();
@@ -82,6 +86,17 @@ function init() {
             }
         } catch (e) {
             consoleLogger.error(e);
+            logger.error({
+                message: 'Init of ChaynsWebLight failed.',
+                locationId,
+                customNumeber: tappId,
+                fileName: 'chayns-web.js',
+                section: 'loadLocation(locationId)',
+                ex: {
+                    message: e.message,
+                    stackTrace: e.stack
+                }
+            });
         }
     });
 }
