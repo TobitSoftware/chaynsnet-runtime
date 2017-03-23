@@ -1,4 +1,5 @@
-import loadTapp from './tapp/custom-tapp';
+import { chaynsInfo } from './chayns-info';
+import loadTapp, { getTappById } from './tapp/custom-tapp';
 import { closeWindow, resizeWindow, setTobitAccessToken } from './json-native-calls/calls/index';
 import Navigation from './ui/navigation';
 import LOGIN_TAPP from './constants/login-tapp';
@@ -22,10 +23,16 @@ export function login(tobitAccessToken) {
 
 export function logout() {
     setTobitAccessToken('');
-    closeWindow()
-        .then((res) => {
-            if (res.status.code === NATIVE_CALL_STATUS.NOT_AVAILABLE) {
-                location.reload();
-            }
-        });
+
+    const activeTapp = getTappById(chaynsInfo.getGlobalData().AppInfo.TappSelected.Id);
+    const tappRequiresLogin = activeTapp && activeTapp.requiresLogin;
+
+    if (tappRequiresLogin) {
+        closeWindow()
+            .then((res) => {
+                if (res.status.code === NATIVE_CALL_STATUS.NOT_AVAILABLE) {
+                    location.reload();
+                }
+            });
+    }
 }

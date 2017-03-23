@@ -19,13 +19,14 @@ export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
         const locationSettingsRequest = await Request.get(`https://chaynssvc.tobit.com/v0.4/${locationId}/LocationSettings`);
 
         if (locationSettingsRequest.status === 204) {
-            consoleLoggerLocation.warning('no location found');
-            logger.warn({
+            consoleLoggerLocation.warn('no location found');
+            logger.warning({
                 message: 'No location found.',
                 fileName: 'chaynsInfo.js',
                 section: 'loadLocation',
                 locationId
             });
+            return false;
         }
 
         const locationSettingsRequestResponse = await locationSettingsRequest.json();
