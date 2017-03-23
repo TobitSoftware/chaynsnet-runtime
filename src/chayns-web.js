@@ -15,7 +15,8 @@ import TAPPIDS from './constants/tapp-ids';
 
 const consoleLogger = new ConsoleLogger('(chayns-web.js)');
 
-document.addEventListener('DOMContentLoaded', () => {
+
+function init() {
     let tappId = parseInt(getUrlParameters().tappid, 10);
     let locationId = parseInt(getUrlParameters().locationid, 10);
 
@@ -60,7 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     Navigation.init();
 
-    // start of ChaynsWebLight
     loadLocation(locationId).then(async() => {
         try {
             setDynamicStyle();
@@ -84,4 +84,6 @@ document.addEventListener('DOMContentLoaded', () => {
             consoleLogger.error(e);
         }
     });
-}, false);
+}
+
+document.addEventListener('DOMContentLoaded', () => init(), false);
