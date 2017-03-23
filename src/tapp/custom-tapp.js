@@ -12,6 +12,10 @@ const loggerLoadTapp = new ConsoleLogger('loadTapp(custom-tapp.js)');
 
 const $bodyContent = document.querySelector('.body-content');
 
+/**
+ * Loads Tapp by TappId.
+ * @param {Number} tappId
+ */
 export default function loadTappById(tappId) {
     FloatingButton.hide();
     WaitCursor.hide();
@@ -19,11 +23,11 @@ export default function loadTappById(tappId) {
     const tapp = getTappById(tappId);
     if (tapp) {
         setSelectedTapp(tapp);
-        loadTapp(parseInt(tapp.id, 10), setUrlParams(tapp.url));
+        loadTapp(tapp.id, setUrlParams(tapp.url));
     } else {
         logger.warning({
             message: 'no tapp found',
-            customNumber: parseInt(tappId, 10),
+            customNumber: tappId,
             fileName: 'custom-tapp.js',
             section: 'loadTapp'
         });
@@ -37,12 +41,7 @@ export default function loadTappById(tappId) {
  * @returns {*}
  */
 function getTappById(tappId) {
-    for (const tapp of chaynsInfo.Tapps) {
-        if (tapp.id === parseInt(tappId, 10)) {
-            return tapp;
-        }
-    }
-    return null;
+    return chaynsInfo.Tapps.find(tapp => tapp.id === tappId) || null;
 }
 
 /**

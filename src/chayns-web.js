@@ -16,10 +16,10 @@ import TAPPIDS from './constants/tapp-ids';
 const consoleLogger = new ConsoleLogger('(chayns-web.js)');
 
 document.addEventListener('DOMContentLoaded', () => {
-    let tappId = getUrlParameters().tappid;
+    let tappId = parseInt(getUrlParameters().tappid, 10);
     let locationId = parseInt(getUrlParameters().locationid, 10);
 
-    if (parseInt(tappId, 10) === -7) {
+    if (tappId === -7) {
         tappId = -2;
     }
 
