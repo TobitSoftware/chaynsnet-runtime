@@ -1,6 +1,6 @@
 import htmlToElement from 'html-to-element';
-import {numberToTimeString} from '../../../utils/convert';
-import {compareDate} from '../../../utils/helper';
+import { numberToTimeString } from '../../../utils/convert';
+import { compareDate } from '../../../utils/helper';
 
 export default class TimePicker {
     $timePicker = null;
@@ -64,13 +64,15 @@ export default class TimePicker {
         if (!this.$minutesInput) {
             return;
         }
-        return parseInt(this.$minutesInput.value, 10)
+        return parseInt(this.$minutesInput.value, 10);
     }
 
     get element() {
         if (this.$timePicker) {
             return this.$timePicker;
         }
+
+        const inputType = navigator.userAgent.toLowerCase().indexOf('firefox') > -1 ? 'tel' : 'number';
 
         this.$timePicker = htmlToElement(`
         <div class="time-picker no-select">
@@ -87,7 +89,7 @@ export default class TimePicker {
                 <div class="table__row">
                     <div class="table__cell table-width">
                         <div class="time-picker__hours">
-                            <input id="picker__hours" type="${chayns.env.browser.name === 'firefox' ? 'tel' : 'number'}" pattern="[0-9]*" min ="0" max="23" value="${numberToTimeString(this.selectedTime.getHours())}" class="timepicker__hours">
+                            <input id="picker__hours" type="${inputType}" pattern="[0-9]*" min ="0" max="23" value="${numberToTimeString(this.selectedTime.getHours())}" class="timepicker__hours">
                         </div>
                     </div>
                     <div class="table__cell" style="width: 10px !important;">
@@ -95,7 +97,7 @@ export default class TimePicker {
                     </div>
                     <div class="table__cell table-width">
                         <div class="time-picker__minutes">
-                            <input id="picker__minutes"  type="${chayns.env.browser.name === 'firefox' ? 'tel' : 'number'}" pattern="[0-9]*" min ="0" max="59" value="${numberToTimeString(this.selectedTime.getMinutes())}" class="timepicker__minutes">
+                            <input id="picker__minutes"  type="${inputType}" pattern="[0-9]*" min ="0" max="59" value="${numberToTimeString(this.selectedTime.getMinutes())}" class="timepicker__minutes">
                         </div>
                     </div>
                 </div>
