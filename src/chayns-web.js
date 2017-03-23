@@ -1,5 +1,5 @@
 import logger from 'chayns-logger';
-import loadTapp from './tapp/custom-tapp';
+import loadTapp, { getTappById } from './tapp/custom-tapp';
 import { loadLocation } from './chayns-info';
 import { setDynamicStyle } from './ui/dynamic-style';
 import Navigation from './ui/navigation';
@@ -66,10 +66,11 @@ document.addEventListener('DOMContentLoaded', () => {
             setDynamicStyle();
 
             const getTobitAccessTokenRes = await getTobitAccessToken();
-
             const tobitAccessToken = getTobitAccessTokenRes.data.tobitAccessToken;
 
-            if (tappId !== LOGIN_TAPP.id && validateTobitAccessToken(tobitAccessToken)) {
+            const tapp = getTappById(tappId);
+
+            if (tappId !== LOGIN_TAPP.id && (validateTobitAccessToken(tobitAccessToken) || (tapp && !tapp.requiresLogin))) {
                 loadTapp(tappId);
             } else {
                 logger.info({

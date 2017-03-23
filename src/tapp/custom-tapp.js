@@ -40,7 +40,7 @@ export default function loadTappById(tappId) {
  * @param tappId
  * @returns {*}
  */
-function getTappById(tappId) {
+export function getTappById(tappId) {
     return chaynsInfo.Tapps.find(tapp => tapp.id === tappId) || null;
 }
 
