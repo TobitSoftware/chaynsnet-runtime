@@ -1,6 +1,7 @@
 ### Custom ###
 .idea
 build
+webpack/ssl
 
 ### Node ###
 # Logs
