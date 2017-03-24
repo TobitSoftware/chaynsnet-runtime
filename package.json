@@ -11,11 +11,11 @@
   "keywords": [
     "ChaynsWeb",
     "ChaynsWebLite",
-    "Webpack",
-    "Babel"
+    "chayns",
+    "tobit"
   ],
   "author": "Kevin Mathmann",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "jira.tobit.com"
   },
