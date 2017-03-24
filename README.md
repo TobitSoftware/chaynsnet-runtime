@@ -1,18 +1,19 @@
-# ChaynsWebLight
+## ChaynsWebLight
+The ChaynsWebLight is an standalone runtime environment for chayns tapps.  
+It self has no User Interface, it displays only the tapp content.
 
-## Usage
-Take a look at the wiki of this repository.
+Take a look at the repository wiki for more information.
 
-
-## Development
 
 #### Installation
 1. Clone this repository
 2. Run <code>npm i</code>
-3. Run <code>npm start</code> to fire up the dev server
-4. Open `http://localhost:7070`
 
-#### Building
-Use `npm run build` to build the project in production.
 
-Use `npm run build:qa` to build the project with source-maps in qa.
+#### DevServer
+1. Run `npm start` to fire up the dev server
+2. Open `https://localhost:7070`
+
+> To use a SSL certificate you can create a ssl.crt and a ssl.key file under webpack/ssl
+
+> Run `npm run start:http` to fire up the dev server on `http://` instead of `https://`
