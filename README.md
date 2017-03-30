@@ -9,6 +9,7 @@ Take a look at the repository wiki for more information.
 1. Clone this repository
 2. Run <code>npm i</code>
 
+> If you have no access to the internal tobit.software npm server you need to remove/replace the usage of the package `chayns-logger`.
 
 #### DevServer
 1. Run `npm start` to fire up the dev server
