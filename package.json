@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server  --config ./webpack/dev.babel.js --progress --https",
-    "start:http": "webpack-dev-server  --config ./webpack/dev.babel.js --progress",
-    "build": "webpack -p --config ./webpack/prod.babel.js",
-    "build:qa": "webpack -p --config ./webpack/qa.babel.js"
+    "start": "npm run check:chayns-logger && webpack-dev-server  --config ./webpack/dev.babel.js --progress --https",
+    "start:http": "npm run check:chayns-logger && webpack-dev-server  --config ./webpack/dev.babel.js --progress",
+    "build": "npm run check:chayns-logger && webpack -p --config ./webpack/prod.babel.js",
+    "build:qa": "npm run check:chayns-logger && webpack -p --config ./webpack/qa.babel.js",
+    "check:chayns-logger": "node check-chayns-logger",
+    "prepublish": "npm run check:chayns-logger"
   },
   "keywords": [
     "ChaynsWeb",
@@ -14,7 +16,7 @@
     "chayns",
     "tobit"
   ],
-  "author": "Kevin Mathmann",
+  "author": "Kevin Mathmann (https://github.com/kmathmann)",
   "license": "MIT",
   "bugs": {
     "url": "jira.tobit.com"
@@ -41,7 +43,6 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.23.0",
-    "chayns-logger": "^2.4.1",
     "classlist-polyfill": "^1.0.3",
     "classnames": "^2.2.5",
     "custom-event-polyfill": "^0.3.0",
@@ -49,5 +50,8 @@
     "html-to-element": "^1.0.0",
     "stylenames": "^1.1.5",
     "whatwg-fetch": "^2.0.3"
+  },
+  "optionalDependencies": {
+    "chayns-logger": "^2.5.1"
   }
 }
