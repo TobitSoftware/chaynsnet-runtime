@@ -1,4 +1,4 @@
-[![license](https://img.shields.io/github/license/TobitSoftware/chayns-web-light.svg)]() [![GitHub pull requests](https://img.shields.io/github/issues-pr/TobitSoftware/chayns-web-light.svg)]() [![](https://img.shields.io/github/issues-pr-closed-raw/TobitSoftware/chayns-web-light.svg)]()
+[![license](https://img.shields.io/github/license/TobitSoftware/chayns-web-light.svg)](./LICENSE) [![GitHub pull requests](https://img.shields.io/github/issues-pr/TobitSoftware/chayns-web-light.svg)](../../pulls) [![](https://img.shields.io/github/issues-pr-closed-raw/TobitSoftware/chayns-web-light.svg)](../../pulls?q=is%3Apr+is%3Aclosed)
 
 ## ChaynsWebLight
 The ChaynsWebLight is an standalone runtime environment for chayns tapps.  
