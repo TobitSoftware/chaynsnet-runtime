@@ -31,9 +31,12 @@ function request(method, url, body, customHeader) {
     config.method = method;
     config.headers = {
         'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${(window.ChaynsInfo) ? window.ChaynsInfo.User.TobitAccessToken : ''}`
+        'Content-Type': 'application/json'
     };
+
+    if (window.ChaynsInfo && window.ChaynsInfo.User.TobitAccessToken) {
+        config.headers.authorization = `Bearer ${window.ChaynsInfo.User.TobitAccessToken}`;
+    }
 
     for (let type of Object.keys(customHeader || {})) {
         config.headers[type] = customHeader[type]
