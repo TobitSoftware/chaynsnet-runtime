@@ -12,7 +12,8 @@ export default (qa = false) => ({
     devtool: qa ? 'inline-source-map' : 'hidden-source-map',
     plugins: [
         new HtmlWebpackPlugin({
-            template: path.resolve(ROOT_PATH, 'index.html'),
+            template: path.resolve(ROOT_PATH, 'index.ejs'),
+            manifest: 'appcache.manifest',
             hash: true
         }),
         new webpack.optimize.UglifyJsPlugin({
