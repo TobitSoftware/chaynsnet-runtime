@@ -1,4 +1,6 @@
 import logger from 'chayns-logger';
+import uuidV1 from 'uuid/v1';
+import { IS_DAVID_WINDOWS, DAVID_VERSION_WINDOWS } from '../utils/environment';
 import ConsoleLogger from '../utils/console-logger';
 
 import RESULT_STATUS from '../constants/native-calls-status';
@@ -53,7 +55,7 @@ export default async function executeCall(config) {
         return false;
     }
 
-    const callId = id;
+    const callId = (IS_DAVID_WINDOWS && DAVID_VERSION_WINDOWS < 6853) ? id : uuidV1();
     id += 1;
 
     const callConfig = {
