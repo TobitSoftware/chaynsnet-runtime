@@ -61,7 +61,7 @@ export default async function executeCall(config) {
     const callConfig = {
         action,
         value: {
-            callback: 'window.external.callback',
+            callback: 'window.nativeCallCallback',
             id: callId,
             parameter,
             data

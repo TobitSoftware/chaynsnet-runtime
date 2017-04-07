@@ -14,11 +14,4 @@ window.cwl = {
     TAPPIDS,
 };
 
-try {
-    window.external = {
-        ...window.external,
-        callback: callbackHandler
-    };
-} catch (e) {
-    new ConsoleLogger('window-objects').info('window.external is readonly');
-}
+window.nativeCallCallback = callbackHandler;
