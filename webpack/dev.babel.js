@@ -32,8 +32,7 @@ export default {
     devtool: 'inline-source-map',
     plugins: [
         new HtmlWebpackPlugin({
-            template: path.resolve(ROOT_PATH, 'index.ejs'),
-            manifest: 'appcache.manifest'
+            template: path.resolve(ROOT_PATH, 'index.ejs')
         }),
         new DefinePlugin({
             'process.env': {
