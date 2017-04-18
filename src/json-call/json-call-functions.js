@@ -7,30 +7,33 @@ import loadTapp from '../tapp/custom-tapp';
 import { refreshChaynsIdIcons } from '../json-native-calls/calls/index';
 import { showLogin, logout, login } from '../login';
 import * as jsonCallHelper from './json-call-helper';
-import { answerJsonCall } from '../tapp/custom-tapp-communication';
 import { chaynsInfo } from '../chayns-info';
 import DATE_TYPE from '../constants/date-type';
 import { removeKeyForTapp, setKeyForTapp, getKeyForTapp } from '../utils/chayns-storage';
+import {
+    getSavedIntercomChats as getSavedIntercomChatsCall,
+    setIntercomChatData as setIntercomChatDataCall
+} from '../json-native-calls/calls/index';
 
-export function toggleWaitCursor(value, srcIframe) {
-    if (value.enabled) {
-        WaitCursor.show(value.timeout, value.text, srcIframe[0]);
+export function toggleWaitCursor(req, res) {
+    if (req.value.enabled) {
+        WaitCursor.show(req.value.timeout, req.value.text, req.srcIframe[0]);
         return;
     }
-    WaitCursor.hide(srcIframe[0]);
+    WaitCursor.hide(req.srcIframe[0]);
 }
 
-export function selectTab(value, srcIframe) {
-    FloatingButton.hide(srcIframe[0]);
+export function selectTab(req, res) {
+    FloatingButton.hide(req.srcIframe[0]);
 
-    loadTapp(value.id);
+    loadTapp(req.value.id);
 }
 
-export function externOpenUrl(value) {
-    window.open(value.url, value.target ? value.target : '_blank');
+export function externOpenUrl(req, res) {
+    window.open(req.value.url, req.value.target ? req.value.target : '_blank');
 }
 
-export function requestGeoLocation(value, srcIframe) {
+export function requestGeoLocation(req, res) {
     if (navigator.geolocation) {
         const requestPos = method => method.apply(navigator.geolocation, [
             (pos) => {
@@ -43,14 +46,14 @@ export function requestGeoLocation(value, srcIframe) {
                     longitude: pos.coords.longitude,
                     speed: pos.coords.speed
                 };
-                answerJsonCall(value, obj, srcIframe);
+                res.answer(obj);
             },
             (err) => {
-                jsonCallHelper.throwEvent(14, err.code + 10, err.message, value, srcIframe);
+                res.event(err.code + 10, err.message);
             }
         ]);
 
-        if (value.permanent) {
+        if (req.value.permanent) {
             jsonCallHelper.GeoWatchNumber = requestPos(navigator.geolocation.watchPosition);
         } else if (jsonCallHelper.GeoWatchNumber !== null) {
             navigator.geolocation.clearWatch(jsonCallHelper.GeoWatchNumber);
@@ -59,28 +62,30 @@ export function requestGeoLocation(value, srcIframe) {
             requestPos(navigator.geolocation.getCurrentPosition);
         }
     } else {
-        jsonCallHelper.throwEvent(14, 10, 'Position unavailable', value, srcIframe);
+        res.event(10, 'Position unavailable');
     }
 }
 
-export function showDialogAlert(value, srcIframe) {
-    if (value.dialog === undefined) {
-        return jsonCallHelper.throwEvent(16, 2, 'Field dialog missing.', value, srcIframe);
+export function showDialogAlert(req, res) {
+    if (!req.value || req.value.dialog === undefined) {
+        return res.event(2, 'Field dialog missing.');
     }
-    if ((value.dialog.buttons || []).length === 0) {
-        return jsonCallHelper.throwEvent(16, 2, 'Field dialog.buttons missing.', value, srcIframe);
+    if ((req.value.dialog.buttons || []).length === 0) {
+        return res.event(2, 'Field dialog.buttons missing.');
     }
 
-    Dialog.show(Dialog.type.ALERT, value.dialog)
-        .then(buttonType => answerJsonCall(value, buttonType, srcIframe));
+    Dialog.show(Dialog.type.ALERT, req.value.dialog)
+        .then(buttonType => res.answer(buttonType));
 }
 
-export function getGlobalData(value, srcIframe) {
+export function getGlobalData(req, res) {
     const data = chaynsInfo.getGlobalData();
-    answerJsonCall(value, data, srcIframe);
+    res.answer(data);
 }
 
-export function dateTimePicker(value, srcIframe) {
+export function dateTimePicker(req, res) {
+    const value = req.value;
+
     if (!value.dialog) {
         value.dialog = {};
     }
@@ -137,51 +142,53 @@ export function dateTimePicker(value, srcIframe) {
                         dateRes.selectedDate = (selectedDate.getTime() / 1000).toFixed(0);
                         dateRes.buttonType = timeRes.buttonType;
 
-                        answerJsonCall(value, dateRes, srcIframe);
+                        res.answer(dateRes);
                     });
             });
     } else {
         Dialog.show(dialogType, value.dialog)
             .then((ret) => {
-                answerJsonCall(value, ret, srcIframe);
+                res.answer(ret);
             });
     }
 }
 
-export function multiSelectDialog(value, srcIframe) {
-    if (value.dialog === undefined) {
-        return jsonCallHelper.throwEvent(50, 2, 'Field dialog missing.', value, srcIframe);
+export function multiSelectDialog(req, res) {
+    if (!req.value || req.value.dialog === undefined) {
+        return res.event(2, 'Field dialog missing.');
     }
 
-    if ((value.dialog.buttons || []).length === 0) {
-        return jsonCallHelper.throwEvent(50, 2, 'Field dialog.buttons missing.', value, srcIframe);
+    if ((req.value.dialog.buttons || []).length === 0) {
+        return res.event(2, 'Field dialog.buttons missing.');
     }
 
-    if ((value.list || []).length === 0) {
-        return jsonCallHelper.throwEvent(50, 2, 'Field list missing.', value, srcIframe);
+    if ((req.value.list || []).length === 0) {
+        return res.event.throwEvent(2, 'Field list missing.');
     }
 
-    value.dialog.list = value.list;
+    req.value.dialog.list = req.value.list;
 
-    Dialog.show(Dialog.type.SELECT, value.dialog)
-        .then(retVal => answerJsonCall(value, retVal, srcIframe));
+    Dialog.show(Dialog.type.SELECT, req.value.dialog)
+        .then(retVal => res.answer(retVal));
 }
 
-export function tobitWebTokenLogin(value) {
-    if ('tobitAccessToken' in value) {
-        login(value.tobitAccessToken);
+export function tobitWebTokenLogin(req, res) {
+    if (req.value && 'tobitAccessToken' in req.value) {
+        login(req.value.tobitAccessToken);
     }
 }
 
-export function tobitLogin() {
+export function tobitLogin(req, res) {
     showLogin();
 }
 
-export function tobitLogout() {
+export function tobitLogout(req, res) {
     logout();
 }
 
-export function showFloatingButton(value, srcIfame) {
+export function showFloatingButton(req, res) {
+    const value = req.value;
+
     if (value.enabled) {
         let bgColor = argbHexToRgba(value.color);
         bgColor = bgColor ? `rgba(${bgColor.r}, ${bgColor.g}, ${bgColor.b}, ${bgColor.a})` : '';
@@ -196,15 +203,16 @@ export function showFloatingButton(value, srcIfame) {
             text = '!';
         }
 
-        const callback = () => answerJsonCall(value, null, srcIfame);
+        const callback = () => res.answer();
 
-        FloatingButton.show(text, srcIfame[0], bgColor, color, callback);
+        FloatingButton.show(text, req.srcIframe[0], bgColor, color, callback);
     } else {
-        FloatingButton.hide(srcIfame[0]);
+        FloatingButton.hide(req.srcIframe[0]);
     }
 }
 
-export function setObjectForKey(value, srcIframe) {
+export function setObjectForKey(req, res) {
+    const value = req.value;
     const tappId = chaynsInfo.getGlobalData().AppInfo.TappSelected.Id;
 
     if (value.object == null) {
@@ -214,22 +222,23 @@ export function setObjectForKey(value, srcIframe) {
     }
 }
 
-export async function getObjectForKey(value, srcIframe) {
+export async function getObjectForKey(req, res) {
     const tappId = chaynsInfo.getGlobalData().AppInfo.TappSelected.Id;
 
-    const item = await getKeyForTapp(tappId, value.key, value.accessMode);
-    answerJsonCall(value, { object: item }, srcIframe);
+    const item = await getKeyForTapp(tappId, req.value.key, req.value.accessMode);
+    res.answer({ object: item });
 }
 
-export function addChaynsCallErrorListener(value, srcIframe) {
-    jsonCallHelper.addJsonCallEventListener(75, value, srcIframe);
+export function addChaynsCallErrorListener(req, res) {
+    req.addJsonCallEventListener(75);
 }
 
-export function setIframeHeigth(value, srcIframe) {
-    const $iframe = srcIframe[0];
+export function setIframeHeigth(req, res) {
+    const $iframe = req.srcIframe[0];
+    const value = req.value;
 
     if (!value.full && !('height' in value) && !('fullViewport' in value)) {
-        jsonCallHelper.throwEvent(77, 2, 'Field height missing.', value, srcIframe);
+        res.event(2, 'Field height missing.');
         return;
     } else if (value.full || value.fullViewport) {
         value.height = getWindowMetrics().AvailHeight;
@@ -240,7 +249,7 @@ export function setIframeHeigth(value, srcIframe) {
     }
 
     if (isNaN(value.height)) {
-        jsonCallHelper.throwEvent(77, 1, 'Field heigth is not typeof number', value, srcIframe);
+        req.event(1, 'Field heigth is not typeof number');
         return;
     }
 
@@ -251,36 +260,42 @@ export function setIframeHeigth(value, srcIframe) {
     }
 }
 
-export function getWindowMetricsCall(value, srcIframe) {
+export function getWindowMetricsCall(req, res) {
     const windowMetrics = getWindowMetrics();
-    answerJsonCall(value, windowMetrics, srcIframe);
+    res.answer(windowMetrics);
 }
 
-export function updateChaynsId() {
+export function updateChaynsId(req, res) {
     refreshChaynsIdIcons();
 }
 
-export function showDialogInput(value, srcIframe) {
-    if (value.dialog === undefined) {
-        return jsonCallHelper.throwEvent(103, 2, 'Field dialog missing.', value, srcIframe);
+export function showDialogInput(req, res) {
+    if (!req.value || req.value.dialog === undefined) {
+        return res.event(2, 'Field dialog missing.');
     }
 
-    if ((value.dialog.buttons || []).length === 0) {
-        return jsonCallHelper.throwEvent(103, 2, 'Field dialog.buttons missing.', value, srcIframe);
+    if ((req.value.dialog.buttons || []).length === 0) {
+        return res.event(2, 'Field dialog.buttons missing.');
     }
 
-    Dialog.show(Dialog.type.INPUT, value.dialog)
-        .then(retVal => answerJsonCall(value, retVal, srcIframe));
+    Dialog.show(Dialog.type.INPUT, req.value.dialog)
+        .then(retVal => res.answer(retVal));
 }
 
-export function sendEventToTopFrame(value, srcIframe) {
-    const event = new CustomEvent(value.event);
-    event.data = value.object;
+export function sendEventToTopFrame(req, res) {
+    if (!req.value || !req.value.event) {
+        return res.event(2, 'Field event missing.');
+    }
+
+    const event = new CustomEvent(req.value.event);
+    event.data = req.value.object;
     window.dispatchEvent(event);
 }
 
-export function setWebsiteTitle(value) {
-    if (value.title) {
-        document.title = value.title;
+export function setWebsiteTitle(req, res) {
+    if (!req.value || !req.value.title) {
+        return res.event(2, 'Field title missing.');
     }
+
+    document.title = req.value.title;
 }
