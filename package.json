@@ -53,6 +53,6 @@
     "whatwg-fetch": "^2.0.3"
   },
   "optionalDependencies": {
-    "chayns-logger": "^2.5.1"
+    "chayns-logger": "^2.6.0"
   }
 }

@@ -18,6 +18,7 @@ logger.init({
     overrideOnError: true,
     throttleTime: 100,
     useDevServer: !isLIVE,
+    version: VERSION,
     middleware: (payload) => {
         if (payload.customText) {
             payload.data = {
@@ -51,16 +52,6 @@ logger.init({
         return true;
     }
 });
-
-const defaults = {
-    version: VERSION
-};
-
-if (!isLIVE) {
-    defaults.env = process.env.NODE_ENV;
-}
-
-logger.setDefaults(defaults);
 
 const logLevelParameter = parseInt(getUrlParameters().loglevel, 10);
 
