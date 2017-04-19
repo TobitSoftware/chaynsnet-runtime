@@ -299,3 +299,17 @@ export function setWebsiteTitle(req, res) {
 
     document.title = req.value.title;
 }
+
+export function getSavedIntercomChats(req, res) {
+    if (!req.value || !req.value.itemId) {
+        return res.event(2, 'Field itemId missing.');
+    }
+
+    getSavedIntercomChatsCall(req.value.itemId).then((retVal) => {
+        res.answer({
+            status: retVal.status.code,
+            data: retVal.data
+        });
+    });
+}
+

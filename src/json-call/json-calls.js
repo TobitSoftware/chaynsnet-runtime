@@ -22,6 +22,7 @@ const jsonCalls = {
     103: jsonCallFunctions.showDialogInput,
     112: jsonCallFunctions.sendEventToTopFrame,
     114: jsonCallFunctions.setWebsiteTitle,
+    127: jsonCallFunctions.getSavedIntercomChats,
 };
 
 export default jsonCalls;
