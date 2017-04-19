@@ -3,7 +3,6 @@
 const jsonCalls = {
     1: jsonCallFunctions.toggleWaitCursor,
     2: jsonCallFunctions.selectTab,
-    9: jsonCallFunctions.externOpenUrl,
     14: jsonCallFunctions.requestGeoLocation,
     16: jsonCallFunctions.showDialogAlert,
     18: jsonCallFunctions.getGlobalData,

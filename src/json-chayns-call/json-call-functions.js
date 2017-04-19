@@ -29,10 +29,6 @@ export function selectTab(req, res) {
     loadTapp(req.value.id);
 }
 
-export function externOpenUrl(req, res) {
-    window.open(req.value.url, req.value.target ? req.value.target : '_blank');
-}
-
 export function requestGeoLocation(req, res) {
     if (navigator.geolocation) {
         const requestPos = method => method.apply(navigator.geolocation, [
