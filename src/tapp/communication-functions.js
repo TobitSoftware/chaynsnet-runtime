@@ -1,5 +1,5 @@
-import jsonCalls from '../json-call/json-calls.js';
-import * as jsonCallHelper from '../json-call/json-call-helper';
+import jsonCalls from '../json-chayns-call/json-calls.js';
+import * as jsonCallHelper from '../json-chayns-call/json-call-helper';
 import { answerJsonCall } from '../tapp/custom-tapp-communication';
 
 export function chaynscall(param, srcIframe) {

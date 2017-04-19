@@ -4,7 +4,6 @@ import { getUrlParameters } from './utils/helper';
 import ConsoleLogger from './utils/console-logger';
 import './polyfill/index';
 import './tapp/custom-tapp-communication';
-import './json-call/json-call-functions';
 import './chayns-web';
 import './constants/system-url-parameter';
 import './window-objects';

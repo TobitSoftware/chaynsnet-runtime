@@ -1,14 +1,13 @@
-﻿import * as jsonCallFunctions from './json-call-functions';
+﻿import * as jsonCallFunctions from './calls/index';
 
 const jsonCalls = {
     1: jsonCallFunctions.toggleWaitCursor,
-    2: jsonCallFunctions.selectTab,
-    9: jsonCallFunctions.externOpenUrl,
+    2: jsonCallFunctions.selectTapp,
     14: jsonCallFunctions.requestGeoLocation,
-    16: jsonCallFunctions.showDialogAlert,
+    16: jsonCallFunctions.showAlert,
     18: jsonCallFunctions.getGlobalData,
     30: jsonCallFunctions.dateTimePicker,
-    50: jsonCallFunctions.multiSelectDialog,
+    50: jsonCallFunctions.selectDialog,
     52: jsonCallFunctions.tobitWebTokenLogin,
     54: jsonCallFunctions.tobitLogin,
     56: jsonCallFunctions.tobitLogout,
@@ -16,10 +15,10 @@ const jsonCalls = {
     73: jsonCallFunctions.setObjectForKey,
     74: jsonCallFunctions.getObjectForKey,
     75: jsonCallFunctions.addChaynsCallErrorListener,
-    77: jsonCallFunctions.setIframeHeigth,
-    78: jsonCallFunctions.getWindowMetricsCall,
+    77: jsonCallFunctions.setIframeHeight,
+    78: jsonCallFunctions.getWindowMetric,
     92: jsonCallFunctions.updateChaynsId,
-    103: jsonCallFunctions.showDialogInput,
+    103: jsonCallFunctions.inputDialog,
     112: jsonCallFunctions.sendEventToTopFrame,
     114: jsonCallFunctions.setWebsiteTitle,
     127: jsonCallFunctions.getSavedIntercomChats,
