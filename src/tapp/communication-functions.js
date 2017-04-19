@@ -1,5 +1,6 @@
-import jsonCalls from '../json-call/json-calls.js';
-import * as jsonCallHelper from '../json-call/json-call-helper';
+import jsonCalls from '../json-chayns-call/json-calls.js';
+import * as jsonCallHelper from '../json-chayns-call/json-call-helper';
+import { answerJsonCall } from '../tapp/custom-tapp-communication';
 
 export function chaynscall(param, srcIframe) {
     let value;
@@ -31,7 +32,18 @@ export function chaynscall(param, srcIframe) {
         }
     }
     if (typeof jsonCalls[action] === 'function') {
-        jsonCalls[action](value, srcIframe);
+        const req = {
+            action,
+            value,
+            srcIframe,
+            addJsonCallEventListener: (action) => jsonCallHelper.addJsonCallEventListener(action, value, srcIframe)
+        };
+        const res = {
+            event: (code, message) => jsonCallHelper.throwEvent(action, code, message, value, srcIframe),
+            answer: (response) => answerJsonCall(value, response, srcIframe)
+        };
+
+        jsonCalls[action](req, res);
     } else {
         jsonCallHelper.throwEvent(action, 3, `chaynsCall ${action} doesn't exist`, value, srcIframe);
     }
