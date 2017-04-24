@@ -48,11 +48,11 @@
     "custom-event-polyfill": "^0.3.0",
     "es6-promise": "^4.1.0",
     "html-to-element": "^1.0.0",
-    "node-uuid": "^1.4.8",
+    "uuid": "^3.0.1",
     "stylenames": "^1.1.5",
     "whatwg-fetch": "^2.0.3"
   },
   "optionalDependencies": {
-    "chayns-logger": "^2.5.1"
+    "chayns-logger": "^2.6.0"
   }
 }
