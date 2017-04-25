@@ -1,6 +1,7 @@
 import logger from 'chayns-logger';
 import ConsoleLogger from './utils/console-logger';
 import { decodeTobitAccessToken } from './utils/convert';
+import { getUrlParameters } from './utils/helper';
 import { getTobitAccessToken } from './json-native-calls/calls/index';
 import Request from './utils/request';
 
@@ -60,8 +61,8 @@ export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
             Tapps: [],
             LocationPersonID: locationSettings.locationPersonId,
             Domain: window.location.host,
-            ColorMode: locationSettings.design.colorMode,
-            Color: locationSettings.design.color,
+            ColorMode: getUrlParameters().colormode || locationSettings.design.colorMode,
+            Color: getUrlParameters().color || locationSettings.design.color,
             Webshadow: {
                 MenuPosition: 0
             },
