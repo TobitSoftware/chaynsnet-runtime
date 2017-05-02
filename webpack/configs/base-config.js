@@ -31,6 +31,7 @@ export default {
                 use: [
                     'style-loader',
                     'css-loader',
+                    'postcss-loader',
                     'sass-loader'
                 ],
                 include: path.resolve(ROOT_PATH, 'src')

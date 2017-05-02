@@ -1,5 +1,3 @@
-@import '../generic/mixin';
-
 .floatingButton {
   position: fixed;
   cursor: pointer;
@@ -19,5 +17,5 @@
   bottom: 30px;
   right: 7%;
 
-  @include vendor(transition, all 100ms ease-in-out);
+  transition: all 100ms ease-in-out;
 }

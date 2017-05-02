@@ -1,7 +1,5 @@
-@import 'mixin';
-
 .transition--fade {
-  @include vendor(transition, opacity 0.5s ease-in-out !important);
+  transition: opacity 0.5s ease-in-out !important;
 }
 
 .fade-out {
@@ -9,9 +7,9 @@
 }
 
 .no-select {
-  @include vendor(user-select, none);
+  user-select: none;
 }
 
-.hidden{
+.hidden {
   display: none;
 }
