@@ -32,7 +32,7 @@ export default async function executeCall(config) {
         fallback,
     } = config;
 
-    if (typeof window.external.jsonCall !== 'function') {
+    if (typeof window.external !== 'object' || typeof window.external.jsonCall !== 'function') {
         if (typeof fallback === 'function') {
             consoleLoggerExecute.debug('native-calls are not supported -> fallback.');
             func({

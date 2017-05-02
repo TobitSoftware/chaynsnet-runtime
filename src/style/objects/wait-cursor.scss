@@ -1,8 +1,6 @@
-@import '../generic/mixin';
-
 .ChaynsLoadingCursor {
   position: fixed;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   left: 50%;
   top: 50%;
   margin-top: -30px;
@@ -36,20 +34,20 @@
     display: inline-block;
     border-radius: 5px;
 
-    @include keyframes(rotate-forever) {
+    @keyframes rotate-forever {
       0% {
-        @include vendor(transform, rotate(0deg));
+        transform: rotate(0deg);
       }
       100% {
-        @include vendor(transform, rotate(360deg));
+        transform: rotate(360deg);
       }
     }
 
     .loading-spinner {
-      @include vendor(animation-duration, 0.75s);
-      @include vendor(animation-iteration-count, infinite);
-      @include vendor(animation-name, rotate-forever);
-      @include vendor(animation-timing-function, linear);
+      animation-duration: 0.75s;
+      animation-iteration-count: infinite;
+      animation-name: rotate-forever;
+      animation-timing-function: linear;
 
       height: 50px;
       width: 50px;

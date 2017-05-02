@@ -83,7 +83,7 @@ export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
             },
             Device: {},
             AppInfo: {
-                Version: 4014,
+                Version: parseInt(VERSION) || 2,
                 domain: location.host,
                 Tapps: [],
                 TappSelected: {},
