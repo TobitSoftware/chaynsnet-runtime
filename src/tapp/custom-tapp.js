@@ -53,7 +53,7 @@ function setUrlParams(url) {
     url = url.replace(/##apname##/ig, chaynsInfo.LocationName);
     url = url.replace(/##siteid##/ig, chaynsInfo.SiteID);
     url = url.replace(/##os##/ig, 'webshadowlight');
-    url = url.replace(/##version##/ig, chaynsInfo.Version);
+    url = url.replace(/##version##/ig, chaynsInfo.getGlobalData().AppInfo.Version);
     url = url.replace(/##colormode##/ig, chaynsInfo.ColorMode.toString());
     url = url.replace(/##color##/ig, chaynsInfo.Color.replace('#', ''));
     url = url.replace(/##adminmode##/ig, (chaynsInfo.AdminMode ? 1 : 0).toString());
