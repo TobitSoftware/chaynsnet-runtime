@@ -21,7 +21,7 @@ export function loadLocation(locationId = 77783) {
                     payload = decodeTobitAccessToken(accessToken);
 
                 chaynsInfo = {
-                    Version: '4014',
+                    Version: '1',
                     BaseUrl: '/',
                     User: {
                         ID: payload && payload.TobitUserID ? payload.TobitUserID : 0,
@@ -62,7 +62,7 @@ export function loadLocation(locationId = 77783) {
                     },
                     Device: {},
                     AppInfo: {
-                        Version: 4014,
+                        Version: chaynsInfo.Version,
                         domain: location.host,
                         Tapps: [],
                         TappSelected: {},
