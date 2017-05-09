@@ -1,6 +1,10 @@
 import jsonCalls from '../json-chayns-call/json-calls.js';
 import * as jsonCallHelper from '../json-chayns-call/json-call-helper';
 import { answerJsonCall } from '../tapp/custom-tapp-communication';
+import logger from 'chayns-logger';
+import ConsoleLogger from '../utils/console-logger';
+
+const consoleLogger = new ConsoleLogger('communication-functions.js (chaynscall)');
 
 export function chaynscall(param, srcIframe) {
     let value;
@@ -46,6 +50,14 @@ export function chaynscall(param, srcIframe) {
         jsonCalls[action](req, res);
     } else {
         jsonCallHelper.throwEvent(action, 3, `chaynsCall ${action} doesn't exist`, value, srcIframe);
+
+        consoleLogger.warn(`Requested chaynsCall with Action ${action} is not supported`);
+        logger.warning({
+            message: 'Requested chaynsCall with Action {customNumber} is not supported',
+            customNumber: action,
+            fileName: 'communication-functions.js',
+            section: 'chaynscall',
+        });
     }
 }
 
