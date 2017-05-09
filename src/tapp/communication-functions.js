@@ -52,7 +52,7 @@ export function chaynscall(param, srcIframe) {
         jsonCallHelper.throwEvent(action, 3, `chaynsCall ${action} doesn't exist`, value, srcIframe);
 
         consoleLogger.warn(`Requested chaynsCall with Action ${action} is not supported`);
-        logger.warning({
+        logger.info({
             message: 'Requested chaynsCall with Action {customNumber} is not supported',
             customNumber: action,
             fileName: 'communication-functions.js',
