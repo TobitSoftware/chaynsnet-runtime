@@ -1,6 +1,6 @@
 import { removeKeyForTapp, setKeyForTapp } from '../../utils/chayns-storage';
 
-export function setObjectForKey(req, res) {
+export default function setObjectForKey(req, res) {
     const value = req.value;
     const tappId = chaynsInfo.getGlobalData().AppInfo.TappSelected.Id;
 
