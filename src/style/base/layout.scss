@@ -17,7 +17,8 @@ body.no-scroll {
 }
 
 .body-content {
-  width: 566px;
+  max-width: 566px;
+  width: 100%;
   transform: translate(-50%);
   margin-left: 50%;
 
