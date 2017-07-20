@@ -12,6 +12,7 @@ import ConsoleLogger from './utils/console-logger';
 import { DEFAULT_LOCATIONID, DEFAULT_TAPPID } from './constants/defaults';
 import LOGIN_TAPP from './constants/login-tapp';
 import TAPPIDS from './constants/tapp-ids';
+import Dialog from './ui/dialog/dialog';
 
 const consoleLogger = new ConsoleLogger('(chayns-web.js)');
 
@@ -61,7 +62,7 @@ function init() {
 
     Navigation.init();
 
-    loadLocation(locationId).then(async(success) => {
+    loadLocation(locationId).then(async (success) => {
         try {
             if (!success) {
                 return;
@@ -73,8 +74,28 @@ function init() {
             const tobitAccessToken = getTobitAccessTokenRes.data.tobitAccessToken;
 
             const tapp = getTappById(tappId);
+
+            if ((!tapp && !validateTobitAccessToken(tobitAccessToken)) || getUrlParameters().forcelogin === "1") {
+                logger.info({
+                    message: 'show login tapp (no tapp found or forcelogin)',
+                    locationId,
+                    customNumber: tappId,
+                    data: {
+                        forceLogin: getUrlParameters().forceLogin
+                    }
+                });
+
+                showLogin();
+                return;
+            }
+
             if (!tapp) {
                 consoleLogger.warn('No Tapp found!');
+
+                Dialog.show(Dialog.type.ALERT, {
+                    message: `The Tapp "${tappId}" does not exist on the location "${locationId}" or you have not the right permissions to see it.`
+                });
+
                 logger.warning({
                     message: 'no tapp found',
                     locationId,
