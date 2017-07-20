@@ -20,26 +20,30 @@ try {
 export default {
     ...BASE_CONFIG,
     devServer: {
-        historyApiFallback: true,
         cert: ssl.cert,
         key: ssl.key,
         host: '0.0.0.0',
         port: 7070,
         stats: {
             colors: true
-        }
-    },
+        },
+        compress: true,
+        disableHostCheck: true
+    }
+    ,
     devtool: 'inline-source-map',
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: path.resolve(ROOT_PATH, 'index.ejs')
-        }),
-        new DefinePlugin({
-            'process.env': {
-                NODE_ENV: JSON.stringify('development')
-            }
-        }),
-        new HotModuleReplacementPlugin(),
-        new NoEmitOnErrorsPlugin(),
-    ]
-};
+    plugins:
+        [
+            new HtmlWebpackPlugin({
+                template: path.resolve(ROOT_PATH, 'index.ejs')
+            }),
+            new DefinePlugin({
+                'process.env': {
+                    NODE_ENV: JSON.stringify('development')
+                }
+            }),
+            new HotModuleReplacementPlugin(),
+            new NoEmitOnErrorsPlugin(),
+        ]
+}
+;
