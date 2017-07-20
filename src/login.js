@@ -16,7 +16,11 @@ export function login(tobitAccessToken) {
     closeWindow()
         .then((res) => {
             if (res.status.code === NATIVE_CALL_STATUS.NOT_AVAILABLE) {
-                location.reload();
+                if(location.href.match(/(forcelogin=1)(&)?/)){
+                    location.href = location.href.replace(/(forcelogin=1)(&)?/,'');
+                }else{
+                    location.reload();
+                }
             }
         });
 }
