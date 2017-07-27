@@ -49,6 +49,50 @@ export function getWindowMetrics() {
     };
 }
 
+/**
+ * scrolls to position
+ * @param to
+ * @param duration
+ * @param callback
+ */
+export function scrollTo(to, duration, callback) {
+    const start = document.documentElement.scrollTop || document.body.parentNode.scrollTop || document.body.scrollTop;
+    const change = to - start;
+    const increment = 20;
+    let currentTime = 0;
+
+    duration = (typeof(duration) === 'undefined') ? 500 : duration;
+
+    const animateScroll = () => {
+        currentTime += increment;
+
+        const val = ((t, b, c, d) => {
+            t /= d / 2;
+            if (t < 1) {
+                return c / 2 * t * t + b
+            }
+            t--;
+            return -c / 2 * (t * (t - 2) - 1) + b;
+        })(currentTime, start, change, duration);
+
+        //TODO: add support for external easing functions
+
+        document.documentElement.scrollTop = val;
+        document.body.parentNode.scrollTop = val;
+        document.body.scrollTop = val;
+
+        if (currentTime < duration) {
+            (window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function (callback) {
+                window.setTimeout(callback, 1000 / 60);
+            })(animateScroll);
+        } else if (callback && typeof(callback) === 'function') {
+            callback();
+        }
+    };
+
+    animateScroll();
+}
+
 export function ApplyUnsafeFunction(func, args, thisArg) {
     if (typeof func !== 'function') {
         return;
