@@ -1,3 +1,5 @@
+import scrollToPosition from './scroll-to-position';
+
 export showAlert from './dialogs/alert';
 export dateTimePicker from './dialogs/date-time-picker';
 export inputDialog from './dialogs/input-dialog';
@@ -11,6 +13,7 @@ export getSavedIntercomChats from './get-saved-intercom-chats';
 export getWindowMetric from './get-window-metric';
 export { tobitLogin, tobitLogout, tobitWebTokenLogin } from './login';
 export requestGeoLocation from './request-geo-location';
+export scrollToPosition from './scroll-to-position';
 export selectTapp from './select-tapp';
 export sendEventToTopFrame from './send-event-to-top-frame';
 export setIframeHeight from './set-iframe-height';
