@@ -56,6 +56,13 @@ export function getWindowMetrics() {
  * @param callback
  */
 export function scrollTo(to, duration, callback) {
+    if (duration <= 0) {
+        document.documentElement.scrollTop = to;
+        document.body.parentNode.scrollTop = to;
+        document.body.scrollTop = to;
+        return;
+    }
+
     const start = document.documentElement.scrollTop || document.body.parentNode.scrollTop || document.body.scrollTop;
     const change = to - start;
     const increment = 20;
