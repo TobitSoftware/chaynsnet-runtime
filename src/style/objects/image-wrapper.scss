@@ -1,0 +1,57 @@
+#ImageShadow {
+    background-color: #000;
+    z-index: 10000;
+    opacity: 0.8;
+}
+
+#ImageWrapper {
+    justify-content: center;
+    align-items: center;
+    z-index: 10001;
+    display: flex;
+
+    .image-container {
+        position: relative;
+
+        img {
+            max-height: 80vh;
+            max-width: 80vw;
+        }
+    }
+
+    .nav-button {
+        transition: opacity .3s ease-in-out;
+        justify-content: center;
+        will-change: opacity;
+        align-items: center;
+        position: absolute;
+        cursor: pointer;
+        display: flex;
+        color: white;
+        width: 25%;
+        opacity: 0;
+        bottom: 0;
+        top: 0;
+
+        &.prev {
+            left: 0;
+        }
+
+        &.next {
+            right: 0;
+        }
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
+
+.full-display {
+    position: absolute;
+    display: block;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+}
