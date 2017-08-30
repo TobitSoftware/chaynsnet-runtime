@@ -56,11 +56,33 @@ export default class ImageWrapper {
     };
 
     static next = () => {
-        console.debug('NEXT:');
+        const newIndex = getNextIndex();
+
+        document.querySelector(`#image_${currentIndex}`).classList.add('hidden');
+        document.querySelector(`#image_${newIndex}`).classList.remove('hidden');
+
+        currentIndex = newIndex;
+
+        $imageWrapper.removeChild($imageWrapper.firstChild);
+
+        const nextImg = getImage(getNextIndex(), false);
+
+        if (nextImg) $imageWrapper.appendChild(nextImg);
     };
 
     static prev = () => {
-        console.debug('PREV:');
+        const newIndex = getPreviousIndex();
+
+        document.querySelector(`#image_${currentIndex}`).classList.add('hidden');
+        document.querySelector(`#image_${newIndex}`).classList.remove('hidden');
+
+        currentIndex = newIndex;
+
+        $imageWrapper.removeChild($imageWrapper.lastChild);
+
+        const nextImg = getImage(getPreviousIndex(), false);
+
+        if (nextImg) $imageWrapper.insertBefore(nextImg, $imageWrapper.firstChild);
     };
 }
 
@@ -72,6 +94,14 @@ function handleKeyDown(event) {
     if (event.keyCode === 27) {
         ImageWrapper.hide();
     }
+
+    if (event.keyCode === 37) {
+        ImageWrapper.prev();
+    }
+
+    if (event.keyCode === 39) {
+        ImageWrapper.next();
+    }
 }
 
 /**
@@ -79,19 +109,17 @@ function handleKeyDown(event) {
  * @param event
  */
 function handleClick(event) {
-    console.debug('ONCLICK:', event);
-}
+    const targetClassList = event.target.classList;
 
-function showNext(event) {
-    event.preventDefault();
-
-    ImageWrapper.next();
-}
-
-function showPrev(event) {
-    event.preventDefault();
-
-    ImageWrapper.prev();
+    if (targetClassList.contains('image-navigation')) {
+        if (targetClassList.contains('next')) {
+            ImageWrapper.next();
+        } else {
+            ImageWrapper.prev();
+        }
+    } else {
+        ImageWrapper.hide();
+    }
 }
 
 /**
@@ -105,15 +133,23 @@ function getImage(index, show) {
         hidden: !show
     });
 
+    const navigationPrevClasses = classNames('nav-button prev image-navigation', {
+        hidden: imageList.length < 2
+    });
+
+    const navigationNextClasses = classNames('nav-button next image-navigation', {
+        hidden: imageList.length < 2
+    });
+
     const image = imageList[index];
 
-    return htmlToElement(`<div class="${containerClasses}">
-        <div class="nav-button prev" onclick="showPrev()">
-            <i class="fa fa-chevron-left"></i>
+    return htmlToElement(`<div id="image_${index}" class="${containerClasses}">
+        <div id="NavPrev_${index}" class="${navigationPrevClasses}">
+            <i class="fa fa-chevron-left image-navigation prev"></i>
         </div>
         <img src="${image.url}">
-        <div class="nav-button next" onclick="showNext()">
-            <i class="fa fa-chevron-right"></i>
+        <div id="NavNext_${index}" class="${navigationNextClasses}">
+            <i class="fa fa-chevron-right image-navigation next"></i>
         </div>
     </div>`);
 }
