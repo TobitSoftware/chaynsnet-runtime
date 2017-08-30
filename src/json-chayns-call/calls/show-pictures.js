@@ -1,16 +1,25 @@
-import Image from '../../ui/image-wrapper';
+import ImageWrapper from '../../ui/image-wrapper';
 
 export default function showPictures(req, res) {
-    let { startIndex } = req.value;
     const { urls } = req.value;
 
-    if ((urls || []).length === 0) return res.event(2, 'Field urls is missing.');
+    if ((urls || []).length === 0) {
+        return res.event(2, 'Field urls is missing.');
+    }
 
-    if (startIndex > urls.length - 1) startIndex = urls.length - 1;
+    let { startIndex } = req.value;
 
-    if (startIndex < 0) startIndex = 0;
+    if (startIndex) {
+        if (startIndex < 0) {
+            startIndex = 0;
+        } else if (startIndex > urls.length - 1) {
+            startIndex = urls.length - 1;
+        }
+    } else {
+        startIndex = 0;
+    }
 
-    Image.show(urls, startIndex, req.srcIframe[0]);
+    ImageWrapper.show(urls, startIndex);
 
     return null;
 }
