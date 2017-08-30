@@ -13,10 +13,12 @@ export default class ImageWrapper {
      * @param {int} startIndex
      */
     static show = (urls, startIndex) => {
+        ImageWrapper.hide();
+
         currentIndex = startIndex;
 
-        $imageShadow = htmlToElement('<div id="ImageShadow" class="full-display"></div>');
-        $imageWrapper = htmlToElement('<div id="ImageWrapper" class="full-display"></div>');
+        $imageShadow = htmlToElement('<div class="image-shadow image-shadow--full-display"></div>');
+        $imageWrapper = htmlToElement('<div class="image-wrapper image-wrapper--full-display"></div>');
 
         document.body.appendChild($imageShadow);
         document.body.appendChild($imageWrapper);
@@ -43,11 +45,11 @@ export default class ImageWrapper {
      * hides ImageWrapper
      */
     static hide = () => {
-        document.body.removeChild($imageWrapper);
-        document.body.removeChild($imageShadow);
+        if ($imageWrapper) document.body.removeChild($imageWrapper);
+        if ($imageShadow) document.body.removeChild($imageShadow);
 
-        document.body.removeEventListener('keydown', handleKeyDown);
-        $imageWrapper.removeEventListener('click', handleClick);
+        if (document.body) document.body.removeEventListener('keydown', handleKeyDown);
+        if ($imageWrapper) $imageWrapper.removeEventListener('click', handleClick);
 
         imageList = [];
     };
@@ -58,7 +60,7 @@ export default class ImageWrapper {
     static next = () => {
         const newIndex = getNextIndex();
 
-        document.querySelector(`#imageContainer_${currentIndex}`).classList.add('hide');
+        document.querySelector(`#imageContainer_${currentIndex}`).classList.add('image-wrapper__image-container--hide');
 
         currentIndex = newIndex;
 
@@ -68,7 +70,7 @@ export default class ImageWrapper {
 
         if (nextImg) $imageWrapper.appendChild(nextImg);
 
-        document.querySelector(`#imageContainer_${currentIndex}`).classList.remove('hide');
+        document.querySelector(`#imageContainer_${currentIndex}`).classList.remove('image-wrapper__image-container--hide');
     };
 
     /**
@@ -77,7 +79,7 @@ export default class ImageWrapper {
     static prev = () => {
         const newIndex = getPreviousIndex();
 
-        document.querySelector(`#imageContainer_${currentIndex}`).classList.add('hide');
+        document.querySelector(`#imageContainer_${currentIndex}`).classList.add('image-wrapper__image-container--hide');
 
         currentIndex = newIndex;
 
@@ -87,7 +89,7 @@ export default class ImageWrapper {
 
         if (nextImg) $imageWrapper.insertBefore(nextImg, $imageWrapper.firstChild);
 
-        document.querySelector(`#imageContainer_${currentIndex}`).classList.remove('hide');
+        document.querySelector(`#imageContainer_${currentIndex}`).classList.remove('image-wrapper__image-container--hide');
     };
 }
 
@@ -116,13 +118,13 @@ function handleKeyDown(event) {
 function handleClick(event) {
     const targetClassList = event.target.classList;
 
-    if (targetClassList.contains('image-navigation')) {
-        if (targetClassList.contains('next')) {
+    if (targetClassList.contains('image-wrapper__image-container__nav-button') || targetClassList.contains('image-wrapper__image-container__nav-button__icon')) {
+        if (targetClassList.contains('image-wrapper__image-container__nav-button--next') || targetClassList.contains('image-wrapper__image-container__nav-button__icon--next')) {
             ImageWrapper.next();
         } else {
             ImageWrapper.prev();
         }
-    } else if (!targetClassList.contains('image')) {
+    } else if (!targetClassList.contains('image-wrapper__image-container__image')) {
         ImageWrapper.hide();
     }
 }
@@ -134,27 +136,27 @@ function handleClick(event) {
  * @returns {*}
  */
 function getImage(index, show) {
-    const containerClasses = classNames('image-container', {
-        hide: !show
+    const containerClasses = classNames('image-wrapper__image-container', {
+        'image-wrapper__image-container--hide': !show
     });
 
-    const navigationPrevClasses = classNames('nav-button prev image-navigation', {
-        hide: imageList.length < 2
+    const navigationPrevClasses = classNames('image-wrapper__image-container__nav-button image-wrapper__image-container__nav-button--prev', {
+        'image-wrapper__image-container__nav-button--hide': imageList.length < 2
     });
 
-    const navigationNextClasses = classNames('nav-button next image-navigation', {
-        hide: imageList.length < 2
+    const navigationNextClasses = classNames('image-wrapper__image-container__nav-button image-wrapper__image-container__nav-button--next', {
+        'image-wrapper__image-container__nav-button--hide': imageList.length < 2
     });
 
     const image = imageList[index];
 
     return htmlToElement(`<div id="imageContainer_${index}" class="${containerClasses}">
         <div id="NavPrev_${index}" class="${navigationPrevClasses}">
-            <i class="fa fa-chevron-left image-navigation prev"></i>
+            <i class="fa fa-chevron-left image-wrapper__image-container__nav-button__icon image-wrapper__image-container__nav-button__icon--prev"></i>
         </div>
-        <img src="${image.url}" class="image">
+        <img src="${image.url}" class="image-wrapper__image-container__image">
         <div id="NavNext_${index}" class="${navigationNextClasses}">
-            <i class="fa fa-chevron-right image-navigation next"></i>
+            <i class="fa fa-chevron-right image-wrapper__image-container__nav-button__icon image-wrapper__image-container__nav-button__icon--next"></i>
         </div>
     </div>`);
 }
