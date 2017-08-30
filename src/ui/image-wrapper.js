@@ -13,9 +13,6 @@ export default class ImageWrapper {
      * @param {int} startIndex
      */
     static show = (urls, startIndex) => {
-        // TODO: Error message to user
-        if ((urls || []).length === 0) return;
-
         currentIndex = startIndex;
 
         $imageShadow = htmlToElement('<div id="ImageShadow" class="full-display"></div>');
@@ -55,11 +52,13 @@ export default class ImageWrapper {
         imageList = [];
     };
 
+    /**
+     * navigates to next image
+     */
     static next = () => {
         const newIndex = getNextIndex();
 
-        document.querySelector(`#image_${currentIndex}`).classList.add('hidden');
-        document.querySelector(`#image_${newIndex}`).classList.remove('hidden');
+        document.querySelector(`#imageContainer_${currentIndex}`).classList.add('hide');
 
         currentIndex = newIndex;
 
@@ -68,13 +67,17 @@ export default class ImageWrapper {
         const nextImg = getImage(getNextIndex(), false);
 
         if (nextImg) $imageWrapper.appendChild(nextImg);
+
+        document.querySelector(`#imageContainer_${currentIndex}`).classList.remove('hide');
     };
 
+    /**
+     * navigates to previous image
+     */
     static prev = () => {
         const newIndex = getPreviousIndex();
 
-        document.querySelector(`#image_${currentIndex}`).classList.add('hidden');
-        document.querySelector(`#image_${newIndex}`).classList.remove('hidden');
+        document.querySelector(`#imageContainer_${currentIndex}`).classList.add('hide');
 
         currentIndex = newIndex;
 
@@ -83,6 +86,8 @@ export default class ImageWrapper {
         const nextImg = getImage(getPreviousIndex(), false);
 
         if (nextImg) $imageWrapper.insertBefore(nextImg, $imageWrapper.firstChild);
+
+        document.querySelector(`#imageContainer_${currentIndex}`).classList.remove('hide');
     };
 }
 
@@ -117,7 +122,7 @@ function handleClick(event) {
         } else {
             ImageWrapper.prev();
         }
-    } else {
+    } else if (!targetClassList.contains('image')) {
         ImageWrapper.hide();
     }
 }
@@ -130,24 +135,24 @@ function handleClick(event) {
  */
 function getImage(index, show) {
     const containerClasses = classNames('image-container', {
-        hidden: !show
+        hide: !show
     });
 
     const navigationPrevClasses = classNames('nav-button prev image-navigation', {
-        hidden: imageList.length < 2
+        hide: imageList.length < 2
     });
 
     const navigationNextClasses = classNames('nav-button next image-navigation', {
-        hidden: imageList.length < 2
+        hide: imageList.length < 2
     });
 
     const image = imageList[index];
 
-    return htmlToElement(`<div id="image_${index}" class="${containerClasses}">
+    return htmlToElement(`<div id="imageContainer_${index}" class="${containerClasses}">
         <div id="NavPrev_${index}" class="${navigationPrevClasses}">
             <i class="fa fa-chevron-left image-navigation prev"></i>
         </div>
-        <img src="${image.url}">
+        <img src="${image.url}" class="image">
         <div id="NavNext_${index}" class="${navigationNextClasses}">
             <i class="fa fa-chevron-right image-navigation next"></i>
         </div>

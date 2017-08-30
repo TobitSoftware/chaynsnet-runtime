@@ -12,41 +12,51 @@
 
     .image-container {
         position: relative;
+        text-align: center;
+        width: 80vw;
 
         img {
             max-height: 80vh;
             max-width: 80vw;
         }
-    }
 
-    .nav-button {
-        transition: opacity .3s ease-in-out;
-        justify-content: center;
-        will-change: opacity;
-        align-items: center;
-        position: absolute;
-        cursor: pointer;
-        display: flex;
-        color: white;
-        width: 20%;
-        opacity: 0;
-        bottom: 0;
-        top: 0;
-
-        i {
-            font-size: 30px;
+        &.hide {
+            display: none;
         }
 
-        &.prev {
-            left: -20%;
-        }
+        .nav-button {
+            transition: opacity .3s ease-in-out;
+            justify-content: center;
+            will-change: opacity;
+            align-items: center;
+            position: absolute;
+            cursor: pointer;
+            opacity: 0.15;
+            display: flex;
+            color: white;
+            width: 10vw;
+            bottom: 0;
+            top: 0;
 
-        &.next {
-            right: -20%;
-        }
+            i {
+                font-size: 30px;
+            }
 
-        &:hover {
-            opacity: 1;
+            &.prev {
+                left: -9vw;
+            }
+
+            &.next {
+                right: -9vw;
+            }
+
+            &.hide {
+                display: none;
+            }
+
+            &:hover {
+                opacity: 1;
+            }
         }
     }
 }
