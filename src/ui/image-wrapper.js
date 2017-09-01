@@ -136,7 +136,7 @@ function handleClick(event) {
         } else {
             ImageWrapper.prev();
         }
-    } else if (!targetClassList.contains('image-wrapper__image-box__image-container__image')) {
+    } else if (!targetClassList.contains('image-wrapper__image-box__image-container__image') && !targetClassList.contains('image-wrapper__image-box__image-container__image_picture')) {
         ImageWrapper.hide();
     }
 }
@@ -165,7 +165,7 @@ function getImage(index, show) {
     return htmlToElement(`<div id="imageContainer_${index}" class="${containerClasses}">
         <div class="image-wrapper__image-box__image-container__image">
             <div class="${imgBtnPrevClasses}"></div>
-            <img src="${image.url}">
+            <img class="image-wrapper__image-box__image-container__image_picture" src="${image.url}">
             <div class="${imgBtnNextClasses}"></div>
         </div>
     </div>`);
