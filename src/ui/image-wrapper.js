@@ -46,6 +46,7 @@ export default class ImageWrapper {
         $imageBox.appendChild(curImg);
         if (nextImg) $imageBox.appendChild(nextImg);
 
+        $imageShadow.addEventListener('click', () => ImageWrapper.hide());
         document.body.addEventListener('keydown', handleKeyDown);
         $imageWrapper.addEventListener('click', handleClick);
     };
