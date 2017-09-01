@@ -23,3 +23,4 @@ export setWebsiteTitle from './set-website-title';
 export showFloatingButton from './show-floating-button';
 export toggleWaitCursor from './toggle-wait-cursor';
 export updateChaynsId from './update-chayns-id';
+export showPictures from './show-pictures';

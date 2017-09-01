@@ -79,5 +79,6 @@ function getFloatingButton(frameName) {
         'menu-left': chaynsInfo.Webshadow.MenuPosition === 0,
         'is-mobile': chaynsInfo.IsMobile
     });
+
     return htmlToElement(`<div class="${classes}" data-iframe="${frameName}"></div>`);
 }
