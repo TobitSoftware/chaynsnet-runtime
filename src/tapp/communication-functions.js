@@ -35,11 +35,12 @@ export function chaynscall(param, srcIframe) {
             return;
         }
     }
+
     if (typeof jsonCalls[action] === 'function') {
         const req = {
             action,
-            value,
             srcIframe,
+            value: value || {},
             addJsonCallEventListener: (action) => jsonCallHelper.addJsonCallEventListener(action, value, srcIframe)
         };
         const res = {
