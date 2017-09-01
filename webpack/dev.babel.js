@@ -29,8 +29,7 @@ export default {
         },
         compress: true,
         disableHostCheck: true
-    }
-    ,
+    },
     devtool: 'inline-source-map',
     plugins:
         [
