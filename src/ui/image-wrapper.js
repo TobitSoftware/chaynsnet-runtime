@@ -38,7 +38,7 @@ export default class ImageWrapper {
         $imageWrapper.appendChild($imageBox);
         if (imageList.length > 1) $imageWrapper.appendChild(navNext);
 
-        const prevImg = imageList.length > 2 ? getImage(getPreviousIndex(), false) : null;
+        const prevImg = imageList.length > 1 ? getImage(getPreviousIndex(), false) : null;
         const nextImg = imageList.length > 1 ? getImage(getNextIndex(), false) : null;
         const curImg = getImage(currentIndex, true);
 
@@ -151,11 +151,11 @@ function getImage(index, show) {
         'image-wrapper__image-box__image-container--hide': !show
     });
 
-    const imgBtnPrevClasses = classNames('image-wrapper__image-box__image-container__img-button image-wrapper__image-box__image-container__img-button--prev', {
+    const imgBtnPrevClasses = classNames('image-wrapper__image-box__image-container__img-button', 'image-wrapper__image-box__image-container__img-button--prev', {
         'image-wrapper__image-box__image-container__img-button--hide': imageList.length < 2
     });
 
-    const imgBtnNextClasses = classNames('image-wrapper__image-box__image-container__img-button image-wrapper__image-box__image-container__img-button--next', {
+    const imgBtnNextClasses = classNames('image-wrapper__image-box__image-container__img-button', 'image-wrapper__image-box__image-container__img-button--next', {
         'image-wrapper__image-box__image-container__img-button--hide': imageList.length < 2
     });
 
