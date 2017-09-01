@@ -49,6 +49,8 @@ export default class ImageWrapper {
         $imageShadow.addEventListener('click', () => ImageWrapper.hide());
         document.body.addEventListener('keydown', handleKeyDown);
         $imageWrapper.addEventListener('click', handleClick);
+
+        document.querySelector('#TappIframe').blur();
     };
 
     /**
