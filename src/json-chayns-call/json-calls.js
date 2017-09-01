@@ -20,6 +20,7 @@ const jsonCalls = {
     78: jsonCallFunctions.getWindowMetric,
     81: jsonCallFunctions.scrollToPosition,
     92: jsonCallFunctions.updateChaynsId,
+    102: jsonCallFunctions.addScrollListener,
     103: jsonCallFunctions.inputDialog,
     112: jsonCallFunctions.sendEventToTopFrame,
     114: jsonCallFunctions.setWebsiteTitle,
