@@ -17,9 +17,11 @@ body.no-scroll {
 }
 
 .body-content {
-  width: 566px;
-  transform: translate(-50%);
-  margin-left: 50%;
+  @media screen and (min-width: 515px) {
+    width: 566px;
+    transform: translate(-50%);
+    margin-left: 50%;
+  }
 
   &.body-content--exclusive-view {
     width: auto !important;
