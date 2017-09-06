@@ -76,7 +76,7 @@ export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
             }
         };
 
-        updateUserData();
+        await updateUserData();
 
         window.chaynsInfo = chaynsInfo;
         return true;
