@@ -1,42 +1,41 @@
-import { chaynsInfo } from './chayns-info';
-import loadTapp, { getTappById } from './tapp/custom-tapp';
+import { chaynsInfo, updateUserData } from './chayns-info';
+import loadTapp from './tapp/custom-tapp';
 import { closeWindow, resizeWindow, setTobitAccessToken } from './json-native-calls/calls/index';
 import Navigation from './ui/navigation';
 import LOGIN_TAPP from './constants/login-tapp';
-import NATIVE_CALL_STATUS from './constants/native-calls-status';
+import { getUrlParameters } from './utils/helper';
+import { init } from './chayns-web';
+
+let prevTappId = null;
 
 export function showLogin() {
     resizeWindow(566, 766);
     Navigation.hide();
-    loadTapp(LOGIN_TAPP.id);
+
+    const currentTappId = chaynsInfo.getGlobalData().AppInfo.TappSelected.Id;
+    if (currentTappId && currentTappId !== LOGIN_TAPP.id) {
+        prevTappId = currentTappId;
+    } else if (parseInt(getUrlParameters().tappid, 10) !== LOGIN_TAPP.id) {
+        prevTappId = parseInt(getUrlParameters().tappid, 10);
+    } else {
+        prevTappId = null;
+    }
+
+    loadTapp(LOGIN_TAPP.id)
 }
 
 export function login(tobitAccessToken) {
-    setTobitAccessToken(tobitAccessToken);
-    closeWindow()
-        .then((res) => {
-            if (res.status.code === NATIVE_CALL_STATUS.NOT_AVAILABLE) {
-                if(location.href.match(/(forcelogin=1)(&)?/)){
-                    location.href = location.href.replace(/(forcelogin=1)(&)?/,'');
-                }else{
-                    location.reload();
-                }
+    setTobitAccessToken(tobitAccessToken)
+        .then(() => Promise.all([updateUserData(), closeWindow()]))
+        .then(() => {
+            if (prevTappId) {
+                init(prevTappId);
             }
-        });
+        })
 }
 
 export function logout() {
-    setTobitAccessToken('');
-
-    const activeTapp = getTappById(chaynsInfo.getGlobalData().AppInfo.TappSelected.Id);
-    const tappRequiresLogin = activeTapp && activeTapp.requiresLogin;
-
-    if (tappRequiresLogin) {
-        closeWindow()
-            .then((res) => {
-                if (res.status.code === NATIVE_CALL_STATUS.NOT_AVAILABLE) {
-                    location.reload();
-                }
-            });
-    }
+    setTobitAccessToken('')
+        .then(() => Promise.all([updateUserData(), closeWindow()]))
+        .then(() => init(chaynsInfo.getGlobalData().AppInfo.TappSelected.Id));
 }
