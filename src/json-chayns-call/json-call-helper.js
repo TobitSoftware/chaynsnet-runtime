@@ -1,5 +1,7 @@
 import { answerJsonCall } from '../tapp/custom-tapp-communication';
+import ConsoleLogger from '../utils/console-logger';
 
+const consoleLogger = new ConsoleLogger('json-call-helper.js');
 let jsonCallEventListener = [];
 
 export const overlayCloseParam = {};
@@ -51,6 +53,8 @@ export function throwEvent(action, code, message, request, srcIframe) {
         action,
         message,
     };
+
+    consoleLogger.warn('throwEvent', retVal);
 
     dispatchJsonCallEvent(75, retVal, srcIframe);
 }
