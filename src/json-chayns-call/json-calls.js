@@ -5,6 +5,7 @@ const jsonCalls = {
     2: jsonCallFunctions.selectTapp,
     4: jsonCallFunctions.showPictures,
     14: jsonCallFunctions.requestGeoLocation,
+    15: jsonCallFunctions.showVideo,
     16: jsonCallFunctions.showAlert,
     18: jsonCallFunctions.getGlobalData,
     30: jsonCallFunctions.dateTimePicker,
