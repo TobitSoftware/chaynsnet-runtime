@@ -21,5 +21,6 @@ export setObjectForKey from './set-object-for-key';
 export setWebsiteTitle from './set-website-title';
 export showFloatingButton from './show-floating-button';
 export showPictures from './show-pictures';
+export showVideo from './show-video';
 export toggleWaitCursor from './toggle-wait-cursor';
 export updateChaynsId from './update-chayns-id';

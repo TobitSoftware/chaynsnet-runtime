@@ -36,22 +36,9 @@ export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
 
         locationSettings.design.color = `#${locationSettings.design.color}`;
 
-        const getTobitAccessTokenRes = await getTobitAccessToken();
-        const accessToken = getTobitAccessTokenRes.data.tobitAccessToken;
-
-        const payload = decodeTobitAccessToken(accessToken);
-
         chaynsInfo = {
             Version: VERSION,
             BaseUrl: '/',
-            User: {
-                ID: payload && payload.TobitUserID ? payload.TobitUserID : 0,
-                FirstName: payload && payload.FirstName ? payload.FirstName : '',
-                LastName: payload && payload.LastName ? payload.LastName : '',
-                PersonID: payload && payload.PersonID ? payload.PersonID : '',
-                TobitAccessToken: accessToken,
-                UACGroups: []
-            },
             LocationID: locationId,
             SiteID: locationSettings.siteId,
             LocationName: locationSettings.locationName,
@@ -71,16 +58,6 @@ export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
 
 
         globalData = {
-            AppUser: {
-                UACGroups: [],
-                FacebookAccessToken: '',
-                FacebookUserName: payload && payload.FirstName && payload.LastName ? `${payload.FirstName} ${payload.LastName}` : '',
-                FacebookID: payload && payload.FacebookUserID ? payload.FacebookUserID : '',
-                PersonID: payload && payload.PersonID ? payload.PersonID : '',
-                TobitUserID: payload && payload.TobitUserID ? payload.TobitUserID : 0,
-                TobitAccessToken: accessToken,
-                AdminMode: false
-            },
             Device: {},
             AppInfo: {
                 Version: parseInt(VERSION) || 2,
@@ -99,12 +76,9 @@ export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
             }
         };
 
-        chaynsInfo.Tapps = await loadTapps(locationId);
-
-        globalData.AppInfo.Tapps = chaynsInfo.Tapps;
+        await updateUserData();
 
         window.chaynsInfo = chaynsInfo;
-
         return true;
     } catch (e) {
         logger.error({
@@ -122,9 +96,47 @@ export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
     }
 }
 
-async function loadTapps(locationId) {
+export async function updateUserData() {
     try {
-        const request = await Request.get(`https://chaynssvc.tobit.com/v0.4/${locationId}/Tapp?forWeb=true`);
+        const getTobitAccessTokenRes = await getTobitAccessToken();
+        const accessToken = getTobitAccessTokenRes.data.tobitAccessToken;
+
+        const payload = decodeTobitAccessToken(accessToken);
+
+        chaynsInfo.User = {
+            ID: payload && payload.TobitUserID ? payload.TobitUserID : 0,
+            FirstName: payload && payload.FirstName ? payload.FirstName : '',
+            LastName: payload && payload.LastName ? payload.LastName : '',
+            PersonID: payload && payload.PersonID ? payload.PersonID : '',
+            TobitAccessToken: accessToken,
+            UACGroups: []
+        };
+
+        globalData.AppUser = {
+            UACGroups: [],
+            FacebookAccessToken: '',
+            FacebookUserName: payload && payload.FirstName && payload.LastName ? `${payload.FirstName} ${payload.LastName}` : '',
+            FacebookID: payload && payload.FacebookUserID ? payload.FacebookUserID : '',
+            PersonID: payload && payload.PersonID ? payload.PersonID : '',
+            TobitUserID: payload && payload.TobitUserID ? payload.TobitUserID : 0,
+            TobitAccessToken: accessToken,
+            AdminMode: false
+        };
+        return true;
+    } catch (e) {
+        logger.error({
+            ex: {
+                message: e.message,
+                stackTrace: e.stack
+            }
+        });
+        console.error(e);
+    }
+}
+
+export async function loadTapps(locationId) {
+    try {
+        const request = await Request.get(`https://chaynssvc.tobit.com/v0.4/${chaynsInfo.LocationID}/Tapp?forWeb=true`);
 
         if (request.status === 204) {
             consoleLoggerTapps.warn('Location has no tapps');
@@ -160,9 +172,9 @@ async function loadTapps(locationId) {
 
         tapps.push(LOGIN_TAPP);
 
-        return tapps;
-    } catch
-        (e) {
+        chaynsInfo.Tapps = tapps;
+        globalData.AppInfo.Tapps = chaynsInfo.Tapps;
+    } catch (e) {
         logger.error({
             message: 'Load Tapps failed.',
             locationId,
@@ -174,7 +186,9 @@ async function loadTapps(locationId) {
             }
         });
         consoleLoggerTapps.error('Load Tapps failed.', e);
-        return [LOGIN_TAPP];
+
+        chaynsInfo.Tapps = [LOGIN_TAPP];
+        globalData.AppInfo.Tapps = chaynsInfo.Tapps;
     }
 }
 
