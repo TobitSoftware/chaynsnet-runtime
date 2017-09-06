@@ -151,7 +151,7 @@ export function getUrlParameters(withSystemParameter = true) {
         }
     }
 
-    return withSystemParameter ? urlParameter : urlParameterNoSystem;
+    return withSystemParameter ? { ...urlParameter } : { ...urlParameterNoSystem };
 }
 
 /**
