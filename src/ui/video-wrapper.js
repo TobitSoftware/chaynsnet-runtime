@@ -1,6 +1,7 @@
 import htmlToElement from 'html-to-element';
 
 let $videoWrapper;
+let $checkTypePlayer;
 
 export default class VideoWrapper {
     /**
@@ -49,7 +50,11 @@ const getType = (url) => {
     const urlParts = url.split('.');
     const type = `video/${urlParts[urlParts.length - 1]}`;
 
-    if (document.createElement('video').canPlayType(type) !== '') {
+    if(!$checkTypePlayer){
+        $checkTypePlayer = document.createElement('video');
+    }
+
+    if ($checkTypePlayer.canPlayType(type) !== '') {
         return type;
     }
     return null;
