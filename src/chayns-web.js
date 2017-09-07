@@ -1,6 +1,6 @@
 import logger from 'chayns-logger';
 import loadTapp, { getTappById } from './tapp/custom-tapp';
-import { loadLocation } from './chayns-info';
+import { loadLocation, loadTapps } from './chayns-info';
 import { setDynamicStyle } from './ui/dynamic-style';
 import Navigation from './ui/navigation';
 import { validateTobitAccessToken, getUrlParameters, stringisEmptyOrWhitespace } from './utils/helper';
@@ -16,8 +16,7 @@ import Dialog from './ui/dialog/dialog';
 
 const consoleLogger = new ConsoleLogger('(chayns-web.js)');
 
-
-function init() {
+function startup() {
     let tappId = parseInt(getUrlParameters().tappid, 10);
     let locationId = parseInt(getUrlParameters().locationid, 10);
 
@@ -62,76 +61,71 @@ function init() {
 
     Navigation.init();
 
-    loadLocation(locationId).then(async (success) => {
-        try {
-            if (!success) {
-                return;
-            }
-
+    loadLocation(locationId)
+        .then(() => {
             setDynamicStyle();
-
-            const getTobitAccessTokenRes = await getTobitAccessToken();
-            const tobitAccessToken = getTobitAccessTokenRes.data.tobitAccessToken;
-
-            const tapp = getTappById(tappId);
-
-            if ((!tapp && !validateTobitAccessToken(tobitAccessToken)) || getUrlParameters().forcelogin === "1") {
-                logger.info({
-                    message: 'show login tapp (no tapp found or forcelogin)',
-                    locationId,
-                    customNumber: tappId,
-                    data: {
-                        forceLogin: getUrlParameters().forceLogin
-                    }
-                });
-
-                showLogin();
-                return;
-            }
-
-            if (!tapp) {
-                consoleLogger.warn('No Tapp found!');
-
-                Dialog.show(Dialog.type.ALERT, {
-                    message: `The Tapp "${tappId}" does not exist on the location "${locationId}" or you have not the right permissions to see it.`
-                });
-
-                logger.warning({
-                    message: 'no tapp found',
-                    locationId,
-                    customNumber: tappId,
-                    fileName: 'custom-tapp.js',
-                    section: 'loadTapp'
-                });
-                return;
-            }
-
-            if (tappId === LOGIN_TAPP.id || (tapp.requiresLogin && !validateTobitAccessToken(tobitAccessToken))) {
-                logger.info({
-                    message: 'show login tapp',
-                    locationId,
-                    customNumber: tappId
-                });
-
-                showLogin();
-            } else {
-                loadTapp(tappId);
-            }
-        } catch (e) {
-            consoleLogger.error(e);
-            logger.error({
-                message: 'Init of ChaynsWebLight failed.',
-                locationId,
-                customNumeber: tappId,
-                fileName: 'chayns-web.js',
-                section: 'loadLocation(locationId)',
-                ex: {
-                    message: e.message,
-                    stackTrace: e.stack
-                }
-            });
-        }
-    });
+            init(tappId);
+        });
 }
 
-document.addEventListener('DOMContentLoaded', () => init(), false);
+export async function init(tappId) {
+    try {
+        await loadTapps();
+
+        const getTobitAccessTokenRes = await getTobitAccessToken();
+        const tobitAccessToken = getTobitAccessTokenRes.data.tobitAccessToken;
+
+        const tapp = getTappById(tappId);
+
+        if ((!tapp && !validateTobitAccessToken(tobitAccessToken)) || getUrlParameters().forcelogin === '1') {
+            logger.info({
+                message: `show login tapp (${getUrlParameters().forcelogin === '1' ? 'forcelogin' : 'no tapp found'})`,
+                customNumber: tappId
+            });
+
+            showLogin();
+            return;
+        }
+
+        if (!tapp) {
+            consoleLogger.warn('No Tapp found!');
+
+            Dialog.show(Dialog.type.ALERT, {
+                message: `The Tapp "${tappId}" does not exist on the location "${chaynsInfo.LocationID}" or you have not the right permissions to see it.`
+            });
+
+            logger.warning({
+                message: 'no tapp found',
+                customNumber: tappId,
+                fileName: 'custom-tapp.js',
+                section: 'loadTapp'
+            });
+            return;
+        }
+
+        if (tappId === LOGIN_TAPP.id || (tapp.requiresLogin && !validateTobitAccessToken(tobitAccessToken))) {
+            logger.info({
+                message: 'show login tapp',
+                customNumber: tappId
+            });
+
+            showLogin();
+        } else {
+            loadTapp(tappId);
+        }
+    } catch (e) {
+        consoleLogger.error(e);
+        logger.error({
+            message: 'Init of ChaynsWebLight failed.',
+            customNumeber: tappId,
+            fileName: 'chayns-web.js',
+            section: 'init',
+            ex: {
+                message: e.message,
+                stackTrace: e.stack
+            }
+        });
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => startup(), false);
