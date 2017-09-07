@@ -72,25 +72,3 @@ export function encodeDialogButtonTypes(type) {
 export function decodeDialogButtonTypes(type) {
     return type <= -10 ? type + 10 : type;
 }
-
-export function throttle(fn, threshhold = 250, scope) {
-    let last;
-    let deferTimer;
-
-    return (...args) => {
-        const context = scope || this;
-        const now = Date.now();
-
-        if (last && now < last + threshhold) {
-            clearTimeout(deferTimer);
-
-            deferTimer = setTimeout(() => {
-                last = now;
-                fn.apply(context, args);
-            }, threshhold);
-        } else {
-            last = now;
-            fn.apply(context, args);
-        }
-    };
-}

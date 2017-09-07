@@ -13,7 +13,7 @@
     "comma-dangle": "off",
     "max-len": "off",
     "no-use-before-define": "off",
-    "no-extraneous-dependencies":"off"
+    "import/no-extraneous-dependencies": "off"
   },
   "extends": "airbnb-base"
 }
