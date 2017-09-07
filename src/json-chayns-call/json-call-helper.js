@@ -1,10 +1,8 @@
-import { answerJsonCall } from '../tapp/custom-tapp-communication';
+import postMessage from '../tapp/custom-tapp-communication';
 import ConsoleLogger from '../utils/console-logger';
 
 const consoleLogger = new ConsoleLogger('json-call-helper.js');
 let jsonCallEventListener = [];
-
-export const overlayCloseParam = {};
 
 export function addJsonCallEventListener(action, request, srcIframe) {
     jsonCallEventListener.push({
@@ -15,9 +13,6 @@ export function addJsonCallEventListener(action, request, srcIframe) {
     });
 }
 
-/**
- * @return {boolean}
- */
 export function dispatchJsonCallEvent(action, response, destIframe) {
     let result = false;
 
@@ -26,11 +21,7 @@ export function dispatchJsonCallEvent(action, response, destIframe) {
             return;
         }
 
-        if (!destIframe) {
-            destIframe = listener.srcIframe;
-        }
-
-        answerJsonCall(listener, response, destIframe);
+        answerJsonCall(listener, response, (destIframe || listener.srcIframe));
         result = true;
     });
 
@@ -59,16 +50,11 @@ export function throwEvent(action, code, message, request, srcIframe) {
     dispatchJsonCallEvent(75, retVal, srcIframe);
 }
 
-/**
- * @return {number}
- */
-export function encodeDialogButtonTypes(type) {
-    return type <= 0 ? type - 10 : type;
-}
-
-/**
- * @return {number}
- */
-export function decodeDialogButtonTypes(type) {
-    return type <= -10 ? type + 10 : type;
+export function answerJsonCall(request, response, srcIframe) {
+    const params = JSON.stringify({
+        addJSONParam: request.addJSONParam || {},
+        retVal: response || {},
+        callback: request.callback
+    });
+    postMessage('jsoncall', params, srcIframe);
 }
