@@ -62,9 +62,11 @@ function startup() {
     Navigation.init();
 
     loadLocation(locationId)
-        .then(() => {
-            setDynamicStyle();
-            init(tappId);
+        .then((success) => {
+            if (success) {
+                setDynamicStyle();
+                init(tappId);
+            }
         });
 }
 
