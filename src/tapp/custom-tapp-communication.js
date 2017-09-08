@@ -1,50 +1,40 @@
 import logger from 'chayns-logger';
-import * as functions from './communication-functions';
+import executeChaynsCall from '../json-chayns-call/execute-chayns-call';
 
-function init() {
-    window.addEventListener('message', onWindowMessage);
-}
-
-let domAlreadyLoaded = false;
+const chaynsNamespace = /^(chayns.\w*).(\w*)@?(\w*)?:({?.*}?)/;
+let initialized = false;
 
 document.addEventListener('DOMContentLoaded', () => {
-    if (!domAlreadyLoaded) {
-        domAlreadyLoaded = true;
-        init();
+    if (!initialized) {
+        initialized = true;
+        window.addEventListener('message', onWindowMessage);
     }
 }, false);
 
 function onWindowMessage(event) {
-    let chaynsNamespace = /^((chayns.\w*.)(\w*))@?(\w*)?:(\{?.*}?)/;
+    const [, namespace, method, srcIFrame, params] = chaynsNamespace.exec(event ? event.data : '') || [];
 
-    // 0-1: string, 2: namespace, 3: method, 4: sourceIFrame, 5: Params
-    let result = chaynsNamespace.exec(event ? event.data : '');
-    if (result) {
-        if (result[3]) {
-            let fn = functions[result[3].toLowerCase()];
-            if (typeof fn == 'function') {
-                fn(result[5], [
-                    result[4] ? document.querySelector(`[name="${result[4]}"]`) : null,
-                    result[2]
-                ]);
-            }
+    if (method) {
+        if (method.toLowerCase() === 'jsoncall') {
+            executeChaynsCall(params, [
+                srcIFrame ? document.querySelector(`[name="${srcIFrame}"]`) : null,
+                namespace
+            ]);
         }
     }
 }
 
-export function postMessage(method, params, source) {
-    let win = null;
-    let $customTappIframe = document.querySelector('#TappIframe');
-    let iframe = source[0] ? source[0] : $customTappIframe;
-
-    if (iframe !== null) {
-        win = iframe.contentWindow ? iframe.contentWindow : iframe;
+export default function postMessage(method, params = '', [srcIframe, namespace = 'chayns.customTab']) {
+    const iframe = srcIframe || document.querySelector('#TappIframe');
+    if (!iframe) {
+        return;
     }
 
-    if (win && typeof win.postMessage === 'function') {
-        params = params || '';
+    const srcWindow = iframe.contentWindow || iframe;
+
+    if (typeof srcWindow.postMessage === 'function') {
         try {
-            win.postMessage((source[1] || 'chayns.customTab.' ) + method + ':' + params.toString(), '*');
+            srcWindow.postMessage(`${namespace}.${method}:${params.toString()}`, '*');
         } catch (e) {
             logger.error({
                 message: e.message,
@@ -57,13 +47,4 @@ export function postMessage(method, params, source) {
             });
         }
     }
-}
-
-export function answerJsonCall(request, response, srcIframe) {
-    let params = JSON.stringify({
-        addJSONParam: request.addJSONParam || {},
-        retVal: response || {},
-        callback: request.callback
-    });
-    postMessage('jsoncall', params, srcIframe);
 }
