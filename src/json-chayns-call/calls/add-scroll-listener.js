@@ -1,4 +1,4 @@
-import { throttle } from '../json-call-helper';
+import throttle from 'lodash.throttle';
 import { getWindowMetrics } from '../../utils/helper';
 
 export default function addScrollListener(req, res) {
