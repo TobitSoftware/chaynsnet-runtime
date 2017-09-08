@@ -143,9 +143,12 @@ export function getUrlParameters(withSystemParameter = true) {
         if (urlParams) {
             for (let param of urlParams) {
                 param = param.split('=');
-                urlParameter[param[0].toLowerCase()] = param[1];
-                if (SYSTEM_URL_PARAMETERS.indexOf(param[0]) === -1) {
-                    urlParameterNoSystem[param[0].toLowerCase()] = param[1];
+                const key = param[0].toLowerCase();
+                const value = param[1];
+
+                urlParameter[key] = value;
+                if (SYSTEM_URL_PARAMETERS.indexOf(key) === -1) {
+                    urlParameterNoSystem[key] = value;
                 }
             }
         }
