@@ -57,6 +57,8 @@ const logLevelParameter = parseInt(getUrlParameters().loglevel, 10);
 
 if (!isNaN(logLevelParameter)) {
     ConsoleLogger.setLevel(logLevelParameter);
+} else if ('debug' in getUrlParameters()) {
+    ConsoleLogger.setLevel(ConsoleLogger.LEVELS.DEBUG);
 } else if (!isLIVE) {
     ConsoleLogger.setLevel(ConsoleLogger.LEVELS.INFO);
 }

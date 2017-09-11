@@ -42,7 +42,7 @@ function startup() {
             personId: decodedToken.PersonID,
         });
 
-        if (decodedToken.roles.indexOf('tobitBuha') !== -1) {
+        if (decodedToken.roles && decodedToken.roles.indexOf('tobitBuha') !== -1) {
             Navigation.disableTappId(TAPPIDS.INTERCOM);
         }
     } else if (!locationId || !tappId) {
@@ -75,13 +75,13 @@ export async function init(tappId) {
         await loadTapps();
 
         const getTobitAccessTokenRes = await getTobitAccessToken();
-        const tobitAccessToken = getTobitAccessTokenRes.data.tobitAccessToken;
+        const { tobitAccessToken } = getTobitAccessTokenRes.data;
 
         const tapp = getTappById(tappId);
 
-        if ((!tapp && !validateTobitAccessToken(tobitAccessToken)) || getUrlParameters().forcelogin === '1') {
+        if ((!tapp && !validateTobitAccessToken(tobitAccessToken)) || 'forcelogin' in getUrlParameters()) {
             logger.info({
-                message: `show login tapp (${getUrlParameters().forcelogin === '1' ? 'forcelogin' : 'no tapp found'})`,
+                message: `show login tapp (${'forcelogin' in getUrlParameters() ? 'forcelogin' : 'no tapp found'})`,
                 customNumber: tappId
             });
 
