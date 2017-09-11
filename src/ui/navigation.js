@@ -7,7 +7,7 @@ let $navigation = null;
 
 export default class Navigation {
     static init() {
-        if (getUrlParameters().navigation === '1') {
+        if ('navigation' in getUrlParameters()) {
             Navigation.show();
         }
     }
