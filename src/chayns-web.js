@@ -34,7 +34,6 @@ function startup() {
     if (!stringisEmptyOrWhitespace(parameterAccessToken) && validateTobitAccessToken(parameterAccessToken)) {
         const decodedToken = decodeTobitAccessToken(parameterAccessToken);
         locationId = decodedToken.LocationID;
-        tappId = DEFAULT_TAPPID;
 
         setTobitAccessToken(parameterAccessToken);
         logger.info({
