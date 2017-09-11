@@ -79,9 +79,9 @@ export async function init(tappId) {
 
         const tapp = getTappById(tappId);
 
-        if ((!tapp && !validateTobitAccessToken(tobitAccessToken)) || getUrlParameters().forcelogin === '1') {
+        if ((!tapp && !validateTobitAccessToken(tobitAccessToken)) || 'forcelogin' in getUrlParameters()) {
             logger.info({
-                message: `show login tapp (${getUrlParameters().forcelogin === '1' ? 'forcelogin' : 'no tapp found'})`,
+                message: `show login tapp (${'forcelogin' in getUrlParameters() ? 'forcelogin' : 'no tapp found'})`,
                 customNumber: tappId
             });
 
