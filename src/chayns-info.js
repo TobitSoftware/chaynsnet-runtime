@@ -17,7 +17,7 @@ let globalData;
 
 export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
     try {
-        const locationSettingsRequest = await Request.get(`https://chaynssvc.tobit.com/v0.4/${locationId}/LocationSettings`);
+        const locationSettingsRequest = await Request.get(`https://chaynssvc.tobit.com/v0.5/${locationId}/LocationSettings`);
 
         if (locationSettingsRequest.status === 204) {
             consoleLoggerLocation.warn('no location found');
@@ -136,7 +136,7 @@ export async function updateUserData() {
 
 export async function loadTapps(locationId) {
     try {
-        const request = await Request.get(`https://chaynssvc.tobit.com/v0.4/${chaynsInfo.LocationID}/Tapp?forWeb=true`);
+        const request = await Request.get(`https://chaynssvc.tobit.com/v0.5/${chaynsInfo.LocationID}/Tapp?forWeb=true`);
 
         if (request.status === 204) {
             consoleLoggerTapps.warn('Location has no tapps');
@@ -163,7 +163,7 @@ export async function loadTapps(locationId) {
 
         const tapps = [];
         for (const entry of data) {
-            if (entry.tapps && typeof entry.tapps === 'object') {
+            if (entry.tapps && entry.tapps instanceof Array) {
                 tapps.push(...entry.tapps);
             } else {
                 tapps.push(entry);
