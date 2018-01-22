@@ -11,6 +11,7 @@ import VERSION from './constants/version';
 
 const consoleLoggerLocation = new ConsoleLogger('loadLocation(chayns-info.js)');
 const consoleLoggerTapps = new ConsoleLogger('loadTapps(chayns-info.js)');
+const consoleLoggerUserData = new ConsoleLogger('updateUserData(chayns-info.js)');
 
 export let chaynsInfo;
 let globalData;
@@ -130,7 +131,9 @@ export async function updateUserData() {
                 stackTrace: e.stack
             }
         });
-        console.error(e);
+        consoleLoggerUserData.error('Update userData failed.', e);
+
+        return false;
     }
 }
 
