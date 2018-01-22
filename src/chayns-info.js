@@ -164,14 +164,17 @@ export async function loadTapps(locationId) {
         const jsonResponse = await request.json();
         const data = jsonResponse.data || [];
 
-        const tapps = [];
-        for (const entry of data) {
-            if (entry.tapps && entry.tapps instanceof Array) {
-                tapps.push(...entry.tapps);
-            } else {
+        const getTappList = list => list.reduce((tapps, entry) => {
+            // the type is a binary value, the bit for a tapp is 1
+            if ((entry.type & 1) === 1) {
                 tapps.push(entry);
+            } else {
+                tapps.push(...getTappList(entry.tapps));
             }
-        }
+            return tapps;
+        }, []);
+
+        const tapps = getTappList(data);
 
         tapps.push(LOGIN_TAPP);
 
