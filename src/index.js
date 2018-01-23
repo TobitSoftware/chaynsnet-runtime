@@ -20,36 +20,45 @@ logger.init({
     useDevServer: !isLIVE,
     version: VERSION,
     middleware: (payload) => {
-        if (payload.customText) {
-            payload.data = {
-                url: location.href,
-                ...payload.data
-            };
-        } else {
-            payload.customText = location.href;
-        }
-
-        if (chaynsInfo) {
-            const activeTappId = chaynsInfo.getGlobalData().AppInfo.TappSelected.Id;
-            if (activeTappId) {
-                if (payload.customNumber) {
-                    payload.data = {
-                        tappId: activeTappId,
-                        ...payload.data,
-                    };
-                } else {
-                    payload.customNumber = activeTappId;
-                }
+        try {
+            if (payload.customText) {
+                payload.data = {
+                    url: location.href,
+                    ...payload.data
+                };
+            } else {
+                payload.customText = location.href;
             }
 
-            payload = {
-                locationId: chaynsInfo.LocationID,
-                personId: chaynsInfo.User.PersonID,
-                ...payload
-            };
-        }
+            if (chaynsInfo) {
+                const activeTappId = chaynsInfo.getGlobalData().AppInfo.TappSelected.Id;
+                if (activeTappId) {
+                    if (payload.customNumber) {
+                        payload.data = {
+                            tappId: activeTappId,
+                            ...payload.data,
+                        };
+                    } else {
+                        payload.customNumber = activeTappId;
+                    }
+                }
 
-        return true;
+                payload = {
+                    locationId: chaynsInfo.LocationID,
+                    personId: chaynsInfo.User && chaynsInfo.User.PersonID,
+                    ...payload
+                };
+            }
+            return true;
+        } catch (e) {
+            console.error('logger-middleware-error', e);
+
+            payload.data = {
+                ...payload.data,
+                middlewareErrorMessage: e.message
+            };
+            return true;
+        }
     }
 });
 
