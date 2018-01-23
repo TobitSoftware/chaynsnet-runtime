@@ -11,6 +11,7 @@ import VERSION from './constants/version';
 
 const consoleLoggerLocation = new ConsoleLogger('loadLocation(chayns-info.js)');
 const consoleLoggerTapps = new ConsoleLogger('loadTapps(chayns-info.js)');
+const consoleLoggerUserData = new ConsoleLogger('updateUserData(chayns-info.js)');
 
 export let chaynsInfo;
 let globalData;
@@ -130,7 +131,9 @@ export async function updateUserData() {
                 stackTrace: e.stack
             }
         });
-        console.error(e);
+        consoleLoggerUserData.error('Update userData failed.', e);
+
+        return false;
     }
 }
 
@@ -161,14 +164,17 @@ export async function loadTapps(locationId) {
         const jsonResponse = await request.json();
         const data = jsonResponse.data || [];
 
-        const tapps = [];
-        for (const entry of data) {
-            if (entry.tapps && entry.tapps instanceof Array) {
-                tapps.push(...entry.tapps);
-            } else {
+        const getTappList = list => list.reduce((tapps, entry) => {
+            // the type is a binary value, the bit for a tapp is 1
+            if ((entry.type & 1) === 1) {
                 tapps.push(entry);
+            } else {
+                tapps.push(...getTappList(entry.tapps));
             }
-        }
+            return tapps;
+        }, []);
+
+        const tapps = getTappList(data);
 
         tapps.push(LOGIN_TAPP);
 

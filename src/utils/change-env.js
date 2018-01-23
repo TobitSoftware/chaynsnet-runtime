@@ -9,7 +9,7 @@ export default function (env) {
             reloadWithUrl('https://chayns2.tobit.com/ChaynsWebLight/v1');
             break;
         case ENVIRONMENTS.QA:
-            reloadWithUrl('https://chayns3.tobit.com/QA/ChaynsWebLight/');
+            reloadWithUrl('https://chaynssvcqa.tobit.com/chaynsweblight/');
             break;
         case ENVIRONMENTS.DEV:
             reloadWithUrl('https://localhost:7070/');
@@ -18,7 +18,7 @@ export default function (env) {
             reloadWithUrl('https://w-mn.tobit.ag:7070/');
             break;
         default:
-            reloadWithUrl('https://chayns2.tobit.com/ChaynsWebLight/v2');
+            console.warn(`${env} is no valid environment`);
             break;
     }
 }
