@@ -147,6 +147,39 @@ export function getRelativeColor(baseColor, percentage, opacity) {
     return color;
 }
 
+export function mixColors(color1, color2, weight = 50, opacity) {
+    const d2h = d => d.toString(16);
+    const h2d = h => parseInt(h, 16);
+
+    let color = '#';
+
+    for (let i = 1; i <= 5; i += 2) {
+        let v1 = h2d(color1.substr(i, 2));
+        let v2 = h2d(color2.substr(i, 2));
+
+        // combine the current pairs from each source color, according to the specified weight
+        let val = d2h(Math.round(v2 + (v1 - v2) * (weight / 100.0)));
+
+        if (val.length < 2) {
+            val = `0${val}`;
+        }
+
+        color += val;
+    }
+
+    if (opacity) {
+        let opacityVal = Math.round(255 * opacity).toString(16);
+
+        if (opacityVal.length < 2) {
+            opacityVal = `0${opacityVal}`;
+        }
+
+        color += opacityVal;
+    }
+
+    return color;
+}
+
 /**
  * converts urlParameter string to object
  * @param {string} parameterString, e.g. '?test=1&second=hello'
