@@ -1,7 +1,7 @@
 import htmlToElement from 'html-to-element';
 import { chaynsInfo } from '../chayns-info';
 import ConsoleLogger from '../utils/console-logger';
-import { getRelativeColor } from '../utils/convert';
+import { getRelativeColor, mixColors } from '../utils/convert';
 import { getUrlParameters } from '../utils/helper';
 
 const consoleLogger = new ConsoleLogger('(dynamic-styles.js)');
@@ -46,10 +46,14 @@ export async function setDynamicStyle() {
         const customBackgroundColor = getUrlParameters().backgroundcolor && !getUrlParameters().backgroundcolor.match(/[^0-9A-Fa-f]/g) && `#${getUrlParameters().backgroundcolor}`;
 
         // Body
+        const colorModeBaseColors = {
+            0: '#ffffff',
+            1: '#1a1a1a',
+        };
         addStyle([{
             selector: 'body',
             styles: {
-                'background-color': customBackgroundColor || getColor(7)
+                'background-color': customBackgroundColor || chaynsInfo.ColorMode === 2 ? '#ffffff' : mixColors(chaynsInfo.Color, colorModeBaseColors[chaynsInfo.ColorMode], 7)
             }
         }, {
             selector: 'h1',
