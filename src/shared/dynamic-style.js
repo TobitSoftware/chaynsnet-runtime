@@ -1,4 +1,4 @@
-import { htmlToElement, getRelativeColor } from './utils/convert';
+import { htmlToElement, getRelativeColor, mixColors } from './utils/convert';
 
 /**
  * Accept Arrays like
@@ -38,10 +38,15 @@ export function setDynamicStyle() {
         }
 
         //Body
+        const colorModeBaseColors = {
+            0: '#ffffff',
+            1: '#1a1a1a',
+        };
+        console.log(mixColors(window.ChaynsInfo.Color, colorModeBaseColors[window.ChaynsInfo.ColorMode], 7));
         addStyle([{
             selector: 'body',
             styles: {
-                'background-color': getColor(7)
+                'background-color': window.ChaynsInfo.ColorMode === 2 ? '#ffffff' : mixColors(window.ChaynsInfo.Color, colorModeBaseColors[window.ChaynsInfo.ColorMode], 7)
             }
         }, {
             selector: 'h1',

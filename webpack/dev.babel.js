@@ -38,6 +38,7 @@ export default {
         key: ssl.key,
         host: '0.0.0.0',
         port: 7070,
+        disableHostCheck: true,
         stats: {
             colors: true
         }
