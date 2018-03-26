@@ -4,6 +4,7 @@ import ConsoleLogger from './utils/console-logger';
 import { decodeTobitAccessToken } from './utils/convert';
 import { getUrlParameters } from './utils/url-parameter';
 import Request from './utils/request';
+import { getItem, setItem } from './utils/localStorage';
 
 import { DEFAULT_LOCATIONID } from './constants/defaults';
 import VERSION from './constants/version';
@@ -139,11 +140,15 @@ export async function updateUserData() {
     }
 }
 
+const tappsCacheKey = 'load-tapps_cache';
+
 export async function loadTapps(locationId) {
     try {
-        const request = await Request.get(`https://chaynssvc.tobit.com/v0.5/${chaynsInfo.LocationID}/Tapp?forWeb=true`);
+        const cache = getItem(tappsCacheKey);
 
-        if (request.status === 204) {
+        const request = await Request.get(`https://chaynssvc.tobit.com/v0.5/${chaynsInfo.LocationID}/Tapp?forWeb=true${cache && cache.version === VERSION ? `&timestamp=${cache.timestamp}` : ''}`);
+
+        if (request.status === 204 && !cache) {
             consoleLoggerTapps.warn('Location has no tapps');
             logger.warning({
                 message: 'Location has no tapps. (CustomNumber:Status)',
@@ -152,7 +157,7 @@ export async function loadTapps(locationId) {
                 fileName: 'chaynsInfo.js',
                 section: 'loadTapps',
             });
-        } else if (request.status !== 200) {
+        } else if (request.status !== 200 && request.status !== 204) {
             consoleLoggerTapps.warn('Get locationTapps failed.', request.status);
             logger.error({
                 message: 'Get locationTapps failed. (CustomNumber:Status)',
@@ -163,21 +168,33 @@ export async function loadTapps(locationId) {
             });
         }
 
-        const jsonResponse = await request.json();
-        const data = jsonResponse.data || [];
+        let tapps;
 
-        const getTappList = list => list.reduce((tapps, entry) => {
-            // the type is a binary value, the bit for a tapp is 1
-            // eslint-disable-next-line no-bitwise
-            if ((entry.type & 1) === 1) {
-                tapps.push(entry);
-            } else {
-                tapps.push(...getTappList(entry.tapps));
-            }
-            return tapps;
-        }, []);
+        if (request.status === 204) {
+            tapps = cache.tapps;
+        } else {
+            const jsonResponse = await request.json();
+            const data = jsonResponse.data || [];
 
-        const tapps = getTappList(data);
+            const getTappList = list => list.reduce((tapps, entry) => {
+                // the type is a binary value, the bit for a tapp is 1
+                // eslint-disable-next-line no-bitwise
+                if ((entry.type & 1) === 1) {
+                    tapps.push(entry);
+                } else {
+                    tapps.push(...getTappList(entry.tapps));
+                }
+                return tapps;
+            }, []);
+
+            tapps = getTappList(data);
+
+            setItem(tappsCacheKey, {
+                version: VERSION,
+                timestamp: jsonResponse.timestamp,
+                tapps,
+            });
+        }
 
         tapps.push({
             id: LOGIN_TAPP_ID,
