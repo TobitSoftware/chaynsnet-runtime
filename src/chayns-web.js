@@ -1,16 +1,17 @@
 import logger from 'chayns-logger';
 import loadTapp, { getTappById } from './tapp/custom-tapp';
-import { loadLocation, loadTapps } from './chayns-info';
+import { loadLocation, loadTapps, chaynsInfo } from './chayns-info';
 import { setDynamicStyle } from './ui/dynamic-style';
 import Navigation from './ui/navigation';
-import { validateTobitAccessToken, getUrlParameters, stringisEmptyOrWhitespace } from './utils/helper';
+import { validateTobitAccessToken, stringisEmptyOrWhitespace } from './utils/helper';
+import { getUrlParameters, set } from './utils/url-parameter';
 import { decodeTobitAccessToken } from './utils/convert';
 import { setTobitAccessToken, getTobitAccessToken } from './json-native-calls/calls/index';
 import { showLogin } from './login';
 import ConsoleLogger from './utils/console-logger';
 
+import LOGIN_TAPP_ID from './constants/login-tapp-id';
 import { DEFAULT_LOCATIONID, DEFAULT_TAPPID } from './constants/defaults';
-import LOGIN_TAPP from './constants/login-tapp';
 import TAPPIDS from './constants/tapp-ids';
 import Dialog from './ui/dialog/dialog';
 
@@ -25,7 +26,7 @@ function startup() {
     }
 
     logger.info({
-        message: 'ChaynsWebLight requested',
+        message: 'chayns®net runtime requested',
         locationId,
         customNumber: tappId,
     });
@@ -45,17 +46,15 @@ function startup() {
             Navigation.disableTappId(TAPPIDS.INTERCOM);
         }
     } else if (!locationId || !tappId) {
-        let url = `${location.href}${location.href.indexOf('?') === -1 ? '?' : '&'}`;
-
         if (!locationId) {
-            url += `${url.endsWith('&') || url.endsWith('?') ? '' : '&'}locationid=${DEFAULT_LOCATIONID}`;
+            set('locationId', DEFAULT_LOCATIONID);
+            locationId = DEFAULT_LOCATIONID;
         }
 
         if (!tappId) {
-            url += `${url.endsWith('&') || url.endsWith('?') ? '' : '&'}tappId=${DEFAULT_TAPPID}`;
+            set('tappId', DEFAULT_TAPPID);
+            tappId = DEFAULT_TAPPID;
         }
-        location.href = url;
-        return;
     }
 
     Navigation.init();
@@ -69,7 +68,7 @@ function startup() {
         });
 }
 
-export async function init(tappId) {
+async function init(tappId) {
     try {
         await loadTapps();
 
@@ -104,7 +103,7 @@ export async function init(tappId) {
             return;
         }
 
-        if (tappId === LOGIN_TAPP.id || (tapp.requiresLogin && !validateTobitAccessToken(tobitAccessToken))) {
+        if (tappId === LOGIN_TAPP_ID || (tapp.requiresLogin && !validateTobitAccessToken(tobitAccessToken))) {
             logger.info({
                 message: 'show login tapp',
                 customNumber: tappId
@@ -117,7 +116,7 @@ export async function init(tappId) {
     } catch (e) {
         consoleLogger.error(e);
         logger.error({
-            message: 'Init of ChaynsWebLight failed.',
+            message: 'Init of chayns®net runtime failed.',
             customNumeber: tappId,
             fileName: 'chayns-web.js',
             section: 'init',
@@ -130,3 +129,5 @@ export async function init(tappId) {
 }
 
 document.addEventListener('DOMContentLoaded', () => startup(), false);
+
+export default init;

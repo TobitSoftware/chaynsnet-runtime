@@ -2,7 +2,7 @@ import executeCall from '../json-native-calls';
 import errorHandler from '../call-error-handler';
 import getDefer from '../../utils/defer';
 import { setItem } from '../../utils/localStorage';
-import { getUrlParameters } from '../../utils/helper';
+import { getUrlParameters } from '../../utils/url-parameter';
 import ConsoleLogger from '../../utils/console-logger';
 
 const consoleLogger = new ConsoleLogger('setTobitAccessToken(native-call)');
@@ -24,7 +24,7 @@ export default function setTobitAccessToken(tobitAccessToken) {
                 executeOnlyOnce: true,
             },
             fallback: () => {
-                setItem(`chaynsWebLight_tobitAccessToken_${getUrlParameters().locationid}`, tobitAccessToken);
+                setItem(`tobitAccessToken_${getUrlParameters().locationid}`, tobitAccessToken);
             },
         });
 

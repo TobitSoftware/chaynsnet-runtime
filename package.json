@@ -1,29 +1,34 @@
 {
-  "name": "chayns-web-lite",
+  "name": "chaynsnet-runtime",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "start": "npm run check:chayns-logger && webpack-dev-server  --config ./webpack/dev.babel.js --progress --https",
     "start:http": "npm run check:chayns-logger && webpack-dev-server  --config ./webpack/dev.babel.js --progress",
     "build": "npm run check:chayns-logger && webpack -p --config ./webpack/prod.babel.js",
-    "build:qa": "npm run check:chayns-logger && webpack -p --config ./webpack/qa.babel.js",
+    "build:staging": "npm run check:chayns-logger && webpack -p --config ./webpack/staging.babel.js",
     "check:chayns-logger": "node check-chayns-logger",
     "prepublish": "npm run check:chayns-logger"
   },
   "keywords": [
-    "ChaynsWeb",
-    "ChaynsWebLite",
+    "chaynsnet",
+    "runtime",
     "chayns",
     "tobit"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TobitSoftware/chaynsnet-runtime.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TobitSoftware/chaynsnet-runtime/issues"
+  },
+  "homepage": "https://github.com/TobitSoftware/chaynsnet-runtime/wiki",
   "author": "Kevin Mathmann (https://github.com/kmathmann)",
   "license": "MIT",
-  "bugs": {
-    "url": "jira.tobit.com"
-  },
   "devDependencies": {
     "appcache-webpack-plugin": "^1.3.0",
-    "autoprefixer": "^7.2.5",
+    "autoprefixer": "^8.2.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.1",
     "babel-loader": "^7.1.2",

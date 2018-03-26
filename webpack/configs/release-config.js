@@ -7,9 +7,9 @@ import BASE_CONFIG from './base-config';
 
 const ROOT_PATH = path.resolve('./');
 
-export default (qa = false) => ({
+export default (staging = false) => ({
     ...BASE_CONFIG,
-    devtool: qa ? 'inline-source-map' : 'hidden-source-map',
+    devtool: staging ? 'inline-source-map' : 'hidden-source-map',
     plugins: [
         new HtmlWebpackPlugin({
             template: path.resolve(ROOT_PATH, 'index.ejs'),
@@ -28,7 +28,7 @@ export default (qa = false) => ({
         }),
         new webpack.DefinePlugin({
             'process.env': {
-                NODE_ENV: JSON.stringify(qa ? 'qa' : 'production')
+                NODE_ENV: JSON.stringify(staging ? 'staging' : 'production')
             }
         }),
     ]

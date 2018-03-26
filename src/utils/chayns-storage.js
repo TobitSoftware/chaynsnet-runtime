@@ -13,7 +13,7 @@ export const ACCESS_MODES = {
 
 const getStorageKey = () => `tappKeyStorage-${chaynsInfo.SiteID}`;
 
-const read = async() => (await getKeyValue(getStorageKey())).data.value || [];
+const read = async () => (await getKeyValue(getStorageKey())).data.value || [];
 const write = value => setKeyValue(getStorageKey(), value);
 
 
@@ -56,7 +56,7 @@ function getItemFromStorage(storage, tappId, key, accessMode = ACCESS_MODES.publ
     return undefined;
 }
 
-export const removeKeyForTapp = async(tappId, key, accessMode) => {
+export const removeKeyForTapp = async (tappId, key, accessMode) => {
     try {
         const storage = await read();
         const keyItem = getItemFromStorage(storage, tappId, key, accessMode);
@@ -76,7 +76,7 @@ export const removeKeyForTapp = async(tappId, key, accessMode) => {
     }
 };
 
-export const setKeyForTapp = async(tappId, key, value, accessMode, tappIds) => {
+export const setKeyForTapp = async (tappId, key, value, accessMode, tappIds) => {
     try {
         const storage = await read();
         const savedItem = getItemFromStorage(storage, tappId, key, accessMode);
@@ -101,7 +101,7 @@ export const setKeyForTapp = async(tappId, key, value, accessMode, tappIds) => {
     }
 };
 
-export const getKeyForTapp = async(tappId, key, accessMode) => {
+export const getKeyForTapp = async (tappId, key, accessMode) => {
     try {
         const storage = await read();
         const keyItem = getItemFromStorage(storage, tappId, key, accessMode);

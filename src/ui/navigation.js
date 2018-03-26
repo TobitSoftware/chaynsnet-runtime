@@ -1,5 +1,5 @@
 import htmlToElement from 'html-to-element';
-import { getUrlParameters } from '../utils/helper';
+import { getUrlParameters } from '../utils/url-parameter';
 import loadTapp from '../tapp/custom-tapp';
 import NAVIGATION_ITEMS from '../constants/navigation-items';
 

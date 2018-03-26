@@ -11,7 +11,7 @@ export getGlobalData from './get-global-data';
 export getObjectForKey from './get-object-for-key';
 export getSavedIntercomChats from './get-saved-intercom-chats';
 export getWindowMetric from './get-window-metric';
-export { tobitLogin, tobitLogout, tobitWebTokenLogin } from './login';
+export { tobitLogin, tobitLogout, setTobitAccessToken } from './login';
 export requestGeoLocation from './request-geo-location';
 export scrollToPosition from './scroll-to-position';
 export selectTapp from './select-tapp';

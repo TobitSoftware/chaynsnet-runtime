@@ -1,18 +1,19 @@
 import logger from 'chayns-logger';
+import { getTobitAccessToken } from './json-native-calls/calls/index';
 import ConsoleLogger from './utils/console-logger';
 import { decodeTobitAccessToken } from './utils/convert';
-import { getUrlParameters } from './utils/helper';
-import { getTobitAccessToken } from './json-native-calls/calls/index';
+import { getUrlParameters } from './utils/url-parameter';
 import Request from './utils/request';
 
-import LOGIN_TAPP from './constants/login-tapp';
 import { DEFAULT_LOCATIONID } from './constants/defaults';
 import VERSION from './constants/version';
+import LOGIN_TAPP_ID from './constants/login-tapp-id';
 
 const consoleLoggerLocation = new ConsoleLogger('loadLocation(chayns-info.js)');
 const consoleLoggerTapps = new ConsoleLogger('loadTapps(chayns-info.js)');
 const consoleLoggerUserData = new ConsoleLogger('updateUserData(chayns-info.js)');
 
+// eslint-disable-next-line import/no-mutable-exports
 export let chaynsInfo;
 let globalData;
 
@@ -45,7 +46,8 @@ export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
             LocationName: locationSettings.locationName,
             IsMobile: false,
             ExclusiveMode: false,
-            IsFacebook: (document.referrer.indexOf('staticxx.facebook') > -1 || location.href.indexOf('fb=1') > -1),
+            IsFacebook: (document.referrer.indexOf('staticxx.facebook') > -1 || window.location.href.indexOf('fb=1') > -1),
+            loginTappUrl: locationSettings.loginDialogUrl,
             Tapps: [],
             LocationPersonID: locationSettings.locationPersonId,
             Domain: window.location.host,
@@ -61,8 +63,8 @@ export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
         globalData = {
             Device: {},
             AppInfo: {
-                Version: parseInt(VERSION) || 2,
-                domain: location.host,
+                Version: parseInt(VERSION, 10) || 2,
+                domain: window.location.host,
                 Tapps: [],
                 TappSelected: {},
                 FacebookAppID: locationSettings.facebookAppId,
@@ -166,6 +168,7 @@ export async function loadTapps(locationId) {
 
         const getTappList = list => list.reduce((tapps, entry) => {
             // the type is a binary value, the bit for a tapp is 1
+            // eslint-disable-next-line no-bitwise
             if ((entry.type & 1) === 1) {
                 tapps.push(entry);
             } else {
@@ -176,7 +179,10 @@ export async function loadTapps(locationId) {
 
         const tapps = getTappList(data);
 
-        tapps.push(LOGIN_TAPP);
+        tapps.push({
+            id: LOGIN_TAPP_ID,
+            url: chaynsInfo.loginTappUrl,
+        });
 
         chaynsInfo.Tapps = tapps;
         globalData.AppInfo.Tapps = chaynsInfo.Tapps;
@@ -193,7 +199,10 @@ export async function loadTapps(locationId) {
         });
         consoleLoggerTapps.error('Load Tapps failed.', e);
 
-        chaynsInfo.Tapps = [LOGIN_TAPP];
+        chaynsInfo.Tapps = [{
+            id: LOGIN_TAPP_ID,
+            url: chaynsInfo.loginTappUrl,
+        }];
         globalData.AppInfo.Tapps = chaynsInfo.Tapps;
     }
 }
