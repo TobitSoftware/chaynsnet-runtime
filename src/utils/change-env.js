@@ -3,10 +3,10 @@ import { ENVIRONMENTS } from '../constants/environments';
 export default function (env) {
     switch (env) {
         case ENVIRONMENTS.LIVE:
-            reloadWithUrl('https://chayns2.tobit.com/ChaynsWebLight/v2');
+            reloadWithUrl('https://frontend.tobit.com/chaynsnet-runtime/v2/');
             break;
         case ENVIRONMENTS.LIVE_V1:
-            reloadWithUrl('https://chayns2.tobit.com/ChaynsWebLight/v1');
+            reloadWithUrl('https://frontend.tobit.com/chaynsnet-runtime/v1/');
             break;
         case ENVIRONMENTS.QA:
             reloadWithUrl('https://chaynssvcqa.tobit.com/chaynsweblight/');
