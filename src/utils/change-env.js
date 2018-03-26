@@ -8,7 +8,7 @@ export default function (env) {
         case ENVIRONMENTS.LIVE_V1:
             reloadWithUrl('https://frontend.tobit.com/chaynsnet-runtime/v1/');
             break;
-        case ENVIRONMENTS.QA:
+        case ENVIRONMENTS.STAGING:
             reloadWithUrl('https://chaynssvcqa.tobit.com/chaynsweblight/');
             break;
         case ENVIRONMENTS.DEV:

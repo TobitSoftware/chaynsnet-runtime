@@ -6,7 +6,7 @@
     "start": "npm run check:chayns-logger && webpack-dev-server  --config ./webpack/dev.babel.js --progress --https",
     "start:http": "npm run check:chayns-logger && webpack-dev-server  --config ./webpack/dev.babel.js --progress",
     "build": "npm run check:chayns-logger && webpack -p --config ./webpack/prod.babel.js",
-    "build:qa": "npm run check:chayns-logger && webpack -p --config ./webpack/qa.babel.js",
+    "build:staging": "npm run check:chayns-logger && webpack -p --config ./webpack/staging.babel.js",
     "check:chayns-logger": "node check-chayns-logger",
     "prepublish": "npm run check:chayns-logger"
   },
