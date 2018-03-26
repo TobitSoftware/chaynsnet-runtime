@@ -1,13 +1,13 @@
 import logger from 'chayns-logger';
 import ConsoleLogger from './utils/console-logger';
 import { decodeTobitAccessToken } from './utils/convert';
-import { getUrlParameters } from './utils/helper';
 import { getTobitAccessToken } from './json-native-calls/calls/index';
+import { getUrlParameters } from './utils/url-parameter';
 import Request from './utils/request';
 
-import LOGIN_TAPP from './constants/login-tapp';
 import { DEFAULT_LOCATIONID } from './constants/defaults';
 import VERSION from './constants/version';
+import LOGIN_TAPP_ID from './constants/login-tapp-id';
 
 const consoleLoggerLocation = new ConsoleLogger('loadLocation(chayns-info.js)');
 const consoleLoggerTapps = new ConsoleLogger('loadTapps(chayns-info.js)');
@@ -46,6 +46,7 @@ export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
             IsMobile: false,
             ExclusiveMode: false,
             IsFacebook: (document.referrer.indexOf('staticxx.facebook') > -1 || location.href.indexOf('fb=1') > -1),
+            loginTappUrl: locationSettings.loginDialogUrl,
             Tapps: [],
             LocationPersonID: locationSettings.locationPersonId,
             Domain: window.location.host,
@@ -176,7 +177,10 @@ export async function loadTapps(locationId) {
 
         const tapps = getTappList(data);
 
-        tapps.push(LOGIN_TAPP);
+        tapps.push({
+            id: LOGIN_TAPP_ID,
+            url: chaynsInfo.loginTappUrl,
+        });
 
         chaynsInfo.Tapps = tapps;
         globalData.AppInfo.Tapps = chaynsInfo.Tapps;
@@ -193,7 +197,10 @@ export async function loadTapps(locationId) {
         });
         consoleLoggerTapps.error('Load Tapps failed.', e);
 
-        chaynsInfo.Tapps = [LOGIN_TAPP];
+        chaynsInfo.Tapps = [{
+            id: LOGIN_TAPP_ID,
+            url: chaynsInfo.loginTappUrl,
+        }];
         globalData.AppInfo.Tapps = chaynsInfo.Tapps;
     }
 }

@@ -2,7 +2,7 @@ import htmlToElement from 'html-to-element';
 import { chaynsInfo } from '../chayns-info';
 import ConsoleLogger from '../utils/console-logger';
 import { getRelativeColor, mixColors } from '../utils/convert';
-import { getUrlParameters } from '../utils/helper';
+import { getUrlParameters } from '../utils/url-parameter';
 
 const consoleLogger = new ConsoleLogger('(dynamic-styles.js)');
 

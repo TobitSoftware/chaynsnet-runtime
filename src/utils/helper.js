@@ -107,33 +107,6 @@ export function validateTobitAccessToken(tobitAccessToken) {
     return tokenData && new Date(tokenData.exp) > new Date() && (!chaynsInfo || tokenData.LocationID == chaynsInfo.LocationID);
 }
 
-let urlParameter = null;
-let urlParameterNoSystem = null;
-
-export function getUrlParameters(withSystemParameter = true) {
-    if (!urlParameter || !urlParameterNoSystem) {
-        urlParameterNoSystem = {};
-        urlParameter = {};
-
-        const urlParams = window.location.href.split('?').length > 1 ? window.location.href.split('?')[1].split('&') : false;
-
-        if (urlParams) {
-            for (let param of urlParams) {
-                param = param.split('=');
-                const key = param[0].toLowerCase();
-                const value = param[1];
-
-                urlParameter[key] = value;
-                if (SYSTEM_URL_PARAMETERS.indexOf(key) === -1) {
-                    urlParameterNoSystem[key] = value;
-                }
-            }
-        }
-    }
-
-    return withSystemParameter ? { ...urlParameter } : { ...urlParameterNoSystem };
-}
-
 /**
  * shortcut for querySelector.
  *    select from document like: _('selector')

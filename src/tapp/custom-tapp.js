@@ -3,7 +3,7 @@ import htmlToElement from 'html-to-element';
 import { chaynsInfo, setSelectedTapp } from '../chayns-info';
 import FloatingButton from '../ui/floating-button';
 import WaitCursor from '../ui/wait-cursor';
-import { getUrlParameters } from '../utils/helper';
+import { getUrlParameters } from '../utils/url-parameter';
 import { parameterStringToObject } from '../utils/convert';
 import ConsoleLogger from '../utils/console-logger';
 

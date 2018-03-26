@@ -1,8 +1,9 @@
 import { showLogin, logout, login } from '../../login';
 
-export function tobitWebTokenLogin(req, res) {
+export function setTobitAccessToken(req, res) {
     if (req.value && 'tobitAccessToken' in req.value) {
         login(req.value.tobitAccessToken);
+        res.answer();
     }
 }
 

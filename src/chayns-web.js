@@ -3,14 +3,15 @@ import loadTapp, { getTappById } from './tapp/custom-tapp';
 import { loadLocation, loadTapps } from './chayns-info';
 import { setDynamicStyle } from './ui/dynamic-style';
 import Navigation from './ui/navigation';
-import { validateTobitAccessToken, getUrlParameters, stringisEmptyOrWhitespace } from './utils/helper';
+import { validateTobitAccessToken, stringisEmptyOrWhitespace } from './utils/helper';
+import { getUrlParameters } from './utils/url-parameter';
 import { decodeTobitAccessToken } from './utils/convert';
 import { setTobitAccessToken, getTobitAccessToken } from './json-native-calls/calls/index';
 import { showLogin } from './login';
 import ConsoleLogger from './utils/console-logger';
 
+import LOGIN_TAPP_ID from './constants/login-tapp-id';
 import { DEFAULT_LOCATIONID, DEFAULT_TAPPID } from './constants/defaults';
-import LOGIN_TAPP from './constants/login-tapp';
 import TAPPIDS from './constants/tapp-ids';
 import Dialog from './ui/dialog/dialog';
 
@@ -104,7 +105,7 @@ export async function init(tappId) {
             return;
         }
 
-        if (tappId === LOGIN_TAPP.id || (tapp.requiresLogin && !validateTobitAccessToken(tobitAccessToken))) {
+        if (tappId === LOGIN_TAPP_ID || (tapp.requiresLogin && !validateTobitAccessToken(tobitAccessToken))) {
             logger.info({
                 message: 'show login tapp',
                 customNumber: tappId

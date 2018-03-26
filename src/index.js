@@ -1,6 +1,6 @@
 import logger from 'chayns-logger';
 import { chaynsInfo } from './chayns-info';
-import { getUrlParameters } from './utils/helper';
+import { getUrlParameters } from './utils/url-parameter';
 import ConsoleLogger from './utils/console-logger';
 import './polyfill/index';
 import './tapp/custom-tapp-communication';
