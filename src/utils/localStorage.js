@@ -1,6 +1,6 @@
 let lsExists = true;
-const chaynsWebStorage = {};
-const storagePrefix = 'ChaynsWeb_';
+const applicationStorage = {};
+const storagePrefix = 'chaynsnet-runtime_';
 
 /**
  * Inits localStorage helper.
@@ -23,15 +23,15 @@ export function setItem(key, value) {
     if (lsExists) {
         localStorage.setItem(`${storagePrefix}${key}`, value);
     } else {
-        chaynsWebStorage[key] = value;
+        applicationStorage[key] = value;
     }
 }
 
 export function removeItem(key) {
     if (lsExists) {
         localStorage.removeItem(`${storagePrefix}${key}`);
-    } else if (chaynsWebStorage.hasOwnProperty(key)) {
-        delete chaynsWebStorage[key];
+    } else if (applicationStorage.hasOwnProperty(key)) {
+        delete applicationStorage[key];
     }
 }
 
@@ -41,7 +41,7 @@ export function getItem(key) {
     if (lsExists) {
         value = localStorage.getItem(`${storagePrefix}${key}`);
     } else {
-        value = chaynsWebStorage[key];
+        value = applicationStorage[key];
     }
 
     try {

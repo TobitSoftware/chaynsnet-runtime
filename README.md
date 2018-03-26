@@ -1,15 +1,17 @@
-[![license](https://img.shields.io/github/license/TobitSoftware/chayns-web-light.svg)](./LICENSE) [![GitHub pull requests](https://img.shields.io/github/issues-pr/TobitSoftware/chayns-web-light.svg)](../../pulls) [![](https://img.shields.io/github/issues-pr-closed-raw/TobitSoftware/chayns-web-light.svg)](../../pulls?q=is%3Apr+is%3Aclosed)
+[![license](https://img.shields.io/github/license/TobitSoftware/chaynsnet-runtime.svg)](./LICENSE)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/TobitSoftware/chaynsnet-runtime.svg)](../../pulls)
+[![](https://img.shields.io/github/issues-pr-closed-raw/TobitSoftware/chaynsnet-runtime.svg)](../../pulls?q=is%3Apr+is%3Aclosed)
 
-## ChaynsWebLight
-The ChaynsWebLight is an standalone runtime environment for chayns tapps.  
-It self has no User Interface, it displays only the tapp content.
+## chayns®net runtime 
+The chayns®net runtime is an standalone runtime environment for chayns tapps.
+It self has no user interface, it only displays the tapp content.
 
 Take a look at the repository wiki for more information.
 
 
 #### Installation
 1. Clone this repository
-2. Run <code>npm i</code>
+2. Run `npm i`
 
 > If you have no access to the internal tobit.software npm server you need to remove/replace the usage of the package `chayns-logger`.
 

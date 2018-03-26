@@ -25,7 +25,7 @@ function startup() {
     }
 
     logger.info({
-        message: 'ChaynsWebLight requested',
+        message: 'chayns®net runtime requested',
         locationId,
         customNumber: tappId,
     });
@@ -117,7 +117,7 @@ export async function init(tappId) {
     } catch (e) {
         consoleLogger.error(e);
         logger.error({
-            message: 'Init of ChaynsWebLight failed.',
+            message: 'Init of chayns®net runtime failed.',
             customNumeber: tappId,
             fileName: 'chayns-web.js',
             section: 'init',

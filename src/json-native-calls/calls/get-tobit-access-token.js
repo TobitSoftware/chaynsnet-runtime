@@ -20,7 +20,7 @@ export default function getTobitAccessToken() {
                 func: defer.resolve,
                 executeOnlyOnce: true,
             },
-            fallback: () => ({ tobitAccessToken: getItem(`chaynsWebLight_tobitAccessToken_${getUrlParameters().locationid}`) }),
+            fallback: () => ({ tobitAccessToken: getItem(`tobitAccessToken_${getUrlParameters().locationid}`) }),
         });
 
         return defer.promise;

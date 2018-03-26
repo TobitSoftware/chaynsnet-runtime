@@ -45,7 +45,7 @@ export function getTappById(tappId) {
 }
 
 /**
- * replaces url parameters with chayns env, removes double params, removes empty params, adds non system urlParameter from CWL
+ * replaces url parameters with chayns env, removes double params, removes empty params, adds non system urlParameter from cnrt
  * @param {string} url
  * @returns {string} url
  */

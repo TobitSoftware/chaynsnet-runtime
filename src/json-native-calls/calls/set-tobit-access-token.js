@@ -24,7 +24,7 @@ export default function setTobitAccessToken(tobitAccessToken) {
                 executeOnlyOnce: true,
             },
             fallback: () => {
-                setItem(`chaynsWebLight_tobitAccessToken_${getUrlParameters().locationid}`, tobitAccessToken);
+                setItem(`tobitAccessToken_${getUrlParameters().locationid}`, tobitAccessToken);
             },
         });
 

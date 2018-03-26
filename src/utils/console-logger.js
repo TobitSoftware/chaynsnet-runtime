@@ -30,7 +30,7 @@ function log(level, args, name) {
 export default class ConsoleLogger {
 
     constructor(name) {
-        this.name = `[${name || 'CWL'}]`;
+        this.name = `[${name || 'cnrt'}]`;
     }
 
     static LEVELS = LEVELS;

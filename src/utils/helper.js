@@ -18,7 +18,6 @@ export function outerHeight(el) {
 export function setCookie(cName, value, exdays) {
     const exdate = new Date();
     exdate.setDate(exdate.getDate() + exdays);
-    // noinspection JSDeprecatedSymbols
     const cValue = escape(value) + ((exdays === null) ? '' : `; expires=${exdate.toUTCString()}`);
     document.cookie = `${cName}=${cValue}`;
 }
@@ -33,7 +32,6 @@ export function getCookie(cCame) {
         y = ARRcookies[i].substr(ARRcookies[i].indexOf('=') + 1);
         x = x.replace(/^\s+|\s+$/g, '');
         if (x === cCame) {
-            // noinspection JSDeprecatedSymbols
             return unescape(y);
         }
     }
@@ -98,27 +96,6 @@ export function scrollTo(to, duration, callback) {
     };
 
     animateScroll();
-}
-
-export function ApplyUnsafeFunction(func, args, thisArg) {
-    if (typeof func !== 'function') {
-        return;
-    }
-
-    if (!(args instanceof Array)) {
-        thisArg = args;
-        args = undefined;
-    }
-
-    if (!thisArg) {
-        thisArg = window;
-    }
-
-    try {
-        func.apply(thisArg, args);
-    } catch (exception) {
-        window.ChaynsWeb.log(exception);
-    }
 }
 
 export function stringisEmptyOrWhitespace(value) {

@@ -7,7 +7,7 @@ const ROOT_PATH = path.resolve('./');
 
 export default {
     entry: {
-        chaynsweb: [
+        chaynsnetRuntime: [
             'babel-polyfill',
             path.resolve(ROOT_PATH, 'src/index')
         ]
