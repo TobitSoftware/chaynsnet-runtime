@@ -28,7 +28,6 @@ function log(level, args, name) {
 }
 
 export default class ConsoleLogger {
-
     constructor(name) {
         this.name = `[${name || 'cnrt'}]`;
     }

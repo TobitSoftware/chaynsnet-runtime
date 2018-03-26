@@ -30,7 +30,7 @@ export function setItem(key, value) {
 export function removeItem(key) {
     if (lsExists) {
         localStorage.removeItem(`${storagePrefix}${key}`);
-    } else if (applicationStorage.hasOwnProperty(key)) {
+    } else if (Object.prototype.hasOwnProperty.call(applicationStorage, key)) {
         delete applicationStorage[key];
     }
 }

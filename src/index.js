@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import logger from 'chayns-logger';
 import { chaynsInfo } from './chayns-info';
 import { getUrlParameters } from './utils/url-parameter';
@@ -23,11 +24,11 @@ logger.init({
         try {
             if (payload.customText) {
                 payload.data = {
-                    url: location.href,
+                    url: window.location.href,
                     ...payload.data
                 };
             } else {
-                payload.customText = location.href;
+                payload.customText = window.location.href;
             }
 
             if (chaynsInfo) {
@@ -64,7 +65,7 @@ logger.init({
 
 const logLevelParameter = parseInt(getUrlParameters().loglevel, 10);
 
-if (!isNaN(logLevelParameter)) {
+if (!Number.isNaN(logLevelParameter)) {
     ConsoleLogger.setLevel(logLevelParameter);
 } else if ('debug' in getUrlParameters()) {
     ConsoleLogger.setLevel(ConsoleLogger.LEVELS.DEBUG);

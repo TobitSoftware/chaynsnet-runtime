@@ -1,6 +1,6 @@
 import logger from 'chayns-logger';
 import loadTapp, { getTappById } from './tapp/custom-tapp';
-import { loadLocation, loadTapps } from './chayns-info';
+import { loadLocation, loadTapps, chaynsInfo } from './chayns-info';
 import { setDynamicStyle } from './ui/dynamic-style';
 import Navigation from './ui/navigation';
 import { validateTobitAccessToken, stringisEmptyOrWhitespace } from './utils/helper';
@@ -68,7 +68,7 @@ function startup() {
         });
 }
 
-export async function init(tappId) {
+async function init(tappId) {
     try {
         await loadTapps();
 
@@ -129,3 +129,5 @@ export async function init(tappId) {
 }
 
 document.addEventListener('DOMContentLoaded', () => startup(), false);
+
+export default init;

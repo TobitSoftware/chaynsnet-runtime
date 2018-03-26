@@ -2,7 +2,7 @@ import { chaynsInfo, updateUserData } from './chayns-info';
 import loadTapp from './tapp/custom-tapp';
 import { closeWindow, resizeWindow, setTobitAccessToken } from './json-native-calls/calls/index';
 import Navigation from './ui/navigation';
-import { init } from './chayns-web';
+import init from './chayns-web';
 import { getUrlParameters, remove } from './utils/url-parameter';
 import LOGIN_TAPP_ID from './constants/login-tapp-id';
 
