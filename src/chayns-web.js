@@ -4,7 +4,7 @@ import { loadLocation, loadTapps } from './chayns-info';
 import { setDynamicStyle } from './ui/dynamic-style';
 import Navigation from './ui/navigation';
 import { validateTobitAccessToken, stringisEmptyOrWhitespace } from './utils/helper';
-import { getUrlParameters } from './utils/url-parameter';
+import { getUrlParameters, set } from './utils/url-parameter';
 import { decodeTobitAccessToken } from './utils/convert';
 import { setTobitAccessToken, getTobitAccessToken } from './json-native-calls/calls/index';
 import { showLogin } from './login';
@@ -46,17 +46,15 @@ function startup() {
             Navigation.disableTappId(TAPPIDS.INTERCOM);
         }
     } else if (!locationId || !tappId) {
-        let url = `${location.href}${location.href.indexOf('?') === -1 ? '?' : '&'}`;
-
         if (!locationId) {
-            url += `${url.endsWith('&') || url.endsWith('?') ? '' : '&'}locationid=${DEFAULT_LOCATIONID}`;
+            set('locationId', DEFAULT_LOCATIONID);
+            locationId = DEFAULT_LOCATIONID;
         }
 
         if (!tappId) {
-            url += `${url.endsWith('&') || url.endsWith('?') ? '' : '&'}tappId=${DEFAULT_TAPPID}`;
+            set('tappId', DEFAULT_TAPPID);
+            tappId = DEFAULT_TAPPID;
         }
-        location.href = url;
-        return;
     }
 
     Navigation.init();
