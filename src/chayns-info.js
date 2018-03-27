@@ -145,17 +145,13 @@ const tappsCacheKeyUser = 'load-tapps_cache_user';
 
 export async function loadTapps(locationId) {
     try {
-        const userId = chaynsInfo.User.ID === 0 ? null : chaynsInfo.User.ID;
-        const cacheKey = userId ? tappsCacheKeyUser : tappsCacheKeyPublic;
+        const userId = chaynsInfo.User && chaynsInfo.User.ID === 0 ? null : chaynsInfo.User.ID;
+        const cacheKey = `${userId ? tappsCacheKeyUser : tappsCacheKeyPublic}_${chaynsInfo.LocationID}`;
         const cache = getItem(cacheKey);
 
-        let cacheTimestamp = '';
+        const validateCache = cache && cache.version === VERSION && (userId === null || (userId === cache.userId));
 
-        if (cache && cache.version === VERSION && (userId === null || (chaynsInfo.User && chaynsInfo.User.ID === cache.userId))) {
-            cacheTimestamp = `&timestamp=${cache.timestamp}`;
-        }
-
-        const request = await Request.get(`https://chaynssvc.tobit.com/v0.5/${chaynsInfo.LocationID}/Tapp?forWeb=true${cacheTimestamp}`);
+        const request = await Request.get(`https://chaynssvc.tobit.com/v0.5/${chaynsInfo.LocationID}/Tapp?forWeb=true${validateCache ? `&timestamp=${cache.timestamp}` : ''}`);
 
         if (request.status !== 200 && request.status !== 204) {
             consoleLoggerTapps.warn('Get locationTapps failed.', request.status);
