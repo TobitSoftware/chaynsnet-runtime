@@ -36,12 +36,9 @@ export async function setDynamicStyle() {
     try {
         const getColor = (percentage, opacity) => getRelativeColor(chaynsInfo.Color, percentage, opacity);
 
-        const chaynsCss = document.querySelector('link[href^="https://chayns-res.tobit.com/API/"]');
-        const chaynsCssColor = htmlToElement(`<link rel="stylesheet" href="${chaynsCss.href}?color=${getColor(100).substr(1, 6)}">`);
-        if (chaynsCss) {
-            document.head.insertBefore(chaynsCssColor, chaynsCss);
-            document.head.removeChild(chaynsCss);
-        }
+        const chaynsCss = htmlToElement(`<link rel="stylesheet" href="https://chayns-res.tobit.com/API/v3.1/css/chayns.min.css?color=${getColor(100).substr(1, 6)}">`);
+
+        document.head.appendChild(chaynsCss);
 
         const customBackgroundColor = getUrlParameters().backgroundcolor && !getUrlParameters().backgroundcolor.match(/[^0-9A-Fa-f]/g) && `#${getUrlParameters().backgroundcolor}`;
 
@@ -113,6 +110,11 @@ export async function setDynamicStyle() {
             selector: '.ChaynsCS-Color',
             styles: {
                 color: `${getColor(100)}!important`
+            }
+        }, {
+            selector: '.ChaynsCS-Color-80Pcnt',
+            styles: {
+                color: `${getColor(80)}!important`
             }
         }]);
     } catch (e) {
