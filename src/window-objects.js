@@ -6,7 +6,7 @@ import ConsoleLogger from './utils/console-logger';
 import { ENVIRONMENTS } from './constants/environments';
 import TAPPIDS from './constants/tapp-ids';
 
-window.cwl = {
+window.cnrt = {
     ConsoleLogger,
     changeEnv,
     ENV: ENVIRONMENTS,

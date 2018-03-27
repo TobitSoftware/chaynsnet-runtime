@@ -3,7 +3,7 @@ import htmlToElement from 'html-to-element';
 import { chaynsInfo, setSelectedTapp } from '../chayns-info';
 import FloatingButton from '../ui/floating-button';
 import WaitCursor from '../ui/wait-cursor';
-import { getUrlParameters } from '../utils/helper';
+import { getUrlParameters } from '../utils/url-parameter';
 import { parameterStringToObject } from '../utils/convert';
 import ConsoleLogger from '../utils/console-logger';
 
@@ -45,14 +45,14 @@ export function getTappById(tappId) {
 }
 
 /**
- * replaces url parameters with chayns env, removes double params, removes empty params, adds non system urlParameter from CWL
+ * replaces url parameters with chayns env, removes double params, removes empty params, adds non system urlParameter from cnrt
  * @param {string} url
  * @returns {string} url
  */
 function setUrlParams(url) {
     url = url.replace(/##apname##/ig, chaynsInfo.LocationName);
     url = url.replace(/##siteid##/ig, chaynsInfo.SiteID);
-    url = url.replace(/##os##/ig, 'webshadowlight');
+    url = url.replace(/##os##/ig, 'chaynsnet-runtime');
     url = url.replace(/##version##/ig, chaynsInfo.getGlobalData().AppInfo.Version);
     url = url.replace(/##colormode##/ig, chaynsInfo.ColorMode.toString());
     url = url.replace(/##color##/ig, chaynsInfo.Color.replace('#', ''));

@@ -1,5 +1,4 @@
 import { chaynsInfo } from '../chayns-info';
-import SYSTEM_URL_PARAMETERS from '../constants/system-url-parameter';
 import { decodeTobitAccessToken } from './convert';
 
 /**
@@ -18,22 +17,21 @@ export function outerHeight(el) {
 export function setCookie(cName, value, exdays) {
     const exdate = new Date();
     exdate.setDate(exdate.getDate() + exdays);
-    // noinspection JSDeprecatedSymbols
     const cValue = escape(value) + ((exdays === null) ? '' : `; expires=${exdate.toUTCString()}`);
     document.cookie = `${cName}=${cValue}`;
 }
 
 export function getCookie(cCame) {
-    let i,
-        x,
-        y,
-        ARRcookies = document.cookie.split(';');
+    let i;
+    let x;
+    let y;
+    const ARRcookies = document.cookie.split(';');
+
     for (i = 0; i < ARRcookies.length; i++) {
         x = ARRcookies[i].substr(0, ARRcookies[i].indexOf('='));
         y = ARRcookies[i].substr(ARRcookies[i].indexOf('=') + 1);
         x = x.replace(/^\s+|\s+$/g, '');
         if (x === cCame) {
-            // noinspection JSDeprecatedSymbols
             return unescape(y);
         }
     }
@@ -68,7 +66,7 @@ export function scrollTo(to, duration, callback) {
     const increment = 20;
     let currentTime = 0;
 
-    duration = (typeof(duration) === 'undefined') ? 500 : duration;
+    duration = (typeof duration === 'undefined') ? 500 : duration;
 
     const animateScroll = () => {
         currentTime += increment;
@@ -76,13 +74,13 @@ export function scrollTo(to, duration, callback) {
         const val = ((t, b, c, d) => {
             t /= d / 2;
             if (t < 1) {
-                return c / 2 * t * t + b
+                return c / 2 * t * t + b;
             }
             t--;
             return -c / 2 * (t * (t - 2) - 1) + b;
         })(currentTime, start, change, duration);
 
-        //TODO: add support for external easing functions
+        // TODO: add support for external easing functions
 
         document.documentElement.scrollTop = val;
         document.body.parentNode.scrollTop = val;
@@ -92,33 +90,12 @@ export function scrollTo(to, duration, callback) {
             (window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function (callback) {
                 window.setTimeout(callback, 1000 / 60);
             })(animateScroll);
-        } else if (callback && typeof(callback) === 'function') {
+        } else if (callback && typeof (callback) === 'function') {
             callback();
         }
     };
 
     animateScroll();
-}
-
-export function ApplyUnsafeFunction(func, args, thisArg) {
-    if (typeof func !== 'function') {
-        return;
-    }
-
-    if (!(args instanceof Array)) {
-        thisArg = args;
-        args = undefined;
-    }
-
-    if (!thisArg) {
-        thisArg = window;
-    }
-
-    try {
-        func.apply(thisArg, args);
-    } catch (exception) {
-        window.ChaynsWeb.log(exception);
-    }
 }
 
 export function stringisEmptyOrWhitespace(value) {
@@ -127,34 +104,7 @@ export function stringisEmptyOrWhitespace(value) {
 
 export function validateTobitAccessToken(tobitAccessToken) {
     const tokenData = decodeTobitAccessToken(tobitAccessToken);
-    return tokenData && new Date(tokenData.exp) > new Date() && (!chaynsInfo || tokenData.LocationID == chaynsInfo.LocationID);
-}
-
-let urlParameter = null;
-let urlParameterNoSystem = null;
-
-export function getUrlParameters(withSystemParameter = true) {
-    if (!urlParameter || !urlParameterNoSystem) {
-        urlParameterNoSystem = {};
-        urlParameter = {};
-
-        const urlParams = window.location.href.split('?').length > 1 ? window.location.href.split('?')[1].split('&') : false;
-
-        if (urlParams) {
-            for (let param of urlParams) {
-                param = param.split('=');
-                const key = param[0].toLowerCase();
-                const value = param[1];
-
-                urlParameter[key] = value;
-                if (SYSTEM_URL_PARAMETERS.indexOf(key) === -1) {
-                    urlParameterNoSystem[key] = value;
-                }
-            }
-        }
-    }
-
-    return withSystemParameter ? { ...urlParameter } : { ...urlParameterNoSystem };
+    return tokenData && new Date(tokenData.exp) > new Date() && (!chaynsInfo || tokenData.LocationID === chaynsInfo.LocationID);
 }
 
 /**

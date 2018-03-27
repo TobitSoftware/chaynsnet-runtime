@@ -1,18 +1,20 @@
 import logger from 'chayns-logger';
+import { getTobitAccessToken } from './json-native-calls/calls/index';
 import ConsoleLogger from './utils/console-logger';
 import { decodeTobitAccessToken } from './utils/convert';
-import { getUrlParameters } from './utils/helper';
-import { getTobitAccessToken } from './json-native-calls/calls/index';
+import { getUrlParameters } from './utils/url-parameter';
 import Request from './utils/request';
+import { getItem, setItem } from './utils/localStorage';
 
-import LOGIN_TAPP from './constants/login-tapp';
 import { DEFAULT_LOCATIONID } from './constants/defaults';
 import VERSION from './constants/version';
+import LOGIN_TAPP_ID from './constants/login-tapp-id';
 
 const consoleLoggerLocation = new ConsoleLogger('loadLocation(chayns-info.js)');
 const consoleLoggerTapps = new ConsoleLogger('loadTapps(chayns-info.js)');
 const consoleLoggerUserData = new ConsoleLogger('updateUserData(chayns-info.js)');
 
+// eslint-disable-next-line import/no-mutable-exports
 export let chaynsInfo;
 let globalData;
 
@@ -45,7 +47,8 @@ export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
             LocationName: locationSettings.locationName,
             IsMobile: false,
             ExclusiveMode: false,
-            IsFacebook: (document.referrer.indexOf('staticxx.facebook') > -1 || location.href.indexOf('fb=1') > -1),
+            IsFacebook: (document.referrer.indexOf('staticxx.facebook') > -1 || window.location.href.indexOf('fb=1') > -1),
+            loginTappUrl: locationSettings.loginDialogUrl,
             Tapps: [],
             LocationPersonID: locationSettings.locationPersonId,
             Domain: window.location.host,
@@ -61,8 +64,8 @@ export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
         globalData = {
             Device: {},
             AppInfo: {
-                Version: parseInt(VERSION) || 2,
-                domain: location.host,
+                Version: parseInt(VERSION, 10) || 2,
+                domain: window.location.host,
                 Tapps: [],
                 TappSelected: {},
                 FacebookAppID: locationSettings.facebookAppId,
@@ -137,20 +140,20 @@ export async function updateUserData() {
     }
 }
 
+const tappsCacheKeyPublic = 'load-tapps_cache_public';
+const tappsCacheKeyUser = 'load-tapps_cache_user';
+
 export async function loadTapps(locationId) {
     try {
-        const request = await Request.get(`https://chaynssvc.tobit.com/v0.5/${chaynsInfo.LocationID}/Tapp?forWeb=true`);
+        const userId = chaynsInfo.User && chaynsInfo.User.ID === 0 ? null : chaynsInfo.User.ID;
+        const cacheKey = `${userId ? tappsCacheKeyUser : tappsCacheKeyPublic}_${chaynsInfo.LocationID}`;
+        const cache = getItem(cacheKey);
 
-        if (request.status === 204) {
-            consoleLoggerTapps.warn('Location has no tapps');
-            logger.warning({
-                message: 'Location has no tapps. (CustomNumber:Status)',
-                locationId,
-                customNumber: request.status,
-                fileName: 'chaynsInfo.js',
-                section: 'loadTapps',
-            });
-        } else if (request.status !== 200) {
+        const validateCache = cache && cache.version === VERSION && (userId === null || (userId === cache.userId));
+
+        const request = await Request.get(`https://chaynssvc.tobit.com/v0.5/${chaynsInfo.LocationID}/Tapp?forWeb=true${validateCache ? `&timestamp=${cache.timestamp}` : ''}`);
+
+        if (request.status !== 200 && request.status !== 204) {
             consoleLoggerTapps.warn('Get locationTapps failed.', request.status);
             logger.error({
                 message: 'Get locationTapps failed. (CustomNumber:Status)',
@@ -161,24 +164,43 @@ export async function loadTapps(locationId) {
             });
         }
 
-        const jsonResponse = await request.json();
-        const data = jsonResponse.data || [];
+        if (request.status === 200) {
+            consoleLoggerTapps.debug('loaded tapps from chaynssvc | key: ', cacheKey);
 
-        const getTappList = list => list.reduce((tapps, entry) => {
-            // the type is a binary value, the bit for a tapp is 1
-            if ((entry.type & 1) === 1) {
-                tapps.push(entry);
-            } else {
-                tapps.push(...getTappList(entry.tapps));
-            }
-            return tapps;
-        }, []);
+            const jsonResponse = await request.json();
+            const data = jsonResponse.data || [];
 
-        const tapps = getTappList(data);
+            const getTappList = list => list.reduce((tapps, entry) => {
+                // the type is a binary value, the bit for a tapp is 1
+                // eslint-disable-next-line no-bitwise
+                if ((entry.type & 1) === 1) {
+                    tapps.push(entry);
+                } else {
+                    tapps.push(...getTappList(entry.tapps));
+                }
+                return tapps;
+            }, []);
 
-        tapps.push(LOGIN_TAPP);
+            const tapps = getTappList(data);
 
-        chaynsInfo.Tapps = tapps;
+            chaynsInfo.Tapps = tapps;
+            setItem(cacheKey, {
+                version: VERSION,
+                timestamp: jsonResponse.timestamp,
+                userId,
+                tapps,
+            });
+        } else {
+            consoleLoggerTapps.debug('apply tapps from cache | key: ', cacheKey);
+
+            chaynsInfo.Tapps = cache.tapps;
+        }
+
+        chaynsInfo.Tapps.push({
+            id: LOGIN_TAPP_ID,
+            url: chaynsInfo.loginTappUrl,
+        });
+
         globalData.AppInfo.Tapps = chaynsInfo.Tapps;
     } catch (e) {
         logger.error({
@@ -193,7 +215,10 @@ export async function loadTapps(locationId) {
         });
         consoleLoggerTapps.error('Load Tapps failed.', e);
 
-        chaynsInfo.Tapps = [LOGIN_TAPP];
+        chaynsInfo.Tapps = [{
+            id: LOGIN_TAPP_ID,
+            url: chaynsInfo.loginTappUrl,
+        }];
         globalData.AppInfo.Tapps = chaynsInfo.Tapps;
     }
 }

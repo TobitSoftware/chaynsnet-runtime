@@ -1,5 +1,5 @@
 import htmlToElement from 'html-to-element';
-import { getUrlParameters } from '../utils/helper';
+import { getUrlParameters } from '../utils/url-parameter';
 import loadTapp from '../tapp/custom-tapp';
 import NAVIGATION_ITEMS from '../constants/navigation-items';
 
@@ -48,7 +48,7 @@ function getNavigationElement() {
     NAVIGATION_ITEMS.forEach((item) => {
         if (!item.disabled) {
             const $navItem = htmlToElement(`<li class="navigation__element">
-                                           <span class="ChaynsIdIcon fa ${item.icon}"></span>
+                                           <i class="ChaynsCS-Color-80Pcnt icon ${item.icon}"></i>
                                        </li>`);
 
             $navItem.addEventListener('click', () => loadTapp(item.tappId));
