@@ -5,6 +5,7 @@ import ConsoleLogger from './utils/console-logger';
 
 import { ENVIRONMENTS } from './constants/environments';
 import TAPPIDS from './constants/tapp-ids';
+import VERSION from './constants/version';
 
 window.cnrt = {
     ConsoleLogger,
@@ -12,6 +13,7 @@ window.cnrt = {
     ENV: ENVIRONMENTS,
     loadTapp,
     TAPPIDS,
+    version: VERSION,
 };
 
 window.nativeCallCallback = callbackHandler;
