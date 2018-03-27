@@ -140,24 +140,20 @@ export async function updateUserData() {
     }
 }
 
-const tappsCacheKey = 'load-tapps_cache';
+const tappsCacheKeyPublic = 'load-tapps_cache_public';
+const tappsCacheKeyUser = 'load-tapps_cache_user';
 
 export async function loadTapps(locationId) {
     try {
-        const cache = getItem(tappsCacheKey);
+        const userId = chaynsInfo.User && chaynsInfo.User.ID === 0 ? null : chaynsInfo.User.ID;
+        const cacheKey = `${userId ? tappsCacheKeyUser : tappsCacheKeyPublic}_${chaynsInfo.LocationID}`;
+        const cache = getItem(cacheKey);
 
-        const request = await Request.get(`https://chaynssvc.tobit.com/v0.5/${chaynsInfo.LocationID}/Tapp?forWeb=true${cache && cache.version === VERSION ? `&timestamp=${cache.timestamp}` : ''}`);
+        const validateCache = cache && cache.version === VERSION && (userId === null || (userId === cache.userId));
 
-        if (request.status === 204 && !cache) {
-            consoleLoggerTapps.warn('Location has no tapps');
-            logger.warning({
-                message: 'Location has no tapps. (CustomNumber:Status)',
-                locationId,
-                customNumber: request.status,
-                fileName: 'chaynsInfo.js',
-                section: 'loadTapps',
-            });
-        } else if (request.status !== 200 && request.status !== 204) {
+        const request = await Request.get(`https://chaynssvc.tobit.com/v0.5/${chaynsInfo.LocationID}/Tapp?forWeb=true${validateCache ? `&timestamp=${cache.timestamp}` : ''}`);
+
+        if (request.status !== 200 && request.status !== 204) {
             consoleLoggerTapps.warn('Get locationTapps failed.', request.status);
             logger.error({
                 message: 'Get locationTapps failed. (CustomNumber:Status)',
@@ -168,11 +164,9 @@ export async function loadTapps(locationId) {
             });
         }
 
-        let tapps;
+        if (request.status === 200) {
+            consoleLoggerTapps.debug('loaded tapps from chaynssvc | key: ', cacheKey);
 
-        if (request.status === 204) {
-            tapps = cache.tapps;
-        } else {
             const jsonResponse = await request.json();
             const data = jsonResponse.data || [];
 
@@ -187,21 +181,26 @@ export async function loadTapps(locationId) {
                 return tapps;
             }, []);
 
-            tapps = getTappList(data);
+            const tapps = getTappList(data);
 
-            setItem(tappsCacheKey, {
+            chaynsInfo.Tapps = tapps;
+            setItem(cacheKey, {
                 version: VERSION,
                 timestamp: jsonResponse.timestamp,
+                userId,
                 tapps,
             });
+        } else {
+            consoleLoggerTapps.debug('apply tapps from cache | key: ', cacheKey);
+
+            chaynsInfo.Tapps = cache.tapps;
         }
 
-        tapps.push({
+        chaynsInfo.Tapps.push({
             id: LOGIN_TAPP_ID,
             url: chaynsInfo.loginTappUrl,
         });
 
-        chaynsInfo.Tapps = tapps;
         globalData.AppInfo.Tapps = chaynsInfo.Tapps;
     } catch (e) {
         logger.error({
