@@ -3,23 +3,23 @@ import TAPPIDS from './tapp-ids';
 const NAVIGATION_ITEMS = [
     {
         tappId: TAPPIDS.CHAYNS_ID,
-        icon: 'user'
+        icon: 'fa-user'
     },
     {
         tappId: TAPPIDS.INTERCOM,
-        icon: 'comments'
+        icon: 'fa-comments'
     },
     {
         tappId: TAPPIDS.TICKETS,
-        icon: 'ticket'
+        icon: 'fa-ticket'
     },
     {
         tappId: TAPPIDS.DOCUMENTS,
-        icon: 'file'
+        icon: 'fa-file'
     },
     {
         tappId: TAPPIDS.MONEY,
-        icon: 'eur'
+        icon: 'fa-eur'
     },
 ];
 
