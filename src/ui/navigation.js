@@ -48,7 +48,7 @@ function getNavigationElement() {
     NAVIGATION_ITEMS.forEach((item) => {
         if (!item.disabled) {
             const $navItem = htmlToElement(`<li class="navigation__element">
-                                           <i class="ChaynsCS-Color-80Pcnt icon ${item.icon}"></i>
+                                           <i class="ChaynsCS-Color-80Pcnt fa ${item.icon}"></i>
                                        </li>`);
 
             $navItem.addEventListener('click', () => loadTapp(item.tappId));
