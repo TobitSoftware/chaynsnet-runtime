@@ -42,8 +42,8 @@ export async function setDynamicStyle() {
         document.head.appendChild(chaynsCss);
         document.head.appendChild(fontAwesomeCss);
 
-        const customBackgroundColor = getUrlParameters().backgroundcolor && !getUrlParameters().backgroundcolor.match(/[^0-9A-Fa-f]/g) && `#${getUrlParameters().backgroundcolor}`;
-
+        const customBackgroundColor = getUrlParameters().backgroundcolor && getUrlParameters().backgroundcolor.match(/^[0-9A-Fa-f]{3,8}$/g) && `#${getUrlParameters().backgroundcolor}`;
+        
         // Body
         const colorModeBaseColors = {
             0: '#ffffff',
@@ -52,7 +52,7 @@ export async function setDynamicStyle() {
         addStyle([{
             selector: 'body',
             styles: {
-                'background-color': customBackgroundColor || chaynsInfo.ColorMode === 2 ? '#ffffff' : mixColors(chaynsInfo.Color, colorModeBaseColors[chaynsInfo.ColorMode], 7)
+                'background-color': customBackgroundColor || (chaynsInfo.ColorMode === 2 ? '#ffffff' : mixColors(chaynsInfo.Color, colorModeBaseColors[chaynsInfo.ColorMode], 7))
             }
         }, {
             selector: 'h1',
