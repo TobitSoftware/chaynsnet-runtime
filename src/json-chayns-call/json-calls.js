@@ -10,6 +10,7 @@ const jsonCalls = {
     18: jsonCallFunctions.getGlobalData,
     30: jsonCallFunctions.dateTimePicker,
     50: jsonCallFunctions.selectDialog,
+    52: jsonCallFunctions.setTobitAccessToken,
     54: jsonCallFunctions.tobitLogin,
     56: jsonCallFunctions.tobitLogout,
     72: jsonCallFunctions.showFloatingButton,
