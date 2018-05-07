@@ -52,7 +52,7 @@ export function getTappById(tappId) {
 function setUrlParams(url) {
     url = url.replace(/##apname##/ig, chaynsInfo.LocationName);
     url = url.replace(/##siteid##/ig, chaynsInfo.SiteID);
-    url = url.replace(/##os##/ig, 'webshadowlight'); // ToDo: replace with 'chaynsnet-runtime' after chayns-js cache problem is solved
+    url = url.replace(/##os##/ig, 'chaynsnet-runtime');
     url = url.replace(/##version##/ig, chaynsInfo.getGlobalData().AppInfo.Version);
     url = url.replace(/##colormode##/ig, chaynsInfo.ColorMode.toString());
     url = url.replace(/##color##/ig, chaynsInfo.Color.replace('#', ''));
