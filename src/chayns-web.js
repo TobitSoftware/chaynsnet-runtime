@@ -90,8 +90,20 @@ async function init(tappId) {
         if (!tapp) {
             consoleLogger.warn('No Tapp found!');
 
+            let lang = (navigator.language || navigator.userLanguage).substring(0, 2) || 'en';
+            if (!(lang.indexOf('de') > -1 || lang.indexOf('en') > -1)) {
+                lang = 'en';
+            }
+
+            let message;
+            if (lang === 'de') {
+                message = `Der Tapp "${tappId}" existiert auf der Location "${chaynsInfo.LocationID}" nicht oder Ihnen fehlen die benötigten Berechtigungen.`;
+            } else { // if lang === 'en'
+                message = `The Tapp "${tappId}" does not exist on the location "${chaynsInfo.LocationID}" or you don't have the right permissions to see it.`;
+            }
+
             Dialog.show(Dialog.type.ALERT, {
-                message: `The Tapp "${tappId}" does not exist on the location "${chaynsInfo.LocationID}" or you have not the right permissions to see it.`
+                message
             });
 
             logger.warning({
