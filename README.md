@@ -3,8 +3,8 @@
 [![](https://img.shields.io/github/issues-pr-closed-raw/TobitSoftware/chaynsnet-runtime.svg)](../../pulls?q=is%3Apr+is%3Aclosed)
 
 ## chayns®net runtime 
-The chayns®net runtime is an standalone runtime environment for chayns tapps.
-It self has no user interface, it only displays the tapp content.
+The chayns®net runtime is a standalone runtime environment for chayns tapps.
+The project itself has no user interface. It only displays the tapp content.
 
 Take a look at the repository wiki for more information.
 
