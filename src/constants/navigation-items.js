@@ -14,10 +14,6 @@ const NAVIGATION_ITEMS = [
         icon: 'fa-ticket'
     },
     {
-        tappId: TAPPIDS.DOCUMENTS,
-        icon: 'fa-file'
-    },
-    {
         tappId: TAPPIDS.MONEY,
         icon: 'fa-eur'
     },

@@ -1,7 +1,7 @@
 import logger from 'chayns-logger';
 import loadTapp, { getTappById } from './tapp/custom-tapp';
 import { loadLocation, loadTapps, chaynsInfo } from './chayns-info';
-import { setDynamicStyle } from './ui/dynamic-style';
+import setDynamicStyle from './ui/dynamic-style';
 import Navigation from './ui/navigation';
 import { validateTobitAccessToken, stringisEmptyOrWhitespace } from './utils/helper';
 import { getUrlParameters, set } from './utils/url-parameter';
