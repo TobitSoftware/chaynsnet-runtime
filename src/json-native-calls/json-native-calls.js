@@ -35,9 +35,16 @@ export default async function executeCall(config) {
     if (typeof window.external !== 'object' || typeof window.external.jsonCall !== 'function') {
         if (typeof fallback === 'function') {
             consoleLoggerExecute.debug('native-calls are not supported -> fallback.');
+
+            let fallbackRes = fallback(data);
+
+            if (fallbackRes instanceof Promise) {
+                fallbackRes = await fallbackRes;
+            }
+
             func({
                 parameter: parameter || {},
-                data: fallback(data) || {},
+                data: fallbackRes || {},
                 status: {
                     code: RESULT_STATUS.FALLBACK
                 }
