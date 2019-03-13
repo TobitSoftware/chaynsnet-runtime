@@ -1,6 +1,6 @@
 import logger from 'chayns-logger';
 import loadTapp, { getTappById } from './tapp/custom-tapp';
-import { loadLocation, loadTapps, chaynsInfo } from './chayns-info';
+import { loadLocation, loadTapps, chaynsInfo, updateUserData } from './chayns-info';
 import setDynamicStyle from './ui/dynamic-style';
 import Navigation from './ui/navigation';
 import { validateTobitAccessToken, stringisEmptyOrWhitespace } from './utils/helper';
@@ -64,6 +64,16 @@ function startup() {
             if (success) {
                 setDynamicStyle();
                 init(tappId);
+
+                setInterval(async () => {
+                    const token = chaynsInfo.User.TobitAccessToken;
+                    await updateUserData();
+
+                    const currentTappId = chaynsInfo.getGlobalData().AppInfo.TappSelected.Id;
+                    if (token !== chaynsInfo.User.TobitAccessToken && currentTappId !== LOGIN_TAPP_ID) {
+                        loadTapp(currentTappId); // ToDo: execute "AccessToken Status Change"(66) callback if one exists
+                    }
+                }, 12 * 60 * 60 * 1000);
             }
         });
 }
