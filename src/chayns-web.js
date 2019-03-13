@@ -72,8 +72,7 @@ async function init(tappId) {
     try {
         await loadTapps();
 
-        const getTobitAccessTokenRes = await getTobitAccessToken();
-        const { tobitAccessToken } = getTobitAccessTokenRes.data;
+        const tobitAccessToken = chaynsInfo.User.TobitAccessToken;
 
         const tapp = getTappById(tappId);
 
