@@ -44,10 +44,10 @@ async function getUserToken() {
 
     const renewTokenDecoded = decodeTobitAccessToken(renewToken);
     if (renewTokenDecoded.exp * 1000 <= Date.now()) {
-        consoleLogger.debug('renew token was expired');
+        consoleLogger.debug('renew token is expired');
         removeItem(renewTokenCacheKey);
         return null;
-    } else if (renewTokenDecoded.iat * 1000 > Date.now() + DAY_IN_MILLISECONDS) { // a renew token can first be extended after 24 hours
+    } else if (renewTokenDecoded.iat * 1000 < Date.now() - DAY_IN_MILLISECONDS) { // a renew token can first be extended after 24 hours
         renewToken = await extendRenewToken(renewToken);
 
         if (renewToken) {
