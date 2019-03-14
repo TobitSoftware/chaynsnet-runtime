@@ -1,3 +1,5 @@
+import logger from 'chayns-logger';
+
 export async function getUserTokenByRenewToken(renewToken) {
     const request = await fetch('https://auth.tobit.com/v2/token', {
         method: 'POST',
@@ -12,6 +14,20 @@ export async function getUserTokenByRenewToken(renewToken) {
 
         return body.token;
     }
+
+    if (request.status !== 401) {
+        logger.warning({
+            data: {
+                'X-Request-Id': request.headers.get('X-Request-Id')
+            },
+            ex: {
+                message: `getUserTokenByRenewToken failed with status code ${request.status}`
+            },
+            fileName: 'tobitAuth.js',
+            section: 'tobitAuth.getUserTokenByRenewToken',
+        });
+    }
+
     return null;
 }
 
@@ -29,18 +45,54 @@ export async function extendRenewToken(renewToken) {
 
         return body.token;
     }
+    if (request.status === 204) {
+        logger.warning({
+            data: {
+                'X-Request-Id': request.headers.get('X-Request-Id')
+            },
+            ex: {
+                message: 'extendRenewToken returned status code 204'
+            },
+            fileName: 'tobitAuth.js',
+            section: 'tobitAuth.extendRenewToken',
+        });
 
-    // ToDo: logging
+        return renewToken;
+    }
+
+    logger.warning({
+        data: {
+            'X-Request-Id': request.headers.get('X-Request-Id')
+        },
+        ex: {
+            message: `extendRenewToken failed with status code ${request.status}`
+        },
+        fileName: 'tobitAuth.js',
+        section: 'tobitAuth.extendRenewToken',
+    });
     return null;
 }
 
 export async function isTokenValid(userToken) {
     const request = await fetch('https://auth.tobit.com/v2/token/validate', {
-        method: 'GET',
+        method: 'HEAD',
         headers: {
             authorization: `bearer ${userToken}`
         }
     });
+
+    if (request.status !== 200 && request.status !== 401) {
+        logger.warning({
+            data: {
+                'X-Request-Id': request.headers.get('X-Request-Id')
+            },
+            ex: {
+                message: `getUserTokenByRenewToken failed with status code ${request.status}`
+            },
+            fileName: 'tobitAuth.js',
+            section: 'tobitAuth.getUserTokenByRenewToken',
+        });
+    }
 
     return request.status === 200;
 }
