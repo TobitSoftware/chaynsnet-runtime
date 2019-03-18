@@ -10,7 +10,7 @@ import { setTobitAccessToken } from './json-native-calls/calls/index';
 import { showLogin } from './login';
 import ConsoleLogger from './utils/console-logger';
 
-import {LOGIN_TAPP_ID} from './constants/login-tapp';
+import { LOGIN_TAPP_ID } from './constants/login-tapp';
 import { DEFAULT_LOCATIONID, DEFAULT_TAPPID } from './constants/defaults';
 import TAPPIDS from './constants/tapp-ids';
 import Dialog from './ui/dialog/dialog';
@@ -99,15 +99,12 @@ async function init(tappId) {
         if (!tapp) {
             consoleLogger.warn('No Tapp found!');
 
-            let lang = (navigator.language || navigator.userLanguage).substring(0, 2) || 'en';
-            if (!(lang.indexOf('de') > -1 || lang.indexOf('en') > -1)) {
-                lang = 'en';
-            }
+            const lang = (navigator.language || navigator.userLanguage).substring(0, 2) || 'en';
 
             let message;
             if (lang === 'de') {
                 message = `Der Tapp "${tappId}" existiert auf der Location "${chaynsInfo.LocationID}" nicht oder Ihnen fehlen die benötigten Berechtigungen.`;
-            } else { // if lang === 'en'
+            } else {
                 message = `The Tapp "${tappId}" does not exist on the location "${chaynsInfo.LocationID}" or you don't have the right permissions to see it.`;
             }
 
