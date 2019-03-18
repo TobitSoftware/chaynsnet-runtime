@@ -8,7 +8,7 @@ import { getItem, setItem } from './utils/localStorage';
 
 import { DEFAULT_LOCATIONID } from './constants/defaults';
 import VERSION from './constants/version';
-import LOGIN_TAPP_ID from './constants/login-tapp-id';
+import { LOGIN_TAPP_ID, LOGIN_TAPP_URL } from './constants/login-tapp';
 
 const consoleLoggerLocation = new ConsoleLogger('loadLocation(chayns-info.js)');
 const consoleLoggerTapps = new ConsoleLogger('loadTapps(chayns-info.js)');
@@ -48,7 +48,6 @@ export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
             IsMobile: false,
             ExclusiveMode: false,
             IsFacebook: (document.referrer.indexOf('staticxx.facebook') > -1 || window.location.href.indexOf('fb=1') > -1),
-            loginTappUrl: locationSettings.loginDialogUrl,
             Tapps: [],
             LocationPersonID: locationSettings.locationPersonId,
             Domain: window.location.host,
@@ -198,7 +197,7 @@ export async function loadTapps(locationId) {
 
         chaynsInfo.Tapps.push({
             id: LOGIN_TAPP_ID,
-            url: chaynsInfo.loginTappUrl,
+            url: LOGIN_TAPP_URL,
         });
 
         globalData.AppInfo.Tapps = chaynsInfo.Tapps;
@@ -217,7 +216,7 @@ export async function loadTapps(locationId) {
 
         chaynsInfo.Tapps = [{
             id: LOGIN_TAPP_ID,
-            url: chaynsInfo.loginTappUrl,
+            url: LOGIN_TAPP_URL,
         }];
         globalData.AppInfo.Tapps = chaynsInfo.Tapps;
     }
