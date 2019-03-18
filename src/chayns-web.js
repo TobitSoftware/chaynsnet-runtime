@@ -1,16 +1,16 @@
 import logger from 'chayns-logger';
 import loadTapp, { getTappById } from './tapp/custom-tapp';
-import { loadLocation, loadTapps, chaynsInfo } from './chayns-info';
+import { loadLocation, loadTapps, chaynsInfo, updateUserData } from './chayns-info';
 import setDynamicStyle from './ui/dynamic-style';
 import Navigation from './ui/navigation';
 import { validateTobitAccessToken, stringisEmptyOrWhitespace } from './utils/helper';
 import { getUrlParameters, set } from './utils/url-parameter';
 import { decodeTobitAccessToken } from './utils/convert';
-import { setTobitAccessToken, getTobitAccessToken } from './json-native-calls/calls/index';
+import { setTobitAccessToken } from './json-native-calls/calls/index';
 import { showLogin } from './login';
 import ConsoleLogger from './utils/console-logger';
 
-import LOGIN_TAPP_ID from './constants/login-tapp-id';
+import { LOGIN_TAPP_ID } from './constants/login-tapp';
 import { DEFAULT_LOCATIONID, DEFAULT_TAPPID } from './constants/defaults';
 import TAPPIDS from './constants/tapp-ids';
 import Dialog from './ui/dialog/dialog';
@@ -64,6 +64,16 @@ function startup() {
             if (success) {
                 setDynamicStyle();
                 init(tappId);
+
+                setInterval(async () => {
+                    const token = chaynsInfo.User.TobitAccessToken;
+                    await updateUserData();
+
+                    const currentTappId = chaynsInfo.getGlobalData().AppInfo.TappSelected.Id;
+                    if (token !== chaynsInfo.User.TobitAccessToken && currentTappId !== LOGIN_TAPP_ID) {
+                        loadTapp(currentTappId); // ToDo: execute "AccessToken Status Change"(66) callback if one exists
+                    }
+                }, 12 * 60 * 60 * 1000);
             }
         });
 }
@@ -72,8 +82,7 @@ async function init(tappId) {
     try {
         await loadTapps();
 
-        const getTobitAccessTokenRes = await getTobitAccessToken();
-        const { tobitAccessToken } = getTobitAccessTokenRes.data;
+        const tobitAccessToken = chaynsInfo.User.TobitAccessToken;
 
         const tapp = getTappById(tappId);
 
@@ -90,15 +99,12 @@ async function init(tappId) {
         if (!tapp) {
             consoleLogger.warn('No Tapp found!');
 
-            let lang = (navigator.language || navigator.userLanguage).substring(0, 2) || 'en';
-            if (!(lang.indexOf('de') > -1 || lang.indexOf('en') > -1)) {
-                lang = 'en';
-            }
+            const lang = (navigator.language || navigator.userLanguage).substring(0, 2) || 'en';
 
             let message;
             if (lang === 'de') {
                 message = `Der Tapp "${tappId}" existiert auf der Location "${chaynsInfo.LocationID}" nicht oder Ihnen fehlen die benötigten Berechtigungen.`;
-            } else { // if lang === 'en'
+            } else {
                 message = `The Tapp "${tappId}" does not exist on the location "${chaynsInfo.LocationID}" or you don't have the right permissions to see it.`;
             }
 

@@ -4,7 +4,7 @@ import { closeWindow, resizeWindow, setTobitAccessToken } from './json-native-ca
 import Navigation from './ui/navigation';
 import init from './chayns-web';
 import { getUrlParameters, remove } from './utils/url-parameter';
-import LOGIN_TAPP_ID from './constants/login-tapp-id';
+import { LOGIN_TAPP_ID } from './constants/login-tapp';
 
 let prevTappId = null;
 

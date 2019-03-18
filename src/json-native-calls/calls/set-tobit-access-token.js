@@ -1,7 +1,7 @@
 import executeCall from '../json-native-calls';
 import errorHandler from '../call-error-handler';
 import getDefer from '../../utils/defer';
-import { setItem } from '../../utils/localStorage';
+import { getItem, setItem } from '../../utils/localStorage';
 import { getUrlParameters } from '../../utils/url-parameter';
 import ConsoleLogger from '../../utils/console-logger';
 
@@ -24,7 +24,7 @@ export default function setTobitAccessToken(tobitAccessToken) {
                 executeOnlyOnce: true,
             },
             fallback: () => {
-                setItem(`tobitAccessToken_${getUrlParameters().locationid}`, tobitAccessToken);
+                setItem(`renewToken_${getUrlParameters().locationid}`, tobitAccessToken);
             },
         });
 
