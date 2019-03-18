@@ -6,11 +6,11 @@ import Navigation from './ui/navigation';
 import { validateTobitAccessToken, stringisEmptyOrWhitespace } from './utils/helper';
 import { getUrlParameters, set } from './utils/url-parameter';
 import { decodeTobitAccessToken } from './utils/convert';
-import { setTobitAccessToken, getTobitAccessToken } from './json-native-calls/calls/index';
+import { setTobitAccessToken } from './json-native-calls/calls/index';
 import { showLogin } from './login';
 import ConsoleLogger from './utils/console-logger';
 
-import LOGIN_TAPP_ID from './constants/login-tapp-id';
+import {LOGIN_TAPP_ID} from './constants/login-tapp';
 import { DEFAULT_LOCATIONID, DEFAULT_TAPPID } from './constants/defaults';
 import TAPPIDS from './constants/tapp-ids';
 import Dialog from './ui/dialog/dialog';
