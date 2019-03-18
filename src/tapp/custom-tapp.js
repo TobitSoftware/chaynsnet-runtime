@@ -1,6 +1,7 @@
 import logger from 'chayns-logger';
 import htmlToElement from 'html-to-element';
 import { chaynsInfo, setSelectedTapp } from '../chayns-info';
+import { resetCallback } from '../json-chayns-call/calls/access-token-status-change';
 import FloatingButton from '../ui/floating-button';
 import WaitCursor from '../ui/wait-cursor';
 import { getUrlParameters } from '../utils/url-parameter';
@@ -23,6 +24,7 @@ export default function loadTappById(tappId) {
     const tapp = getTappById(tappId);
     if (tapp) {
         setSelectedTapp(tapp);
+        resetCallback();
         loadTapp(tapp.id, setUrlParams(tapp.url));
     } else {
         logger.warning({

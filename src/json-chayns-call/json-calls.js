@@ -13,6 +13,7 @@ const jsonCalls = {
     52: jsonCallFunctions.setTobitAccessToken,
     54: jsonCallFunctions.tobitLogin,
     56: jsonCallFunctions.tobitLogout,
+    66: jsonCallFunctions.accessTokenStatusChange,
     72: jsonCallFunctions.showFloatingButton,
     73: jsonCallFunctions.setObjectForKey,
     74: jsonCallFunctions.getObjectForKey,

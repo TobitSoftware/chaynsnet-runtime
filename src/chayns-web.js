@@ -9,6 +9,7 @@ import { decodeTobitAccessToken } from './utils/convert';
 import { setTobitAccessToken } from './json-native-calls/calls/index';
 import { showLogin } from './login';
 import ConsoleLogger from './utils/console-logger';
+import { executeCallback, existCallback } from './json-chayns-call/calls/access-token-status-change';
 
 import { LOGIN_TAPP_ID } from './constants/login-tapp';
 import { DEFAULT_LOCATIONID, DEFAULT_TAPPID } from './constants/defaults';
@@ -71,7 +72,11 @@ function startup() {
 
                     const currentTappId = chaynsInfo.getGlobalData().AppInfo.TappSelected.Id;
                     if (token !== chaynsInfo.User.TobitAccessToken && currentTappId !== LOGIN_TAPP_ID) {
-                        loadTapp(currentTappId); // ToDo: execute "AccessToken Status Change"(66) callback if one exists
+                        if (existCallback()) {
+                            executeCallback();
+                        } else {
+                            loadTapp(currentTappId);
+                        }
                     }
                 }, 12 * 60 * 60 * 1000);
             }
