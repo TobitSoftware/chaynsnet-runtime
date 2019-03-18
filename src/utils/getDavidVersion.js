@@ -1,4 +1,4 @@
-const DAVID_VERSION_REGEX = /\((?<version>\d+),?\s(?<platform>[a-z]+)/gi;
+const DAVID_VERSION_REGEX = /\((\d+),?\s([a-z]+)/gi;
 
 export default function getDavidVersion() {
     const userAgent = window.navigator.userAgent.toLowerCase();
@@ -13,7 +13,7 @@ export default function getDavidVersion() {
         return null;
     }
 
-    const { version, platform } = match.groups;
+    const [, version, platform] = match;
 
     const isMac = platform === 'macos';
     const isWindows = platform === 'windows';
