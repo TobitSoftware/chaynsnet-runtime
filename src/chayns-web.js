@@ -1,4 +1,5 @@
 import logger from 'chayns-logger';
+import { setSessionUserToken } from './json-native-calls/calls/get-tobit-access-token';
 import loadTapp, { getTappById } from './tapp/custom-tapp';
 import { loadLocation, loadTapps, chaynsInfo, updateUserData } from './chayns-info';
 import setDynamicStyle from './ui/dynamic-style';
@@ -37,7 +38,7 @@ function startup() {
         const decodedToken = decodeTobitAccessToken(parameterAccessToken);
         locationId = decodedToken.LocationID;
 
-        setTobitAccessToken(parameterAccessToken);
+        setSessionUserToken(parameterAccessToken);
         logger.info({
             message: 'accessToken as URLParameter',
             personId: decodedToken.PersonID,

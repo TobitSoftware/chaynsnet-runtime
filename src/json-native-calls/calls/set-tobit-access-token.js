@@ -1,7 +1,7 @@
 import executeCall from '../json-native-calls';
 import errorHandler from '../call-error-handler';
 import getDefer from '../../utils/defer';
-import { getItem, setItem } from '../../utils/localStorage';
+import { setItem } from '../../utils/localStorage';
 import { getUrlParameters } from '../../utils/url-parameter';
 import ConsoleLogger from '../../utils/console-logger';
 
