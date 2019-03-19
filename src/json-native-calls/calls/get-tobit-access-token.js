@@ -13,6 +13,12 @@ const DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000;
 const renewTokenCacheKey = `renewToken_${getUrlParameters().locationid}`;
 const userTokenCacheKey = `tobitAccessToken_${getUrlParameters().locationid}`;
 
+let sessionUserToken = null;
+
+export function setSessionUserToken(userToken) {
+    sessionUserToken = userToken;
+}
+
 export default function getTobitAccessToken() {
     try {
         const defer = getDefer();
@@ -36,6 +42,10 @@ export default function getTobitAccessToken() {
 
 
 async function getUserToken() {
+    if (sessionUserToken) {
+        return sessionUserToken;
+    }
+
     let renewToken = getItem(renewTokenCacheKey);
     if (!renewToken) {
         consoleLogger.debug('no renew token in cache');
