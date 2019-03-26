@@ -8,7 +8,7 @@ import { getItem, setItem } from './utils/localStorage';
 
 import { DEFAULT_LOCATIONID } from './constants/defaults';
 import VERSION from './constants/version';
-import { LOGIN_TAPP_ID, LOGIN_TAPP_URL } from './constants/login-tapp';
+import { LOGIN_TAPP } from './constants/login-tapp';
 
 const consoleLoggerLocation = new ConsoleLogger('loadLocation(chayns-info.js)');
 const consoleLoggerTapps = new ConsoleLogger('loadTapps(chayns-info.js)');
@@ -195,10 +195,7 @@ export async function loadTapps(locationId) {
             chaynsInfo.Tapps = cache.tapps;
         }
 
-        chaynsInfo.Tapps.push({
-            id: LOGIN_TAPP_ID,
-            url: LOGIN_TAPP_URL,
-        });
+        chaynsInfo.Tapps.push(LOGIN_TAPP);
 
         globalData.AppInfo.Tapps = chaynsInfo.Tapps;
     } catch (e) {
@@ -214,10 +211,7 @@ export async function loadTapps(locationId) {
         });
         consoleLoggerTapps.error('Load Tapps failed.', e);
 
-        chaynsInfo.Tapps = [{
-            id: LOGIN_TAPP_ID,
-            url: LOGIN_TAPP_URL,
-        }];
+        chaynsInfo.Tapps.push(LOGIN_TAPP);
         globalData.AppInfo.Tapps = chaynsInfo.Tapps;
     }
 }
@@ -225,6 +219,7 @@ export async function loadTapps(locationId) {
 export function setSelectedTapp(tapp) {
     if (tapp && typeof tapp === 'object') {
         chaynsInfo.ExclusiveMode = tapp.exclusiveView || false;
+        chaynsInfo.fullSizeMode = tapp.fullSizeView || false;
         globalData.AppInfo.TappSelected = {
             Id: tapp.id,
             InternalName: tapp.internalName,

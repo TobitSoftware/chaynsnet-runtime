@@ -70,7 +70,7 @@ function setUrlParams(url) {
 
     const urlParam = Object.assign(getUrlParameters(false), parameterStringToObject(url));
 
-    const paramString = Object.keys(urlParam).map(key => `${key}=${urlParam[key]}`);
+    const paramString = Object.keys(urlParam).map(key => urlParam[key] !== undefined ? `${key}=${urlParam[key]}` : key);
     const timeStamp = url.match(/(?:_=)\b(\d*)/i);
 
     return `${url.split('?')[0]}?${paramString.join('&')}${(!timeStamp) ? `&_=${Date.now()}` : ''}`;
@@ -110,7 +110,7 @@ function loadTapp(tappId, tappUrl) {
         $iframe.setAttribute('style', 'margin-top: -10px !important;');
     }
 
-    if (chaynsInfo.ExclusiveMode) {
+    if (chaynsInfo.ExclusiveMode || chaynsInfo.fullSizeMode) {
         $bodyContent.classList.add('body-content--exclusive-view');
     } else {
         $bodyContent.classList.remove('body-content--exclusive-view');

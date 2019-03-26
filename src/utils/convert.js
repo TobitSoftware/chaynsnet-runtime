@@ -194,8 +194,9 @@ export function parameterStringToObject(parameterString) {
 
     for (const param of parameterString.split('&')) {
         const parsed = param.split('=');
-        if (parsed.length > 1 && parsed[1].length > 0) {
-            result[parsed[0]] = parsed[1];
+        if (parsed.length > 0) {
+            const [key, value] = parsed;
+            result[key] = value;
         }
     }
 
