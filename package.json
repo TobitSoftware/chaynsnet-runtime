@@ -8,7 +8,8 @@
     "build": "npm run check:chayns-logger && webpack -p --config ./webpack/prod.babel.js",
     "build:staging": "npm run check:chayns-logger && webpack -p --config ./webpack/staging.babel.js",
     "check:chayns-logger": "node check-chayns-logger",
-    "prepublish": "npm run check:chayns-logger"
+    "prepublish": "npm run check:chayns-logger",
+    "eslint": "eslint ./src"
   },
   "keywords": [
     "chaynsnet",

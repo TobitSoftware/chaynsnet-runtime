@@ -2,11 +2,13 @@ import Dialog from '../../../ui/dialog/dialog';
 
 export default function showInputDialog(req, res) {
     if (!req.value || req.value.dialog === undefined) {
-        return res.event(2, 'Field dialog missing.');
+        res.event(2, 'Field dialog missing.');
+        return;
     }
 
     if ((req.value.dialog.buttons || []).length === 0) {
-        return res.event(2, 'Field dialog.buttons missing.');
+        res.event(2, 'Field dialog.buttons missing.');
+        return;
     }
 
     Dialog.show(Dialog.type.INPUT, req.value.dialog)

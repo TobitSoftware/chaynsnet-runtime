@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { scrollTo } from '../../utils/helper';
 
 export default function scrollToPosition(req, res) {

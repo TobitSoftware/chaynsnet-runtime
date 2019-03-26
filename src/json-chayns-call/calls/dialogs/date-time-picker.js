@@ -3,7 +3,7 @@ import { compareDate } from '../../../utils/helper';
 import DATE_TYPE from '../../../constants/date-type';
 
 export default function dateTimePicker(req, res) {
-    const value = req.value;
+    const { value } = req;
 
     if (!value.dialog) {
         value.dialog = {};

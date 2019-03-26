@@ -1,13 +1,12 @@
 import htmlToElement from 'html-to-element';
-import {dateToString} from '../../../utils/convert';
-import {_} from '../../../utils/helper';
+import { dateToString } from '../../../utils/convert';
+import { _ } from '../../../utils/helper';
 
 import DayPicker from './day-picker/day-picker';
 import MonthPicker from './month-picker/month-picker';
 
 
 export default class DatePicker {
-
     $datePicker = null;
 
     $header = null;
@@ -49,7 +48,7 @@ export default class DatePicker {
                 this.callback(date);
             }
             this.updateHeader();
-        }, (year) => { //MonthSelectionCB
+        }, (year) => { // MonthSelectionCB
             this.monthPicker.selectedDate = this.selectedDate;
             this.monthPicker.showYear(year);
 

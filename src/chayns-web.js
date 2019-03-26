@@ -7,7 +7,6 @@ import Navigation from './ui/navigation';
 import { validateTobitAccessToken, stringisEmptyOrWhitespace } from './utils/helper';
 import { getUrlParameters, set } from './utils/url-parameter';
 import { decodeTobitAccessToken } from './utils/convert';
-import { setTobitAccessToken } from './json-native-calls/calls/index';
 import { showLogin } from './login';
 import ConsoleLogger from './utils/console-logger';
 import { executeCallback, existCallback } from './json-chayns-call/calls/access-token-status-change';

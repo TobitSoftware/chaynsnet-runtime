@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import WaitCursor from '../../ui/wait-cursor';
 
 export default function toggleWaitCursor(req, res) {
