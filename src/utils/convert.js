@@ -16,7 +16,7 @@ export function argbHexToRgba(hex) {
                 r: parseInt(result[2], 16),
                 g: parseInt(result[3], 16),
                 b: parseInt(result[4], 16),
-                a: Math.round(parseInt(result[1], 16) / 255 * 100) / 100
+                a: Math.round((parseInt(result[1], 16) / 255) * 100) / 100
             } : null;
         }
         result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -118,9 +118,9 @@ export function getRelativeColor(baseColor, percentage, opacity) {
     let color = baseColor.substr(1);
     const l = color.length;
 
-    let r,
-        g,
-        b;
+    let r;
+    let g;
+    let b;
     if (l === 3) {
         r = color.substring(0, 1);
         g = color.substring(1, 2);
@@ -154,11 +154,11 @@ export function mixColors(color1, color2, weight = 50, opacity) {
     let color = '#';
 
     for (let i = 1; i <= 5; i += 2) {
-        let v1 = h2d(color1.substr(i, 2));
-        let v2 = h2d(color2.substr(i, 2));
+        const v1 = h2d(color1.substr(i, 2));
+        const v2 = h2d(color2.substr(i, 2));
 
         // combine the current pairs from each source color, according to the specified weight
-        let val = d2h(Math.round(v2 + (v1 - v2) * (weight / 100.0)));
+        let val = d2h(Math.round(v2 + ((v1 - v2) * (weight / 100.0))));
 
         if (val.length < 2) {
             val = `0${val}`;
@@ -189,7 +189,7 @@ export function parameterStringToObject(parameterString) {
     const result = {};
 
     if (parameterString.indexOf('?') > -1) {
-        parameterString = parameterString.split('?')[1];
+        ([, parameterString] = parameterString.split('?'));
     }
 
     for (const param of parameterString.split('&')) {

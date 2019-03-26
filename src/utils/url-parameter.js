@@ -10,6 +10,7 @@ const getUrlParameterCache = {
 
 export function getUrlParameters(withSystemParameter = true) {
     if (getUrlParameterCache.href !== window.location.href) {
+        getUrlParameterCache.href = window.location.href;
         getUrlParameterCache.urlParameterNoSystem = {};
         getUrlParameterCache.urlParameter = {};
 

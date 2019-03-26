@@ -1,5 +1,7 @@
-import Dialog from '../../../ui/dialog/dialog';
+/* eslint-disable no-unused-vars */
 
 export default function closeDialog(req, res) {
-    Dialog.hide();
+    import(/* webpackChunkName: "dialog" */ '../../../ui/dialog/dialog').then(({ default: Dialog }) => {
+        Dialog.hide();
+    });
 }

@@ -7,7 +7,6 @@ import Navigation from './ui/navigation';
 import { validateTobitAccessToken, stringisEmptyOrWhitespace } from './utils/helper';
 import { getUrlParameters, set } from './utils/url-parameter';
 import { decodeTobitAccessToken } from './utils/convert';
-import { setTobitAccessToken } from './json-native-calls/calls/index';
 import { showLogin } from './login';
 import ConsoleLogger from './utils/console-logger';
 import { executeCallback, existCallback } from './json-chayns-call/calls/access-token-status-change';
@@ -15,7 +14,6 @@ import { executeCallback, existCallback } from './json-chayns-call/calls/access-
 import { LOGIN_TAPP_ID } from './constants/login-tapp';
 import { DEFAULT_LOCATIONID, DEFAULT_TAPPID } from './constants/defaults';
 import TAPPIDS from './constants/tapp-ids';
-import Dialog from './ui/dialog/dialog';
 
 const consoleLogger = new ConsoleLogger('(chayns-web.js)');
 
@@ -114,8 +112,10 @@ async function init(tappId) {
                 message = `The Tapp "${tappId}" does not exist on the location "${chaynsInfo.LocationID}" or you don't have the right permissions to see it.`;
             }
 
-            Dialog.show(Dialog.type.ALERT, {
-                message
+            import(/* webpackChunkName: "dialog" */ './ui/dialog/dialog').then(({ default: Dialog }) => {
+                Dialog.show(Dialog.type.ALERT, {
+                    message
+                });
             });
 
             logger.warning({

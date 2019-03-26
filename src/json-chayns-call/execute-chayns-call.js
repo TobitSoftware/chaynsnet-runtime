@@ -12,15 +12,13 @@ export default (param, srcIframe) => {
     if (typeof (param) === 'string') {
         try {
             const temp = JSON.parse(param);
-            value = temp.value;
-            action = temp.action;
+            ({ value, action } = temp);
         } catch (e) {
             throwEvent(window.NaN, 4, 'Error parsing JSON', param, srcIframe);
             return;
         }
     } else if (typeof (param) === 'object' && param.action !== undefined) {
-        value = param.value;
-        action = param.action;
+        ({ value, action } = param);
     } else {
         throwEvent(window.NaN, 2, 'Field action missing', param, srcIframe);
         return;
@@ -40,11 +38,11 @@ export default (param, srcIframe) => {
             action,
             srcIframe,
             value: value || {},
-            addJsonCallEventListener: (action) => addJsonCallEventListener(action, value, srcIframe)
+            addJsonCallEventListener: action => addJsonCallEventListener(action, value, srcIframe)
         };
         const res = {
             event: (code, message) => throwEvent(action, code, message, value, srcIframe),
-            answer: (response) => answerJsonCall(value, response, srcIframe)
+            answer: response => answerJsonCall(value, response, srcIframe)
         };
 
         jsonCalls[action](req, res);
@@ -59,4 +57,4 @@ export default (param, srcIframe) => {
             section: 'executeChaynsCall',
         });
     }
-}
+};

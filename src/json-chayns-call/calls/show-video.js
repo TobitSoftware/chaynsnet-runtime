@@ -9,6 +9,6 @@ export default function showPictures(req, res) {
     }
 
     if (!VideoWrapper.show(url)) {
-        res.event(2, 'Unsupported video type.')
+        res.event(2, 'Unsupported video type.');
     }
 }

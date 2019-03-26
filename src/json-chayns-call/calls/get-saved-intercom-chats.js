@@ -2,7 +2,8 @@ import { getSavedIntercomChats as getSavedIntercomChatsCall } from '../../json-n
 
 export default function getSavedIntercomChats(req, res) {
     if (!req.value || !req.value.itemId) {
-        return res.event(2, 'Field itemId missing.');
+        res.event(2, 'Field itemId missing.');
+        return;
     }
 
     getSavedIntercomChatsCall(req.value.itemId).then((retVal) => {

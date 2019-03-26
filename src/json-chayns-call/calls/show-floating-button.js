@@ -2,7 +2,7 @@ import FloatingButton from '../../ui/floating-button';
 import { argbHexToRgba } from '../../utils/convert';
 
 export default function showFloatingButton(req, res) {
-    const value = req.value;
+    const { value } = req;
 
     if (value.enabled) {
         let bgColor = argbHexToRgba(value.color);

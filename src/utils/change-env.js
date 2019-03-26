@@ -24,6 +24,6 @@ export default function (env) {
 }
 
 function reloadWithUrl(url) {
-    const urlParameter = location.href.substring(location.href.indexOf('?') + 1);
-    location.href = `${url}?${urlParameter}`;
+    const urlParameter = window.location.href.substring(window.location.href.indexOf('?') + 1);
+    window.location.href = `${url}?${urlParameter}`;
 }

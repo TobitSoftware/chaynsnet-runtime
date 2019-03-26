@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 let defaultTitle = null;
 
 export default function setWebsiteTitle(req, res) {
-    if(defaultTitle === null){
+    if (defaultTitle === null) {
         defaultTitle = document.title;
     }
 

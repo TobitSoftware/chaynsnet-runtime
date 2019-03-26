@@ -10,7 +10,7 @@ export function outerHeight(el) {
     let height = el.offsetHeight;
     const style = getComputedStyle(el);
 
-    height += parseInt(style.marginTop) + parseInt(style.marginBottom);
+    height += parseInt(style.marginTop, 10) + parseInt(style.marginBottom, 10);
     return height;
 }
 
@@ -27,7 +27,7 @@ export function getCookie(cCame) {
     let y;
     const ARRcookies = document.cookie.split(';');
 
-    for (i = 0; i < ARRcookies.length; i++) {
+    for (i = 0; i < ARRcookies.length; i += 1) {
         x = ARRcookies[i].substr(0, ARRcookies[i].indexOf('='));
         y = ARRcookies[i].substr(ARRcookies[i].indexOf('=') + 1);
         x = x.replace(/^\s+|\s+$/g, '');

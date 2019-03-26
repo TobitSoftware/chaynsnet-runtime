@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import htmlToElement from 'html-to-element';
 import { argbHexToRgba } from '../../utils/convert';
 import Fade from '../../utils/fade';
@@ -8,21 +9,20 @@ import DatePicker from './date-picker/date-picker';
 import InputDialog from './input-dialog/input-dialog';
 import SelectDialog from './select-dialog/select-dialog';
 
-let dialogs = {
-        alert,
-        select,
-        date,
-        time,
-        dateTime,
-        input
-    },
-    $currentDialog = null,
-    currentType = null,
-    currentInstances = null,
-    promise = null;
+const dialogs = {
+    alert,
+    select,
+    date,
+    time,
+    dateTime,
+    input
+};
+let $currentDialog = null;
+let currentType = null;
+let currentInstances = null;
+let promise = null;
 
 export default class Dialog {
-
     /**
      * Displays an Dialog.
      * @param {number} type - Dialog.buttonType.*
@@ -58,7 +58,7 @@ export default class Dialog {
 
         return Fade.out($currentDialog).then(() => {
             if (!$currentDialog) {
-                return Promise.resolve();
+                return;
             }
 
             document.body.removeChild($currentDialog);
@@ -220,7 +220,7 @@ function getResultObj(buttonType) {
         buttonType
     };
 
-    if (buttonType != Dialog.buttonType.CANCEL) {
+    if (buttonType !== Dialog.buttonType.CANCEL) {
         switch (currentType) {
             case 'alert':
                 break;
@@ -296,11 +296,11 @@ function getButtonWrapper(buttons) {
 
         if (button.icon) {
             const rgba = argbHexToRgba(button.icon.color) || {
-                    r: 255,
-                    g: 255,
-                    b: 255,
-                    a: 1
-                };
+                r: 255,
+                g: 255,
+                b: 255,
+                a: 1
+            };
 
             icon = `<span style="font-size:${button.icon.size}px;
                                  color: rgba(${rgba.r},${rgba.g},${rgba.b},${rgba.a});"
@@ -355,7 +355,7 @@ function getDialog(headline, description, quickFind, $content, $buttonWrapper, l
     if ($content) {
         const $wrapper = htmlToElement('<div class="dialog__content"></div>');
 
-        if ($content.length != undefined) {
+        if ($content.length !== undefined) {
             for (const $element of $content) {
                 $wrapper.appendChild($element);
             }

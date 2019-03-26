@@ -1,7 +1,6 @@
 import htmlToElement from 'html-to-element';
 
 export default class InputDialog {
-
     $input = null;
     placeholder = null;
 
