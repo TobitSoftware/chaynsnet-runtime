@@ -1,5 +1,3 @@
-import Dialog from '../../../ui/dialog/dialog';
-
 export default function showInputDialog(req, res) {
     if (!req.value || req.value.dialog === undefined) {
         res.event(2, 'Field dialog missing.');
@@ -11,6 +9,9 @@ export default function showInputDialog(req, res) {
         return;
     }
 
-    Dialog.show(Dialog.type.INPUT, req.value.dialog)
-        .then(retVal => res.answer(retVal));
+
+    import(/* webpackChunkName: "dialog" */ '../../../ui/dialog/dialog').then(({ default: Dialog }) => {
+        Dialog.show(Dialog.type.INPUT, req.value.dialog)
+            .then(retVal => res.answer(retVal));
+    });
 }

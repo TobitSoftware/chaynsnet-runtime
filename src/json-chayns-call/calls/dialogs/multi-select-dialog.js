@@ -1,5 +1,3 @@
-import Dialog from '../../../ui/dialog/dialog';
-
 export default function multiSelectDialog(req, res) {
     if (!req.value || req.value.dialog === undefined) {
         res.event(2, 'Field dialog missing.');
@@ -18,6 +16,9 @@ export default function multiSelectDialog(req, res) {
 
     req.value.dialog.list = req.value.list;
 
-    Dialog.show(Dialog.type.SELECT, req.value.dialog)
-        .then(retVal => res.answer(retVal));
+
+    import(/* webpackChunkName: "dialog" */ '../../../ui/dialog/dialog').then(({ default: Dialog }) => {
+        Dialog.show(Dialog.type.SELECT, req.value.dialog)
+            .then(retVal => res.answer(retVal));
+    });
 }
