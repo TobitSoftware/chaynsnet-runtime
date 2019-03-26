@@ -3,7 +3,6 @@ import { getTobitAccessToken } from './json-native-calls/calls/index';
 import ConsoleLogger from './utils/console-logger';
 import { decodeTobitAccessToken } from './utils/convert';
 import { getUrlParameters } from './utils/url-parameter';
-import Request from './utils/request';
 import { getItem, setItem } from './utils/localStorage';
 
 import { DEFAULT_LOCATIONID } from './constants/defaults';
@@ -20,7 +19,12 @@ let globalData;
 
 export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
     try {
-        const locationSettingsRequest = await Request.get(`https://chaynssvc.tobit.com/v0.5/${locationId}/LocationSettings`);
+        const locationSettingsRequest = await fetch(`https://chaynssvc.tobit.com/v0.5/${locationId}/LocationSettings?ts=${Date.now()}`, {
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            }
+        });
 
         if (locationSettingsRequest.status === 204) {
             consoleLoggerLocation.warn('no location found');
@@ -150,7 +154,18 @@ export async function loadTapps(locationId) {
 
         const validateCache = cache && cache.version === VERSION && (userId === null || (userId === cache.userId));
 
-        const request = await Request.get(`https://chaynssvc.tobit.com/v0.5/${chaynsInfo.LocationID}/Tapp?forWeb=true${validateCache ? `&timestamp=${cache.timestamp}` : ''}`);
+        const headers = {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        };
+
+        if (chaynsInfo.User.TobitAccessToken) {
+            headers.Authorization = `Bearer ${chaynsInfo.User.TobitAccessToken}`;
+        }
+
+        const request = await fetch(`https://chaynssvc.tobit.com/v0.5/${chaynsInfo.LocationID}/Tapp?forWeb=true${validateCache ? `&timestamp=${cache.timestamp}` : ''}&ts=${Date.now()}`, {
+            headers
+        });
 
         if (request.status !== 200 && request.status !== 204) {
             consoleLoggerTapps.warn('Get locationTapps failed.', request.status);
