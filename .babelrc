@@ -1,15 +1,26 @@
 {
   "presets": [
     [
-      "latest",
+      "@babel/preset-env",
       {
+        "targets": {
+          "browsers": [
+            ">1%",
+            "last 4 versions",
+            "Firefox ESR",
+            "not ie < 10"
+          ]
+        },
         "modules": false
       }
-    ],
-    "stage-0"
+    ]
   ],
   "plugins": [
-    "transform-flow-strip-types",
-    "transform-runtime"
+    "@babel/plugin-syntax-dynamic-import",
+    "@babel/plugin-transform-runtime",
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-proposal-object-rest-spread",
+    "babel-plugin-transform-flow-strip-types",
+    "@babel/plugin-proposal-export-default-from"
   ]
 }
