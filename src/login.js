@@ -4,12 +4,13 @@ import { closeWindow, resizeWindow, setTobitAccessToken } from './json-native-ca
 import Navigation from './ui/navigation';
 import init from './chayns-web';
 import { getUrlParameters, remove } from './utils/url-parameter';
-import { LOGIN_TAPP_ID } from './constants/login-tapp';
+import { LOGIN_TAPP_ID, LOGIN_TAPP } from './constants/login-tapp';
 
 let prevTappId = null;
 
 export function showLogin() {
-    resizeWindow(566, 766);
+    const { windowSize: { x, y } } = LOGIN_TAPP;
+    resizeWindow(x, y);
     Navigation.hide();
 
     const currentTappId = chaynsInfo.getGlobalData().AppInfo.TappSelected.Id;
