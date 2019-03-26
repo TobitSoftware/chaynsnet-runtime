@@ -225,6 +225,7 @@ export async function loadTapps(locationId) {
 export function setSelectedTapp(tapp) {
     if (tapp && typeof tapp === 'object') {
         chaynsInfo.ExclusiveMode = tapp.exclusiveView || false;
+        chaynsInfo.fullSizeMode = tapp.fullSizeView || false;
         globalData.AppInfo.TappSelected = {
             Id: tapp.id,
             InternalName: tapp.internalName,

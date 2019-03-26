@@ -1,3 +1,4 @@
+import { chaynsInfo } from '../../chayns-info';
 import { getWindowMetrics } from '../../utils/helper';
 
 export default function setIframeHeigth(req, res) {
@@ -7,7 +8,7 @@ export default function setIframeHeigth(req, res) {
     if (!value.full && !('height' in value) && !('fullViewport' in value)) {
         res.event(2, 'Field height missing.');
         return;
-    } else if (value.full || value.fullViewport) {
+    } else if (value.full || value.fullViewport || chaynsInfo.fullSizeMode) {
         value.height = getWindowMetrics().AvailHeight;
         document.body.classList.add('no-scroll');
     } else {

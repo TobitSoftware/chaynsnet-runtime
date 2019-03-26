@@ -110,7 +110,7 @@ function loadTapp(tappId, tappUrl) {
         $iframe.setAttribute('style', 'margin-top: -10px !important;');
     }
 
-    if (chaynsInfo.ExclusiveMode) {
+    if (chaynsInfo.ExclusiveMode || chaynsInfo.fullSizeMode) {
         $bodyContent.classList.add('body-content--exclusive-view');
     } else {
         $bodyContent.classList.remove('body-content--exclusive-view');
