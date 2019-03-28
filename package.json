@@ -59,10 +59,7 @@
     "webpack-merge": "^4.1.2"
   },
   "dependencies": {
-    "classlist-polyfill": "^1.2.0",
     "classnames": "^2.2.6",
-    "custom-event-polyfill": "^1.0.6",
-    "es6-promise": "^4.2.6",
     "html-to-element": "^1.0.0",
     "lodash.throttle": "^4.1.1",
     "uuid": "^3.3.2",
