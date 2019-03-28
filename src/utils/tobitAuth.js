@@ -96,3 +96,30 @@ export async function isTokenValid(userToken) {
 
     return request.status === 200;
 }
+
+export async function invalidateToken(token) {
+    const request = await fetch('https://auth.tobit.com/v2/invalidtoken', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            token,
+        })
+    });
+
+    if (request.status !== 200 && request.status !== 401) {
+        logger.warning({
+            data: {
+                'X-Request-Id': request.headers.get('X-Request-Id')
+            },
+            ex: {
+                message: `invalidateToken failed with status code ${request.status}`
+            },
+            fileName: 'tobitAuth.js',
+            section: 'tobitAuth.getUserTokenByRenewToken',
+        });
+    }
+
+    return null;
+}
