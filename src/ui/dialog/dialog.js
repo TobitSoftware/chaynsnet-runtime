@@ -9,6 +9,8 @@ import DatePicker from './date-picker/date-picker';
 import InputDialog from './input-dialog/input-dialog';
 import SelectDialog from './select-dialog/select-dialog';
 
+import '../../style/objects/dialog/index.scss';
+
 const dialogs = {
     alert,
     select,
