@@ -56,7 +56,7 @@ export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
             LocationPersonID: locationSettings.locationPersonId,
             Domain: window.location.host,
             ColorMode: getUrlParameters().colormode || locationSettings.design.colorMode,
-            Color: getUrlParameters().color || locationSettings.design.color,
+            Color: getUrlParameters().color ? `#${getUrlParameters().color.replace('#', '')}` : locationSettings.design.color,
             Webshadow: {
                 MenuPosition: 0
             },

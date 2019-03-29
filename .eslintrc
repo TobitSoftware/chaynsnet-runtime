@@ -13,7 +13,14 @@
     "comma-dangle": "off",
     "max-len": "off",
     "no-use-before-define": "off",
-    "import/no-extraneous-dependencies": "off"
+    "import/no-extraneous-dependencies": "off",
+    "lines-between-class-members": [
+      "error",
+      "always",
+      {
+        "exceptAfterSingleLine": true
+      }
+    ]
   },
   "extends": "airbnb-base"
 }

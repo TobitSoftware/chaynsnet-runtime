@@ -3,7 +3,6 @@ import logger from 'chayns-logger';
 import { chaynsInfo } from './chayns-info';
 import { getUrlParameters } from './utils/url-parameter';
 import ConsoleLogger from './utils/console-logger';
-import './polyfill/index';
 import './tapp/custom-tapp-communication';
 import './chayns-web';
 import './constants/system-url-parameter';

@@ -105,17 +105,14 @@ export function getRelativeColor(baseColor, percentage, opacity) {
 
     if (percentage < 0 || percentage === undefined) {
         // noinspection Eslint
-        throw {
-            name: 'OutOfRangeException',
-            message: 'Percentage has at least to be 0'
-        };
+        throw new Error('OutOfRangeException: Percentage has at least to be 0');
     }
 
     if (percentage === 100 && !opacity) {
         return baseColor;
     }
 
-    let color = baseColor.substr(1);
+    let color = baseColor.replace('#', '');
     const l = color.length;
 
     let r;
@@ -131,10 +128,7 @@ export function getRelativeColor(baseColor, percentage, opacity) {
         b = color.substring(4, 6);
     } else {
         // noinspection Eslint
-        throw {
-            name: 'WrongFormatException',
-            message: 'Invalid color-format'
-        };
+        throw new Error('WrongFormatException: Invalid color-format');
     }
     if (opacity) {
         return `rgba(${parseInt(getSingleRelativeColor(r, percentage), 16)},${parseInt(getSingleRelativeColor(g, percentage), 16)},${parseInt(getSingleRelativeColor(b, percentage), 16)},${opacity})`;

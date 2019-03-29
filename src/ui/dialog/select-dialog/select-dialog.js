@@ -1,7 +1,6 @@
 /* @flow */
 // $FlowIgnore
 import classNames from 'classnames';
-import styleNames from 'stylenames';
 import htmlToElement from 'html-to-element';
 import { chaynsInfo } from '../../../chayns-info';
 import memorize from '../../../utils/memorize';
@@ -121,11 +120,7 @@ export default class SelectDialog {
 
         if (item && item.icon && item.icon.name) {
             const rgba = item.icon.color ? argbHexToRgba(item.icon.color) : argbHexToRgba(chaynsInfo.Color);
-            const styles = styleNames({
-                color: {
-                    [`rgba(${rgba.r},${rgba.g},${rgba.b},${rgba.a})`]: rgba !== null
-                }
-            });
+            const styles = rgba !== null ? `color: rgba(${rgba.r},${rgba.g},${rgba.b},${rgba.a});` : '';
 
             icon = `<div style=${styles} class="select-dialog__item__icon">
                             <span class="fa ${item.icon.name}"></span>
