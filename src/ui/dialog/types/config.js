@@ -6,4 +6,3 @@ export type Config = {
     message?: string,
     buttons?: Button[],
 };
-

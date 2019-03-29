@@ -19,7 +19,7 @@ export default class TimePicker {
         this.maxDate = (config.maxDate) ? new Date(config.maxDate) : null;
 
         if (this.minDate && this.maxDate && this.minDate >= this.maxDate) {
-            throw 'minDate could not be greater than maxDate!';
+            throw new Error('minDate could not be greater than maxDate!');
         }
 
         this.selectedTime = this.selectedDate = new Date(config.selectedDate || Date.now());
@@ -48,9 +48,9 @@ export default class TimePicker {
 
     get hours() {
         if (!this.$hoursInput) {
-            return;
+            return undefined;
         }
-        return parseInt(this.$hoursInput.value, 10)
+        return parseInt(this.$hoursInput.value, 10);
     }
 
     set minutes(value) {
@@ -62,7 +62,7 @@ export default class TimePicker {
 
     get minutes() {
         if (!this.$minutesInput) {
-            return;
+            return undefined;
         }
         return parseInt(this.$minutesInput.value, 10);
     }
@@ -131,23 +131,23 @@ export default class TimePicker {
 
         this.checkValues();
 
-        //Minutes Up/Down Arrows
+        // Minutes Up/Down Arrows
         this.$timePicker.querySelector('.hours.arrow.up').addEventListener('click', () => {
-            this.hours++; //this.hours = this.hours + 1;
-            this.hoursDirection.up++;
+            this.hours += 1;
+            this.hoursDirection.up += 1;
             this.hoursDirection.down = 0;
             this.checkValues();
         });
         this.$timePicker.querySelector('.hours.arrow.down').addEventListener('click', () => {
-            this.hours--;
+            this.hours -= 1;
             this.hoursDirection.up = 0;
-            this.hoursDirection.down++;
+            this.hoursDirection.down += 1;
             this.checkValues();
         });
 
-        //Minutes Up/Down Arrows
+        // Minutes Up/Down Arrows
         this.$timePicker.querySelector('.minutes.arrow.up').addEventListener('click', () => {
-            this.minutes++;
+            this.minutes += 1;
 
             this.hoursDirection = {
                 up: 1,
@@ -157,7 +157,7 @@ export default class TimePicker {
             this.checkValues();
         });
         this.$timePicker.querySelector('.minutes.arrow.down').addEventListener('click', () => {
-            this.minutes--;
+            this.minutes -= 1;
 
             this.hoursDirection = {
                 up: 1,
@@ -168,7 +168,7 @@ export default class TimePicker {
         });
 
 
-        let inputOnArrowKey = (event) => {
+        const inputOnArrowKey = (event) => {
             if (event.keyCode === 38 || event.keyCode === 40) { // ArrowUp || ArrowDown
                 this.checkValues();
                 if (this.minutes < 10) {
@@ -186,10 +186,10 @@ export default class TimePicker {
     }
 
     checkValues() {
-        if (isNaN(this.hours)) {
+        if (Number.isNaN(this.hours)) {
             this.hours = this.selectedTime.getHours();
         }
-        if (isNaN(this.minutes)) {
+        if (Number.isNaN(this.minutes)) {
             this.minutes = this.selectedTime.getMinutes();
         }
 
@@ -222,5 +222,5 @@ export default class TimePicker {
         } else {
             this.hoursDirection.down = 0;
         }
-    };
+    }
 }

@@ -1,10 +1,9 @@
 import classNames from 'classnames';
 import htmlToElement from 'html-to-element';
-import {numberToDayName, numberToMonthName} from '../../../../utils/convert';
-import {_} from '../../../../utils/helper';
+import { numberToDayName, numberToMonthName } from '../../../../utils/convert';
+import { _ } from '../../../../utils/helper';
 
 export default class DayPicker {
-
     $dayPicker = null;
 
     constructor(config, daySelectedCallback, monthOnClick) {
@@ -108,17 +107,17 @@ export default class DayPicker {
     }
 
     isDateAllowed(date) {
-        let year = date.getFullYear();
-        let month = date.getMonth();
-        let day = date.getDate();
+        const year = date.getFullYear();
+        const month = date.getMonth();
+        const day = date.getDate();
 
         if (this.minDate) {
             if (year < this.minDate.getFullYear()) {
                 return false;
             } else if (year === this.minDate.getFullYear() && month < this.minDate.getMonth()) {
-                return false
+                return false;
             } else if (year === this.minDate.getFullYear() && month === this.minDate.getMonth() && day < this.minDate.getDate()) {
-                return false
+                return false;
             }
         }
 
@@ -136,20 +135,20 @@ export default class DayPicker {
     }
 
     getDayTable(year, month) {
-        let date = new Date(0);
+        const date = new Date(0);
         date.setFullYear(year);
         date.setMonth(month);
         date.setDate(1);
 
-        let $element = htmlToElement(`<div class="day-picker__day-table">
+        const $element = htmlToElement(`<div class="day-picker__day-table">
                                         <div class="day-table__month">
                                             <span>${numberToMonthName(month)} ${year}</span>
                                         </div>
                                     </div>`);
         _('.day-table__month span', $element).addEventListener('click', () => this.monthOnClick(year));
-        //DayNames
+        // DayNames
         if (!this.$weekDays) {
-            this.$weekDays = htmlToElement(`<div class="day-table__week-days"></div>`);
+            this.$weekDays = htmlToElement('<div class="day-table__week-days"></div>');
 
             for (let i = 1; i < 7; i++) {
                 this.$weekDays.appendChild(htmlToElement(`<div class="ChaynsCS-Color">${numberToDayName(i, 2)}</div>`));
@@ -159,26 +158,26 @@ export default class DayPicker {
         }
         $element.appendChild(this.$weekDays);
 
-        //Date to last Monday
+        // Date to last Monday
         while (date.getDay() !== 1) {
             date.setDate(date.getDate() - 1);
         }
 
-        //build table
+        // build table
         for (let week = 0, l = 6; week < l; week++) {
-            let $month = htmlToElement('<div class="day-table__week-row"></div>');
+            const $month = htmlToElement('<div class="day-table__week-row"></div>');
 
             for (let day = 0, k = 7; day < k; day++) {
-                let classes = classNames({
+                const classes = classNames({
                     'day--out-of-month': date.getMonth() !== month,
                     'day--blocked': date.getMonth() === month && !this.isDateAllowed(date),
                     'day--selected ChaynsCS-Color': this.selectedDate.getDate() === date.getDate() && this.selectedDate.getMonth() === date.getMonth() && this.selectedDate.getFullYear() === date.getFullYear()
                 });
 
-                let $day = htmlToElement(`<div class="${classes}" data-date="${date.getTime()}">${date.getDate()}</div>`);
+                const $day = htmlToElement(`<div class="${classes}" data-date="${date.getTime()}">${date.getDate()}</div>`);
 
                 $day.addEventListener('click', (event) => {
-                    let selectedDate = new Date(parseInt((event.toElement || event.srcElement || event.target).getAttribute('data-date'), 10));
+                    const selectedDate = new Date(parseInt((event.toElement || event.srcElement || event.target).getAttribute('data-date'), 10));
                     if (selectedDate.getMonth() === month && selectedDate.getFullYear() === year) {
                         this.selected = selectedDate;
                     } else {

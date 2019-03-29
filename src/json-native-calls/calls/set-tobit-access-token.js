@@ -1,7 +1,8 @@
+import { invalidateToken } from '../../utils/tobitAuth';
 import executeCall from '../json-native-calls';
 import errorHandler from '../call-error-handler';
 import getDefer from '../../utils/defer';
-import { setItem } from '../../utils/localStorage';
+import { getItem, removeItem, setItem } from '../../utils/localStorage';
 import { getUrlParameters } from '../../utils/url-parameter';
 import ConsoleLogger from '../../utils/console-logger';
 
@@ -24,7 +25,23 @@ export default function setTobitAccessToken(tobitAccessToken) {
                 executeOnlyOnce: true,
             },
             fallback: () => {
-                setItem(`renewToken_${getUrlParameters().locationid}`, tobitAccessToken);
+                const renewToken = getItem(`renewToken_${getUrlParameters().locationid}`);
+                const userToken = getItem(`tobitAccessToken_${getUrlParameters().locationid}`);
+
+                if (renewToken && renewToken.length > 0) {
+                    invalidateToken(renewToken);
+                }
+
+                if (userToken && userToken.length > 0) {
+                    invalidateToken(userToken);
+                }
+                removeItem(`tobitAccessToken_${getUrlParameters().locationid}`);
+
+                if (tobitAccessToken && tobitAccessToken.length > 0) {
+                    setItem(`renewToken_${getUrlParameters().locationid}`, tobitAccessToken);
+                } else {
+                    removeItem(`renewToken_${getUrlParameters().locationid}`);
+                }
             },
         });
 

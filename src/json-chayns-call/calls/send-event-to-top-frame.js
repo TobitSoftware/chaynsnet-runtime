@@ -1,6 +1,7 @@
 export default function sendEventToTopFrame(req, res) {
     if (!req.value || !req.value.event) {
-        return res.event(2, 'Field event missing.');
+        res.event(2, 'Field event missing.');
+        return;
     }
 
     const event = new CustomEvent(req.value.event);

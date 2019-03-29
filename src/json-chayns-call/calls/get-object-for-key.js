@@ -1,3 +1,4 @@
+import { chaynsInfo } from '../../chayns-info';
 import { getKeyForTapp } from '../../utils/chayns-storage';
 
 export default async function getObjectForKey(req, res) {

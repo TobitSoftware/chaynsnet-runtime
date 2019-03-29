@@ -70,7 +70,7 @@ function setUrlParams(url) {
 
     const urlParam = Object.assign(getUrlParameters(false), parameterStringToObject(url));
 
-    const paramString = Object.keys(urlParam).map(key => urlParam[key] !== undefined ? `${key}=${urlParam[key]}` : key);
+    const paramString = Object.keys(urlParam).map(key => (urlParam[key] !== undefined ? `${key}=${urlParam[key]}` : key));
     const timeStamp = url.match(/(?:_=)\b(\d*)/i);
 
     return `${url.split('?')[0]}?${paramString.join('&')}${(!timeStamp) ? `&_=${Date.now()}` : ''}`;
@@ -104,7 +104,7 @@ function loadTapp(tappId, tappUrl) {
     }
 
     const $iframe = htmlToElement('<iframe frameborder="0" marginheight="0" marginwidth="0" id="TappIframe" name="TappIframe"></iframe>');
-    $iframe.style.height = `${window.innerHeight - document.body.getBoundingClientRect().top + document.body.scrollTop}px`;
+    $iframe.style.height = `${(window.innerHeight - document.body.getBoundingClientRect().top) + document.body.scrollTop}px`;
 
     if (chaynsInfo.IsMobile) {
         $iframe.setAttribute('style', 'margin-top: -10px !important;');

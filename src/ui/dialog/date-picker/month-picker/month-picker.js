@@ -3,7 +3,6 @@ import htmlToElement from 'html-to-element';
 import { _ } from '../../../../utils/helper';
 
 export default class MonthPicker {
-
     $monthPicker: Object;
     $captionYear: Object;
     $yearTable: Object;
@@ -22,7 +21,7 @@ export default class MonthPicker {
         this.maxDate = (config.maxDate) ? new Date(config.maxDate) : null;
 
         if (this.minDate && this.maxDate && this.minDate > this.maxDate) {
-            throw 'minDate could not be greater than maxDate!';
+            throw new Error('minDate could not be greater than maxDate!');
         }
 
         this.selectedDate = new Date(config.selectedDate || Date.now());
@@ -61,7 +60,7 @@ export default class MonthPicker {
             if (this.minDate && this.selectedYear === this.minDate.getFullYear()) {
                 return;
             }
-            this.selectedYear--;
+            this.selectedYear -= 1;
             this.updateMonthTable();
             this.updateArrows();
         });
@@ -71,21 +70,21 @@ export default class MonthPicker {
             if (this.maxDate && this.selectedYear === this.maxDate.getFullYear()) {
                 return;
             }
-            this.selectedYear++;
+            this.selectedYear += 1;
             this.updateMonthTable();
             this.updateArrows();
         });
 
         this.updateArrows();
 
-        let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-        for (let i = 0; i < 4; i++) {
-            let $row = htmlToElement('<div class="month-picker__year-table__month-row"></div>');
+        for (let i = 0; i < 4; i += 1) {
+            const $row = htmlToElement('<div class="month-picker__year-table__month-row"></div>');
 
-            for (let j = 0; j < 3; j++) {
-                let monthId = i * 3 + j;
-                let $month = htmlToElement(`<div data-month-id="${monthId}">
+            for (let j = 0; j < 3; j += 1) {
+                const monthId = (i * 3) + j;
+                const $month = htmlToElement(`<div data-month-id="${monthId}">
                                                 <span>${months[monthId]}</span>
                                            </div>`);
                 $month.addEventListener('click', () => this.selected = getDate(this.selectedYear, $month.getAttribute('data-month-id')));
@@ -139,9 +138,9 @@ export default class MonthPicker {
             return;
         }
         this.$captionYear.innerHTML = this.selectedYear;
-        let date = new Date(0);
+        const date = new Date(0);
         date.setFullYear(this.selectedYear);
-        for (let $month of this.$months) {
+        for (const $month of this.$months) {
             date.setMonth(parseInt($month.getAttribute('data-month-id'), 10));
             if (this.isDateAllowed(date)) {
                 $month.firstElementChild.classList.remove('month--blocked');
@@ -158,19 +157,19 @@ export default class MonthPicker {
     }
 
     isDateAllowed(date: Date) {
-        let year = date.getFullYear();
-        let month = date.getMonth();
+        const year = date.getFullYear();
+        const month = date.getMonth();
 
         if ((!this.minDate && !this.maxDate)) {
             return true;
         }
 
-        if (( this.minDate && year < this.minDate.getFullYear()) || (this.maxDate && year > this.maxDate.getFullYear())) {
+        if ((this.minDate && year < this.minDate.getFullYear()) || (this.maxDate && year > this.maxDate.getFullYear())) {
             return false;
         }
 
         if (this.minDate && year === this.minDate.getFullYear() && month < this.minDate.getMonth()) {
-            return false
+            return false;
         }
 
         if (this.maxDate && year === this.maxDate.getFullYear() && month > this.maxDate.getMonth()) {
@@ -182,7 +181,7 @@ export default class MonthPicker {
 }
 
 function getDate(year, month) {
-    let date = new Date(0);
+    const date = new Date(0);
     date.setFullYear(year);
     date.setMonth(month);
     return date;

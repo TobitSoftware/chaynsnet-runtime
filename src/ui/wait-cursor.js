@@ -1,9 +1,8 @@
 import htmlToElement from 'html-to-element';
 
-let waitCursorConfig = {};
+const waitCursorConfig = {};
 
 export default class WaitCursor {
-
     /**
      * display or create a WaitCursor for the srcIframe
      * @param timeToTextDisplay
@@ -21,11 +20,11 @@ export default class WaitCursor {
             }
         }
 
-        let config = waitCursorConfig[srcIframe.name] || {};
+        const config = waitCursorConfig[srcIframe.name] || {};
 
         if (!config.$waitCursor) {
             config.$waitCursor = getWaitCursor(srcIframe.name);
-            config.$waitCursor.addEventListener('click', (e) => e.stopPropagation());
+            config.$waitCursor.addEventListener('click', e => e.stopPropagation());
             (srcIframe.name !== 'default') ? srcIframe.parentElement.parentElement.appendChild(config.$waitCursor) : srcIframe.parentElement.appendChild(config.$waitCursor);
             config.$text = config.$waitCursor.querySelector('.loading-spinner-text');
         }
@@ -52,16 +51,16 @@ export default class WaitCursor {
      * @param srcIframe
      */
     static hide = (srcIframe) => {
-        let iframeName = (srcIframe && srcIframe.name) ? srcIframe.name : 'TappIframe';
+        const iframeName = (srcIframe && srcIframe.name) ? srcIframe.name : 'TappIframe';
         if (iframeName === 'TappIframe') {
-            let defaultWaitCursor = document.querySelector('.ChaynsLoadingCursor[data-iframe="default"]');
+            const defaultWaitCursor = document.querySelector('.ChaynsLoadingCursor[data-iframe="default"]');
             if (defaultWaitCursor) {
                 defaultWaitCursor.parentElement.removeChild(defaultWaitCursor);
-                waitCursorConfig['default'] = undefined;
+                waitCursorConfig.default = undefined;
             }
         }
 
-        let config = (iframeName) ? waitCursorConfig[iframeName] || null : null;
+        const config = (iframeName) ? waitCursorConfig[iframeName] || null : null;
 
         if (!config || !config.$waitCursor) {
             return;
@@ -69,7 +68,7 @@ export default class WaitCursor {
         config.$waitCursor.classList.add('hidden');
         clearTimeout(config.timeout);
 
-        let runningTime = new Date().getTime() - config.startTime;
+        const runningTime = new Date().getTime() - config.startTime;
 
         if (runningTime < 1000) {
             return;

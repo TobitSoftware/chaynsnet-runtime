@@ -10,8 +10,6 @@ import ConsoleLogger from '../../utils/console-logger';
 const consoleLogger = new ConsoleLogger('getTobitAccessToken(native-call)');
 
 const DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000;
-const renewTokenCacheKey = `renewToken_${getUrlParameters().locationid}`;
-const userTokenCacheKey = `tobitAccessToken_${getUrlParameters().locationid}`;
 
 let sessionUserToken = null;
 
@@ -45,6 +43,9 @@ async function getUserToken() {
     if (sessionUserToken) {
         return sessionUserToken;
     }
+
+    const renewTokenCacheKey = `renewToken_${getUrlParameters().locationid}`;
+    const userTokenCacheKey = `tobitAccessToken_${getUrlParameters().locationid}`;
 
     let renewToken = getItem(renewTokenCacheKey);
     if (!renewToken) {

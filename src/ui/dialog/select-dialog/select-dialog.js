@@ -1,9 +1,8 @@
 /* @flow */
 // $FlowIgnore
 import classNames from 'classnames';
-import styleNames from 'stylenames';
 import htmlToElement from 'html-to-element';
-import {chaynsInfo} from '../../../chayns-info';
+import { chaynsInfo } from '../../../chayns-info';
 import memorize from '../../../utils/memorize';
 import { argbHexToRgba } from '../../../utils/convert';
 
@@ -44,21 +43,20 @@ export default class SelectDialog {
         return this.$dialog;
     }
 
-    get selection(): { name:string, value:any }[] {
+    get selection(): { name: string, value: any }[] {
         const selectedItems = this.items.filter(item => item.isSelected);
         return selectedItems.map(item => (
-                {
-                    name: item.name,
-                    value: item.value
-                }
-            )
-        );
+            {
+                name: item.name,
+                value: item.value
+            }
+        ));
     }
 
     lazyLoad = (element: HTMLElement) => {
         this.scrollElement = element;
         const availableHeight = element.scrollHeight - element.clientHeight;
-        const scrollTop = element.scrollTop;
+        const { scrollTop } = element;
         const percent = (scrollTop / availableHeight) * 100;
 
         if (percent >= 90) {
@@ -122,11 +120,7 @@ export default class SelectDialog {
 
         if (item && item.icon && item.icon.name) {
             const rgba = item.icon.color ? argbHexToRgba(item.icon.color) : argbHexToRgba(chaynsInfo.Color);
-            const styles = styleNames({
-                color: {
-                    [`rgba(${rgba.r},${rgba.g},${rgba.b},${rgba.a})`]: rgba !== null
-                }
-            });
+            const styles = rgba !== null ? `color: rgba(${rgba.r},${rgba.g},${rgba.b},${rgba.a});` : '';
 
             icon = `<div style=${styles} class="select-dialog__item__icon">
                             <span class="fa ${item.icon.name}"></span>
@@ -161,5 +155,4 @@ export default class SelectDialog {
 
         return $item;
     }, item => item.id);
-
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import FloatingButton from '../../ui/floating-button';
 import loadTapp from '../../tapp/custom-tapp';
 

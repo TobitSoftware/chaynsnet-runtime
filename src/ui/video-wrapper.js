@@ -39,18 +39,17 @@ export default class VideoWrapper {
     };
 }
 
-const getVideo = (url, type) => {
-    return htmlToElement(`<video controls autoplay>
-                                <source src="${url}" type="${type}"/>                                        
-                                Your browser does not support the video tag.
-                          </video>`);
-};
+const getVideo = (url, type) => htmlToElement(`
+<video controls autoplay>
+    <source src="${url}" type="${type}"/>                                        
+    Your browser does not support the video tag.
+</video>`);
 
 const getType = (url) => {
     const urlParts = url.split('.');
     const type = `video/${urlParts[urlParts.length - 1]}`;
 
-    if(!$checkTypePlayer){
+    if (!$checkTypePlayer) {
         $checkTypePlayer = document.createElement('video');
     }
 

@@ -18,4 +18,3 @@ export type Config = BaseConfig & {
     quickfind: boolean,
     list: Item[],
 };
-

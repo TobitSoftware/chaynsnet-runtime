@@ -2,7 +2,7 @@ import htmlToElement from 'html-to-element'
 import classNames from 'classnames';
 import { chaynsInfo } from '../chayns-info';
 
-let floatingBtnCfg = {};
+const floatingBtnCfg = {};
 
 export default class FloatingButton {
     /**
@@ -22,7 +22,7 @@ export default class FloatingButton {
             }
         }
 
-        let config = floatingBtnCfg[srcIframe.name] || {};
+        const config = floatingBtnCfg[srcIframe.name] || {};
 
         if (!config.$floatingButton) {
             config.$floatingButton = getFloatingButton(srcIframe.name);
@@ -31,7 +31,7 @@ export default class FloatingButton {
 
         config.$floatingButton.onclick = (e) => {
             callback();
-            e.stopPropagation()
+            e.stopPropagation();
         };
 
         config.$floatingButton.innerHTML = text;
@@ -49,16 +49,16 @@ export default class FloatingButton {
      */
     static hide = (srcIframe) => {
         if (!srcIframe || srcIframe === window) {
-            let defaultWaitCursor = document.querySelector('.floatingButton[data-iframe="default"]');
+            const defaultWaitCursor = document.querySelector('.floatingButton[data-iframe="default"]');
             if (defaultWaitCursor) {
                 defaultWaitCursor.parentElement.removeChild(defaultWaitCursor);
-                floatingBtnCfg['default'] = undefined;
+                floatingBtnCfg.default = undefined;
                 return;
             }
             srcIframe = document.querySelector('#TappIframe');
         }
 
-        let config = (srcIframe) ? floatingBtnCfg[srcIframe.name] || null : null;
+        const config = (srcIframe) ? floatingBtnCfg[srcIframe.name] || null : null;
         if (!config || !config.$floatingButton) {
             return;
         }
@@ -72,8 +72,7 @@ export default class FloatingButton {
  * @returns {*}
  */
 function getFloatingButton(frameName) {
-
-    let classes = classNames('floatingButton', 'hidden', {
+    const classes = classNames('floatingButton', 'hidden', {
         'chayns-id': (frameName === 'ChaynsIDFrame'),
         'menu-right': chaynsInfo.Webshadow.MenuPosition === 1,
         'menu-left': chaynsInfo.Webshadow.MenuPosition === 0,
