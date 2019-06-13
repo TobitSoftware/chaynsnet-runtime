@@ -3,6 +3,7 @@ export default function showAlert(req, res) {
         res.event(2, 'Field dialog missing.');
         return;
     }
+
     if ((req.value.dialog.buttons || []).length === 0) {
         res.event(2, 'Field dialog.buttons missing.');
         return;
