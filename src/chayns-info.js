@@ -67,7 +67,7 @@ export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
         globalData = {
             Device: {},
             AppInfo: {
-                Version: parseInt(VERSION, 10) || 2,
+                Version: parseInt(VERSION, 10) || 3,
                 domain: window.location.host,
                 Tapps: [],
                 TappSelected: {},
