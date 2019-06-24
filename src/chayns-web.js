@@ -10,6 +10,7 @@ import { decodeTobitAccessToken } from './utils/convert';
 import { showLogin } from './login';
 import ConsoleLogger from './utils/console-logger';
 import { executeCallback, existCallback } from './json-chayns-call/calls/access-token-status-change';
+import loadExternalScript from './utils/loadExternalScript';
 
 import { LOGIN_TAPP_ID } from './constants/login-tapp';
 import { DEFAULT_LOCATIONID, DEFAULT_TAPPID } from './constants/defaults';
@@ -85,6 +86,9 @@ function startup() {
 async function init(tappId) {
     try {
         await loadTapps();
+
+        // Add dialog JS
+        loadExternalScript('https://chayns-res.tobit.com/API/v3.1/dialog/js/dialog.js');
 
         const tobitAccessToken = chaynsInfo.User.TobitAccessToken;
 
