@@ -36,7 +36,7 @@ export default async function setDynamicStyle() {
     try {
         const getColor = (percentage, opacity) => getRelativeColor(chaynsInfo.Color, percentage, opacity);
 
-        const chaynsCss = htmlToElement(`<link rel="stylesheet" href="https://api.chayns.net/css/?siteid=${chaynsInfo.SiteID}">`);
+        const chaynsCss = htmlToElement(`<link rel="stylesheet" href="https://api.chayns.net/css/v4.2/?siteid=${chaynsInfo.SiteID}">`);
         const fontAwesomeCss = htmlToElement('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">');
 
         document.head.appendChild(chaynsCss);
