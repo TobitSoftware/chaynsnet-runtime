@@ -33,4 +33,6 @@ const jsonCalls = {
     129: jsonCallFunctions.closeWindow,
 };
 
+window.JsonCalls = jsonCalls;
+
 export default jsonCalls;
