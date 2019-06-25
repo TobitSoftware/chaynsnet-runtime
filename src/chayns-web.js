@@ -87,6 +87,8 @@ async function init(tappId) {
     try {
         await loadTapps();
 
+        // Add chayns JS
+        loadExternalScript('https://api.chayns-static.space/js/v4.0/chayns.min.js');
         // Add dialog JS
         loadExternalScript('https://chayns-res.tobit.com/API/v3.1/dialog/js/dialog.js');
 
