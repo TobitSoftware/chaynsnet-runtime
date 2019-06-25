@@ -44,6 +44,7 @@ export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
         locationSettings.design.color = `#${locationSettings.design.color}`;
 
         chaynsInfo = {
+            isChaynsnetRuntime: true,
             Version: VERSION,
             BaseUrl: '/',
             LocationID: locationId,
