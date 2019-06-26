@@ -3,4 +3,5 @@
  * @type {string}
  */
 const VERSION = 'dev';
-export default VERSION;
+const CACHE_VERSION = 'dev';
+export { VERSION, CACHE_VERSION };
