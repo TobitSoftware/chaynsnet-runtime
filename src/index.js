@@ -8,7 +8,7 @@ import './chayns-web';
 import './constants/system-url-parameter';
 import './window-objects';
 
-import VERSION from './constants/version';
+import { VERSION } from './constants/version';
 import { isLIVE } from './constants/environments';
 
 import './style/index.scss';
