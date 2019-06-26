@@ -310,7 +310,7 @@ function getButtonWrapper(buttons) {
                     </span>)`;
         }
 
-        const $currentBtn = htmlToElement(`<div class="button">${icon} ${button.text}</div>`);
+        const $currentBtn = htmlToElement(`<button class="button">${icon} ${button.text}</button>`);
         $currentBtn.addEventListener('click', () => Dialog.hide(button.buttonType));
         $btnWrapper.appendChild($currentBtn);
     }
