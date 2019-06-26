@@ -64,7 +64,6 @@ export default {
         new AppCacheWebpackPlugin({
             output: 'appcache.manifest',
             cache: [
-                'https://api.chayns.net/css/v4.2/',
                 'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css'
             ]
         }),

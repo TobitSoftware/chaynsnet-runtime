@@ -1,7 +1,9 @@
 import logger from 'chayns-logger';
 import { setSessionUserToken } from './json-native-calls/calls/get-tobit-access-token';
 import loadTapp, { getTappById } from './tapp/custom-tapp';
-import { loadLocation, loadTapps, chaynsInfo, updateUserData } from './chayns-info';
+import {
+ loadLocation, loadTapps, chaynsInfo, updateUserData
+} from './chayns-info';
 import setDynamicStyle from './ui/dynamic-style';
 import Navigation from './ui/navigation';
 import { validateTobitAccessToken, stringisEmptyOrWhitespace } from './utils/helper';
@@ -15,6 +17,7 @@ import loadExternalScript from './utils/loadExternalScript';
 import { LOGIN_TAPP_ID } from './constants/login-tapp';
 import { DEFAULT_LOCATIONID, DEFAULT_TAPPID } from './constants/defaults';
 import TAPPIDS from './constants/tapp-ids';
+import { CACHE_VERSION } from './constants/version';
 
 const consoleLogger = new ConsoleLogger('(chayns-web.js)');
 
@@ -88,9 +91,9 @@ async function init(tappId) {
         await loadTapps();
 
         // Add chayns JS
-        loadExternalScript('https://api.chayns-static.space/js/v4.0/chayns.min.js');
+        loadExternalScript(`https://api.chayns-static.space/js/v4.0/chayns.min.js?cacheVersion=${CACHE_VERSION}`);
         // Add dialog JS
-        loadExternalScript('https://chayns-res.tobit.com/API/v3.1/dialog/js/dialog.js');
+        loadExternalScript(`https://chayns-res.tobit.com/API/v3.1/dialog/js/dialog.js?cacheVersion=${CACHE_VERSION}`);
 
         const tobitAccessToken = chaynsInfo.User.TobitAccessToken;
 
