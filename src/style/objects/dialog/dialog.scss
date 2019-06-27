@@ -3,6 +3,14 @@
 @import '../../constants/z-index';
 @import '../../constants/dialog';
 
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Roboto Light"), local("Roboto-Light"), url(https://api.chayns-static.space/font/Roboto/Regular.woff2) format("woff2"), url(https://api.chayns-static.space/font/Roboto/Regular.woff) format("woff"), url(https://api.chayns-static.space/font/Roboto/Regular.ttf) format("truetype"), url(https://api.chayns-static.space/font/Roboto/Regular.svg) format("svg");
+  unicode-range: U+0020-00FF, U+20A0-20CF, U+2122
+}
+
 .dialog {
   overflow: hidden;
 
@@ -50,6 +58,7 @@
       margin: $dialog-component-margin;
       color: #545454;
     }
+
     .search {
       width: calc(100% - 26px);
       margin: $dialog-component-margin;
@@ -73,6 +82,7 @@
   &__buttons {
     text-align: center;
     margin: $dialog-component-margin;
+
     .button {
       min-width: 90px;
       margin: 0 5px;
