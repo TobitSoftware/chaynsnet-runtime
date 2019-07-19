@@ -5,7 +5,7 @@ export const LOGIN_TAPP_ID = -1;
 
 const loginTapps = [
     'https://tapp03.tobit.com/ChaynsWebLightLogin/?AppVersion=##version##&OS=##os##&colormode=##colormode##&color=##color##&apname=##apname##&tappid=-1',
-    'https://login.chayns.net/login/v3.0/index.html?desktop=1&staticMode&AppVersion=##version##&SiteID=##siteid##&OS=##os##&color=##color##&colormode=##colormode##&font=##fontid##',
+    'https://login.chayns.net/v3/index.html?desktop=1&staticMode&AppVersion=##version##&SiteID=##siteid##&OS=##os##&color=##color##&colormode=##colormode##&font=##fontid##',
 ];
 
 const loginTapp = {
