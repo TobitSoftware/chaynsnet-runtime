@@ -46,6 +46,7 @@ export default async function setDynamicStyle() {
         document.head.appendChild(fontAwesomeCss);
 
         const customBackgroundColor = getUrlParameters().backgroundcolor && getUrlParameters().backgroundcolor.match(/^#?[0-9A-Fa-f]{3,8}$/g) && `#${getUrlParameters().backgroundcolor.replace('#', '')}`;
+        const customOverflow = getUrlParameters().overflow ;
 
         // Body
         const colorModeBaseColors = {
@@ -55,7 +56,8 @@ export default async function setDynamicStyle() {
         addStyle([{
             selector: 'body',
             styles: {
-                'background-color': customBackgroundColor || (chaynsInfo.ColorMode === 2 ? '#ffffff' : mixColors(chaynsInfo.Color, colorModeBaseColors[chaynsInfo.ColorMode], 7))
+                'background-color': customBackgroundColor || (chaynsInfo.ColorMode === 2 ? '#ffffff' : mixColors(chaynsInfo.Color, colorModeBaseColors[chaynsInfo.ColorMode], 7)),
+                overflow: customOverflow || ''
             }
         }, {
             selector: 'h1',
