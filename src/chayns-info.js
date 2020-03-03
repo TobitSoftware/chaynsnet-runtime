@@ -78,6 +78,7 @@ export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
                 CurrentUrl: window.location.href,
                 SiteID: chaynsInfo.SiteID,
                 LocationID: chaynsInfo.LocationID,
+                LocationPersonID: locationSettings.locationPersonId,
                 IsColorSchemeDark: false,
                 colorMode: chaynsInfo.ColorMode,
                 color: chaynsInfo.Color,
