@@ -46,7 +46,16 @@ export default async function setDynamicStyle() {
         document.head.appendChild(fontAwesomeCss);
 
         const customBackgroundColor = getUrlParameters().backgroundcolor && getUrlParameters().backgroundcolor.match(/^#?[0-9A-Fa-f]{3,8}$/g) && `#${getUrlParameters().backgroundcolor.replace('#', '')}`;
-        const customOverflow = getUrlParameters().overflow ;
+        const customOverflow = getUrlParameters().overflow;
+
+        if (customOverflow) {
+            addStyle([{
+                selector: 'chayns--mobile',
+                styles: {
+                    overflow: `${customOverflow} !important`
+                }
+            }]);
+        }
 
         // Body
         const colorModeBaseColors = {
