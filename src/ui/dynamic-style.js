@@ -50,7 +50,7 @@ export default async function setDynamicStyle() {
 
         if (customOverflow) {
             addStyle([{
-                selector: 'chayns--mobile',
+                selector: '.chayns--mobile',
                 styles: {
                     overflow: `${customOverflow} !important`
                 }
