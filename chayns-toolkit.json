@@ -1,0 +1,8 @@
+{
+  "development": {
+    "host": "0.0.0.0",
+    "port": 8081,
+    "cert": "//fs1.tobit.ag/ssl/tobitag.crt",
+    "key": "//fs1.tobit.ag/ssl/tobitag.key"
+  }
+}
