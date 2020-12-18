@@ -1,5 +1,6 @@
 /* eslint-disable prefer-destructuring */
 import getDavidVersion from '../utils/getDavidVersion';
+import { getUrlParameters } from '../utils/url-parameter';
 
 export const LOGIN_TAPP_ID = -1;
 
@@ -33,6 +34,14 @@ if (davidVersion !== null) {
 
         if (davidVersion.version < 7708) {
             loginTapp.url = `${loginTapp.url}&tokenType=1`;
+        }
+
+        const parameters = getUrlParameters(true);
+        if ((parameters.noborder || parameters.noBorder) && davidVersion.version > 8000) {
+            loginTapp.windowSize = {
+                x: 500,
+                y: 370,
+            };
         }
     }
 }

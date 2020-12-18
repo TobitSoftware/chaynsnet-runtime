@@ -18,6 +18,7 @@ import { LOGIN_TAPP_ID } from './constants/login-tapp';
 import { DEFAULT_LOCATIONID, DEFAULT_TAPPID } from './constants/defaults';
 import TAPPIDS from './constants/tapp-ids';
 import { CACHE_VERSION } from './constants/version';
+import { resizeWindow } from './json-native-calls/calls';
 
 const consoleLogger = new ConsoleLogger('(chayns-web.js)');
 
@@ -34,6 +35,10 @@ function startup() {
         locationId,
         customNumber: tappId,
     });
+
+    if (typeof window !== 'undefined') {
+        window.resizeDimensions = (x, y) => resizeWindow(x, y);
+    }
 
     const parameterAccessToken = getUrlParameters().accesstoken;
     if (!stringisEmptyOrWhitespace(parameterAccessToken) && validateTobitAccessToken(parameterAccessToken)) {
