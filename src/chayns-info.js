@@ -42,6 +42,8 @@ export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
 
 
         locationSettings.design.color = `#${locationSettings.design.color}`;
+        const parameters = getUrlParameters();
+        const colorMode = parameters.colorMode && Number.parseInt(parameters.colorMode);
 
         chaynsInfo = {
             isChaynsnetRuntime: true,
@@ -56,8 +58,8 @@ export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
             Tapps: [],
             LocationPersonID: locationSettings.locationPersonId,
             Domain: window.location.host,
-            ColorMode: getUrlParameters().colormode || locationSettings.design.colorMode,
-            Color: getUrlParameters().color ? `#${getUrlParameters().color.replace('#', '')}` : locationSettings.design.color,
+            ColorMode: typeof colorMode === 'number' ? colorMode : locationSettings.design.colorMode,
+            Color: parameters.color ? `#${parameters.color.replace('#', '')}` : locationSettings.design.color,
             Webshadow: {
                 MenuPosition: 0
             },
