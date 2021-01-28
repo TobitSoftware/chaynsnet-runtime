@@ -25,7 +25,7 @@ export default function loadTappById(tappId) {
     if (tapp) {
         setSelectedTapp(tapp);
         resetCallback();
-        loadTapp(tapp.id, setUrlParams(tapp.url));
+        loadTapp(tapp.id, setUrlParams(tapp.url), tapp.postTobitAccessToken);
     } else {
         logger.warning({
             message: 'no tapp found',
@@ -80,8 +80,9 @@ function setUrlParams(url) {
  * loads an url by tapp id and creates the iframe
  * @param {number} tappId
  * @param {string} tappUrl
+ * @param {boolean} postTobitAccessToken
  */
-function loadTapp(tappId, tappUrl) {
+function loadTapp(tappId, tappUrl, postTobitAccessToken) {
     if (typeof tappId !== 'number') {
         tappId = parseInt(tappId, 10);
         if (Number.isNaN(tappId)) {
@@ -97,6 +98,14 @@ function loadTapp(tappId, tappUrl) {
     const $input = htmlToElement(`<input id="ActiveTappID" name="ActiveTappID" type="hidden" value="${tappId}">`);
 
     const $form = htmlToElement(`<form action="${tappUrl}" target="TappIframe" method="get" id="TobitAccessTokenForm"></form>`);
+    if (postTobitAccessToken && chaynsInfo.User.TobitAccessToken) {
+        $form.setAttribute('method', 'post');
+        const $hiddenField = document.createElement('input');
+        $hiddenField.setAttribute('type', 'hidden');
+        $hiddenField.setAttribute('name', 'TobitAccessToken');
+        $hiddenField.setAttribute('value', chaynsInfo.User.TobitAccessToken);
+        $form.appendChild($hiddenField);
+    }
 
     const parameter = parameterStringToObject(tappUrl);
     for (const key of Object.keys(parameter)) {
