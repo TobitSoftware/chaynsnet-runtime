@@ -124,6 +124,7 @@ function loadTapp(tappId, tappUrl, postTobitAccessToken) {
     } else {
         $bodyContent.classList.remove('body-content--exclusive-view');
     }
+    $form.action = `${$form.action}&contentWidth=${$bodyContent.offsetWidth}`;
 
 
     $bodyContent.innerHTML = '';
