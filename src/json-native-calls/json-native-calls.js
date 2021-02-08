@@ -32,7 +32,14 @@ export default async function executeCall(config) {
         fallback,
     } = config;
 
-    if (typeof window.external !== 'object' || typeof window.external.jsonCall !== 'function') {
+    let jsonCallFn;
+    if (typeof window.external?.jsonCall === 'function') {
+        jsonCallFn = window.external.jsonCall;
+    } else if (typeof chrome === 'object' && typeof chrome?.webview?.hostObjects?.chayns?.jsonCall === 'function') {
+        jsonCallFn = chrome.webview.hostObjects.chayns.jsonCall;
+    }
+
+    if (typeof jsonCallFn !== 'function') {
         if (typeof fallback === 'function') {
             consoleLoggerExecute.debug('native-calls are not supported -> fallback.');
 
@@ -82,7 +89,7 @@ export default async function executeCall(config) {
     };
 
     consoleLoggerExecute.debug(`execute call { callId: ${callId} }`, callConfig);
-    window.external.jsonCall(JSON.stringify(callConfig));
+    jsonCallFn(JSON.stringify(callConfig));
     return true;
 }
 
