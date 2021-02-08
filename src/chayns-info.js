@@ -6,7 +6,7 @@ import { getUrlParameters } from './utils/url-parameter';
 import { getItem, setItem } from './utils/localStorage';
 
 import { DEFAULT_LOCATIONID } from './constants/defaults';
-import VERSION from './constants/version';
+import { VERSION } from './constants/version';
 import { LOGIN_TAPP } from './constants/login-tapp';
 
 const consoleLoggerLocation = new ConsoleLogger('loadLocation(chayns-info.js)');
