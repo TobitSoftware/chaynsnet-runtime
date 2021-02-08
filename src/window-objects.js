@@ -5,7 +5,7 @@ import ConsoleLogger from './utils/console-logger';
 
 import { ENVIRONMENTS } from './constants/environments';
 import TAPPIDS from './constants/tapp-ids';
-import VERSION from './constants/version';
+import { VERSION } from './constants/version';
 
 window.cnrt = {
     ConsoleLogger,
