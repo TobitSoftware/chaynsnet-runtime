@@ -4,6 +4,15 @@ export default function getDavidVersion() {
     const userAgent = window.navigator.userAgent.toLowerCase();
 
     if (!userAgent.includes('david')) {
+        const params = new URLSearchParams(location.search);
+        if (params.has('davidclient')) {
+            return {
+                version: parseInt(params.get('davidclient'), 10),
+                isMac: /mac/i.test(navigator.platform),
+                isWindows: /win/i.test(navigator.platform),
+            }
+        }
+
         return null;
     }
 
