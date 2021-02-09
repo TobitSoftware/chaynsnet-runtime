@@ -33,9 +33,11 @@ export default async function executeCall(config) {
     } = config;
 
     let jsonCallFn;
-    if (typeof window.external?.jsonCall === 'function') {
+    let davidWebviewV2 = false;
+    if (typeof window.external === 'object' && typeof window.external.jsonCall === 'function') {
         jsonCallFn = window.external.jsonCall;
     } else if (typeof chrome === 'object' && typeof chrome.webview?.hostObjects?.sync?.chayns?.jsonCall === 'function') {
+        davidWebviewV2 = true;
         jsonCallFn = chrome.webview.hostObjects.sync.chayns.jsonCall;
     }
 
@@ -88,8 +90,13 @@ export default async function executeCall(config) {
         callData: data
     };
 
-    consoleLoggerExecute.debug(`execute call { callId: ${callId} }`, callConfig);
-    jsonCallFn(JSON.stringify(callConfig));
+    consoleLoggerExecute.info(`execute call { callId: ${callId} }`, callConfig);
+    if (davidWebviewV2) {
+        chrome.webview.hostObjects.sync.chayns.jsonCall(JSON.stringify(callConfig));
+    } else {
+        window.external.jsonCall(JSON.stringify(callConfig));
+    }
+    // jsonCallFn(JSON.stringify(callConfig));
     return true;
 }
 
