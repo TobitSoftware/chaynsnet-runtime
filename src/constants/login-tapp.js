@@ -39,8 +39,8 @@ if (davidVersion !== null) {
         const parameters = getUrlParameters(true);
         if ((parameters.noborder || parameters.noBorder) && davidVersion.version > 8000) {
             loginTapp.windowSize = {
-                x: 500,
-                y: 370,
+                x: 420,
+                y: 326,
             };
         }
     }
