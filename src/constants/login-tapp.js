@@ -40,7 +40,7 @@ if (davidVersion !== null) {
         if ((parameters.noborder || parameters.noBorder) && davidVersion.version > 8000) {
             loginTapp.windowSize = {
                 x: 420,
-                y: 326,
+                y: 288,
             };
         }
     }
