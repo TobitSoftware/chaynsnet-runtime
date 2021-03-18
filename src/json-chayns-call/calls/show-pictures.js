@@ -1,10 +1,19 @@
 import ImageWrapper from '../../ui/image-wrapper';
+import getDavidVersion from '../../utils/getDavidVersion';
+import showPicture from '../../json-native-calls/calls/show-picture';
 
 export default function showPictures(req, res) {
     const { urls } = req.value;
 
     if ((urls || []).length === 0) {
         return res.event(2, 'Field urls is missing.');
+    }
+
+    if (getDavidVersion()) {
+        showPicture(urls[0]).then((retVal) => {
+            res.answer(retVal);
+        });
+        return;
     }
 
     let { startIndex } = req.value;
