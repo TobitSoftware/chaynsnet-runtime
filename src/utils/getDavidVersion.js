@@ -16,7 +16,7 @@ export default function getDavidVersion() {
         return null;
     }
 
-    const match = DAVID_VERSION_REGEX.exec(userAgent);
+    const match = DAVID_VERSION_REGEX.test(userAgent);
 
     if (!match) {
         return null;
