@@ -4,6 +4,7 @@ import showPicture from '../../json-native-calls/calls/show-picture';
 
 export default function showPictures(req, res) {
     const { urls } = req.value;
+    console.log('showPicture', req, res, getDavidVersion());
 
     if ((urls || []).length === 0) {
         return res.event(2, 'Field urls is missing.');
