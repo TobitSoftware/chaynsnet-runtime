@@ -112,7 +112,7 @@ function loadTapp(tappId, tappUrl, postTobitAccessToken) {
         $form.appendChild(htmlToElement(`<input name="${key}" value="${parameter[key]}" type="hidden">`));
     }
 
-    const $iframe = htmlToElement('<iframe frameborder="0" marginheight="0" marginwidth="0" id="TappIframe" name="TappIframe"></iframe>');
+    const $iframe = htmlToElement('<iframe frameborder="0" marginheight="0" marginwidth="0" id="TappIframe" name="TappIframe" allowpaymentrequest=""></iframe>');
     $iframe.style.height = `${(window.innerHeight - document.body.getBoundingClientRect().top) + document.body.scrollTop}px`;
 
     if (chaynsInfo.IsMobile) {
