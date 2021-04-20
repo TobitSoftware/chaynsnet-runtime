@@ -1,4 +1,4 @@
-const DAVID_VERSION_REGEX = /\((\d+),?\s([a-z]+)/gi;
+const DAVID_VERSION_REGEX = /\((\d+),?\s([a-z]+)/i;
 
 export default function getDavidVersion() {
     const userAgent = window.navigator.userAgent.toLowerCase();
@@ -16,7 +16,7 @@ export default function getDavidVersion() {
         return null;
     }
 
-    const match = DAVID_VERSION_REGEX.test(userAgent);
+    const match = userAgent.match(DAVID_VERSION_REGEX);
 
     if (!match) {
         return null;
