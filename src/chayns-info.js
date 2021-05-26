@@ -129,6 +129,8 @@ export async function updateUserData() {
             FacebookUserName: payload && payload.FirstName && payload.LastName ? `${payload.FirstName} ${payload.LastName}` : '',
             FacebookID: payload && payload.FacebookUserID ? payload.FacebookUserID : '',
             PersonID: payload && payload.PersonID ? payload.PersonID : '',
+            FirstName: payload && payload.FirstName ? payload.FirstName : '',
+            LastName: payload && payload.LastName ? payload.LastName : '',
             TobitUserID: payload && payload.TobitUserID ? payload.TobitUserID : 0,
             TobitAccessToken: accessToken,
             AdminMode: false
