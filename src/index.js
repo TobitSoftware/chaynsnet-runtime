@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+import 'regenerator-runtime/runtime';
 import logger from 'chayns-logger';
 import { chaynsInfo } from './chayns-info';
 import { getUrlParameters } from './utils/url-parameter';
