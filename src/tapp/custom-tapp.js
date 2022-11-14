@@ -7,11 +7,107 @@ import WaitCursor from '../ui/wait-cursor';
 import { getUrlParameters } from '../utils/url-parameter';
 import { parameterStringToObject } from '../utils/convert';
 import ConsoleLogger from '../utils/console-logger';
+import { ChaynsHost, Environment, Font, Gender, getDeviceInfo, IconType, RuntimeEnviroment } from 'chayns-api';
+import * as ReactDOM from 'react-dom';
 
 const loggerLoadTappById = new ConsoleLogger('loadTappById(custom-tapp.js)');
 const loggerLoadTapp = new ConsoleLogger('loadTapp(custom-tapp.js)');
 
 const $bodyContent = document.querySelector('.body-content');
+
+const PULL_TO_REFRESH_CALL_NUMBER = 0;
+const OPEN_DIALOG_CALL_NUMBER = 184;
+const CLOSE_DIALOG_CALL_NUMBER = 113;
+const SHOW_TOAST_NOTIFICATION_CALL_NUMBER = 276;
+
+let accessToken;
+let callbackId = 0;
+
+const mapOldApiToNew = ({ retVal }) => {
+    const { AppInfo, AppUser } = retVal;
+    accessToken = AppUser.TobitAccessToken;
+    return {
+        device: getDeviceInfo(navigator.userAgent, 'image/webp'),
+        environment: {
+            buildEnvironment: Environment.Production,
+            runtimeEnvironment: RuntimeEnviroment.Unknown
+        },
+        language: {
+            site: AppInfo.Language,
+            translation: null,
+            device: AppInfo.Language,
+            active: AppInfo.Language
+        }, // ToDo: Find better way to detect
+        site: {
+            id: AppInfo.SiteID,
+            locationId: AppInfo.LocationID,
+            url: window?.location.href.split('#')[0],
+            layoutDisposition: {
+                contentWide: false,
+                barOnTop: false,
+                barWide: false,
+                coverDetached: false,
+                coverHidden: false,
+                coverWide: false,
+                docked: false
+            },
+            title: AppInfo.Title,
+            colorMode: AppInfo.colorMode,
+            color: AppInfo.color,
+            domain: AppInfo.domain,
+            font: {
+                id: Font.Roboto,
+                headlineFont: Font.Roboto,
+                dynamicFontSize: false
+            },
+            dynamicFontSize: false,
+            locationPersonId: AppInfo.LocationPersonId,
+            urlHash: window?.location.hash.replace('#', '')
+        },
+        parameters: [...new URLSearchParams(location.search)],
+        user: {
+            firstName: AppUser.FirstName,
+            lastName: AppUser.LastName,
+            gender: Gender.Unknown,
+            userId: AppUser.TobitUserID,
+            personId: AppUser.PersonID,
+            uacGroups: []
+        },
+        customData: null,
+        isAdminModeActive: AppUser.AdminMode,
+        currentPage: {
+            id: AppInfo.TappSelected?.TappID,
+            siteId: AppInfo.SiteID
+        },
+        pages: AppInfo.Tapps.map(x => ({
+            id: x.TappID,
+            icon: '',
+            iconType: IconType.Font,
+            customUrl: '',
+            isExclusive: x.isExclusiveView,
+            isHiddenFromMenu: x.isHiddenFromMenu,
+            minAge: null,
+            name: x.ShowName,
+            sortId: x.SortUID
+        }))
+    }
+}
+
+export const invokeDialogCall = (call, callback) => {
+    const callbackName = `cwCallback${callbackId}`;
+    window[callbackName] = (e) => {
+        callback(e?.retVal);
+    };
+    if ([OPEN_DIALOG_CALL_NUMBER, PULL_TO_REFRESH_CALL_NUMBER, CLOSE_DIALOG_CALL_NUMBER,SHOW_TOAST_NOTIFICATION_CALL_NUMBER].includes(call.action)) {
+        window.dialog.receiveApiCall({ ...call, value: { ...(call?.value || {}), callback: `window.${callbackName}` } }, 'chayns.ajaxTab.jsoncall');
+    }
+
+    if (call.action === 218) {
+        window.receiveIframeDialogMessage(call, true);
+    }
+
+    callbackId++;
+};
 
 /**
  * Loads Tapp by TappId.
@@ -92,6 +188,44 @@ function loadTapp(tappId, tappUrl, postTobitAccessToken) {
     }
     if (!tappUrl || typeof tappUrl !== 'string') {
         loggerLoadTapp.error('TappUrl is not a string');
+        return;
+    }
+
+    if (tappId === 250357) {
+        ReactDOM.render((
+            <ChaynsHost
+                type="client-iframe"
+                src="https://tapp.chayns-static.space/wallet/v3/index.html?siteId=77890-17410"
+                iFrameProps={{
+                    name: 'TappIframe',
+                    id: 'TappIframe'
+                }}
+                {...mapOldApiToNew({ retVal: chaynsInfo.getGlobalData() })}
+                functions={{
+                    getAccessToken: () => ({accessToken: typeof chaynsInfo !== 'undefined' ? window.chaynsInfo.User.TobitAccessToken : chayns.env.user.tobitAccessToken}),
+                    setFloatingButton: (data, callback) => {
+                        // data.callback = callback;
+                        // window.handleChaynsCalls('floatingButton', data);
+                    },
+                    storageSetItem: (key, value, accessMode, tappIds) => {
+                        // return setKeyForTapp(key, value, accessMode, tappIds);
+                    },
+                    storageGetItem: (key, accessMode) => {
+                        // return getKeyForTapp(key, accessMode);
+                    },
+                    storageRemoveItem: (key, accessMode) => {
+                        // return removeKeyForTapp(key, accessMode);
+                    },
+                    invokeDialogCall: (value, callback) => {
+                        console.log('test', value, callback);
+                        invokeDialogCall(value, callback);
+                    },
+                    setWaitCursor: (v) => {
+                        console.log('setWaitCursor', v)
+                    }
+                }}
+            />
+        ), $bodyContent);
         return;
     }
 
