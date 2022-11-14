@@ -195,7 +195,7 @@ function loadTapp(tappId, tappUrl, postTobitAccessToken) {
         ReactDOM.render((
             <ChaynsHost
                 type="client-iframe"
-                src={`https://tapp.chayns-static.space/wallet/v3/index.html?siteId=${chaynsInfo.SiteID}`}
+                src={`https://tapp.chayns-static.space/wallet/v3/index.html?siteId=${chaynsInfo.SiteID}&colorMode=${chaynsInfo.ColorMode}`}
                 iFrameProps={{
                     name: 'TappIframe',
                     id: 'TappIframe'
