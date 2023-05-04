@@ -43,7 +43,11 @@ export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
 
         locationSettings.design.color = `#${locationSettings.design.color}`;
         const parameters = getUrlParameters();
-        const colorMode = parameters.colormode && Number.parseInt(parameters.colormode);
+        let colorMode = parameters.colormode && Number.parseInt(parameters.colormode);
+        // fixes app passing through colormode=%0A
+        if (Number.isNaN(colorMode)) {
+            colorMode = 0;
+        }
 
         chaynsInfo = {
             isChaynsnetRuntime: true,
