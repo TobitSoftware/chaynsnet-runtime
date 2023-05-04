@@ -7,7 +7,11 @@ export default function setIframeHeigth(req, res) {
         res.event(2, 'Field height missing.');
         return;
     } else if (value.full || value.fullViewport || chaynsInfo.fullSizeMode) {
-        $iframe.style.height = '100vh';
+        if (CSS.supports('height: 100svh')) {
+            $iframe.style.height = '100svh';
+        } else {
+            $iframe.style.height = '100vh';
+        }
         document.body.classList.add('no-scroll');
         return;
     }
