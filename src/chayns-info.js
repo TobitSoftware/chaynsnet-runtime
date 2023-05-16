@@ -8,6 +8,7 @@ import { getItem, setItem } from './utils/localStorage';
 import { DEFAULT_LOCATIONID } from './constants/defaults';
 import { VERSION } from './constants/version';
 import { LOGIN_TAPP } from './constants/login-tapp';
+import TAPPIDS from "./constants/tapp-ids";
 
 const consoleLoggerLocation = new ConsoleLogger('loadLocation(chayns-info.js)');
 const consoleLoggerTapps = new ConsoleLogger('loadTapps(chayns-info.js)');
@@ -195,6 +196,10 @@ export async function loadTapps(locationId) {
             const data = jsonResponse.data || [];
 
             const getTappList = list => list.reduce((tapps, entry) => {
+                if(entry && entry.id === TAPPIDS.INTERCOM) {
+                    entry.url = 'https://tapp.chayns-static.space/intercom/v3/full-view/index.html?TappID=251441&OS=##os##&color=##color##&font=##fontid##&colormode=##colormode##&lang=##lang##&siteId=##siteId##&AppVersion=##version##';
+                }
+
                 // the type is a binary value, the bit for a tapp is 1
                 // eslint-disable-next-line no-bitwise
                 if ((entry.type & 1) === 1) {
