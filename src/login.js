@@ -26,6 +26,19 @@ export function showLogin() {
 }
 
 export function login(tobitAccessToken) {
+    if (chayns.env.isApp && tobitAccessToken) {
+        const payload = chayns.utils.getJwtPayload(tobitAccessToken);
+        if (payload && payload.type === 12) {
+            chayns.invokeCall({
+                action: 52,
+                value: {
+                    tobitAccessToken
+                },
+            });
+            return;
+        }
+    }
+
     setTobitAccessToken(tobitAccessToken)
         .then(() => Promise.all([updateUserData(), closeWindow()]))
         .then(() => {
