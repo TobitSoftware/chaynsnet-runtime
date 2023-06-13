@@ -36,7 +36,7 @@ export default async function executeCall(config) {
     let davidWebviewV2 = false;
     if (typeof window.external === 'object' && typeof window.external.jsonCall === 'function') {
         jsonCallFn = window.external.jsonCall;
-    } else if (typeof chrome === 'object' && typeof chrome.webview?.hostObjects?.sync?.chayns?.jsonCall === 'function') {
+    } else if (typeof chrome === 'object' && chrome.webview && chrome.webview.hostObjects && chrome.webview.hostObjects.sync && chrome.webview.hostObjects.sync.chayns && typeof chrome.webview.hostObjects.sync.chayns.jsonCall === 'function') {
         davidWebviewV2 = true;
         jsonCallFn = chrome.webview.hostObjects.sync.chayns.jsonCall;
     }
