@@ -41,7 +41,7 @@ const mapOldApiToNew = ({ retVal }) => {
         site: {
             id: AppInfo.SiteID,
             locationId: AppInfo.LocationID,
-            url: window?.location.href.split('#')[0],
+            url: window.location.href.split('#')[0],
             layoutDisposition: {
                 contentWide: false,
                 barOnTop: false,
@@ -62,7 +62,7 @@ const mapOldApiToNew = ({ retVal }) => {
             },
             dynamicFontSize: false,
             locationPersonId: AppInfo.LocationPersonId,
-            urlHash: window?.location.hash.replace('#', '')
+            urlHash: window.location.hash.replace('#', '')
         },
         parameters: [...new URLSearchParams(location.search)],
         user: {
@@ -76,7 +76,7 @@ const mapOldApiToNew = ({ retVal }) => {
         customData: null,
         isAdminModeActive: AppUser.AdminMode,
         currentPage: {
-            id: AppInfo.TappSelected?.TappID,
+            id: AppInfo.TappSelected && AppInfo.TappSelected.TappID,
             siteId: AppInfo.SiteID
         },
         pages: AppInfo.Tapps.map(x => ({
@@ -96,10 +96,10 @@ const mapOldApiToNew = ({ retVal }) => {
 export const invokeDialogCall = (call, callback) => {
     const callbackName = `cwCallback${callbackId}`;
     window[callbackName] = (e) => {
-        callback(e?.retVal);
+        callback(e && e.retVal);
     };
     if ([OPEN_DIALOG_CALL_NUMBER, PULL_TO_REFRESH_CALL_NUMBER, CLOSE_DIALOG_CALL_NUMBER,SHOW_TOAST_NOTIFICATION_CALL_NUMBER].includes(call.action)) {
-        window.dialog.receiveApiCall({ ...call, value: { ...(call?.value || {}), callback: `window.${callbackName}` } }, 'chayns.ajaxTab.jsoncall');
+        window.dialog.receiveApiCall({ ...call, value: { ...(call && call.value || {}), callback: `window.${callbackName}` } }, 'chayns.ajaxTab.jsoncall');
     }
 
     if (call.action === 218) {
