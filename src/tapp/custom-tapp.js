@@ -191,11 +191,14 @@ function loadTapp(tappId, tappUrl, postTobitAccessToken) {
         return;
     }
 
-    if (tappId === 250357) {
+    if (tappId === 250357 || tappId === -2) {
+        const url = new URL(tappId === 250357 ? 'https://tapp.chayns-static.space/wallet/v3/index.html' : 'https://tapp.chayns-static.space/chayns-id/v1/index.html');
+        url.searchParams.set('siteId', chaynsInfo.SiteID);
+        url.searchParams.set('colorMode', chaynsInfo.ColorMode);
         ReactDOM.render((
             <ChaynsHost
                 type="client-iframe"
-                src={`https://tapp.chayns-static.space/wallet/v3/index.html?siteId=${chaynsInfo.SiteID}&colorMode=${chaynsInfo.ColorMode}`}
+                src={url.toString()}
                 iFrameProps={{
                     name: 'TappIframe',
                     id: 'TappIframe'
