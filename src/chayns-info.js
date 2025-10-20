@@ -77,6 +77,7 @@ export async function loadLocation(locationId = DEFAULT_LOCATIONID) {
             AppInfo: {
                 Version: parseInt(VERSION, 10) || 2,
                 domain: window.location.host,
+                Language: parameters.lang || (navigator.language || 'en').slice(0, 2),
                 Tapps: [],
                 TappSelected: {},
                 FacebookAppID: locationSettings.facebookAppId,
